@@ -4,7 +4,7 @@ namespace BlogApp.Mappers;
 
     public static class BlogMapper
     {
-        public static BlogDTO ToDTO(Blog blog)
+        public static BlogDTO ToDTO(this Blog blog)
         {
             return new BlogDTO
             {
@@ -20,7 +20,7 @@ namespace BlogApp.Mappers;
             };
         }
 
-        public static Blog ToModel(BlogDTO blogDTO)
+        public static Blog ToModel(this BlogDTO blogDTO)
         {
             return new Blog
             {

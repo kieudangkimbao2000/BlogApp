@@ -1,4 +1,6 @@
 using BlogApp.Dbs;
+using BlogApp.DIs;
+using BlogApp.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,6 +14,9 @@ builder.Services.AddOpenApi();
 builder.Services.AddDbContext<BlogAppContext>(options =>{
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
+
+builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 
 
 var app = builder.Build();

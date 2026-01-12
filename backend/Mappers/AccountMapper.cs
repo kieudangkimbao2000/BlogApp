@@ -4,7 +4,7 @@
 
     public static class AccountMapper
     {
-        public static AccountDTO ToDTO(Account account)
+        public static AccountDTO ToDTO(this Account account)
         {
             return new AccountDTO
             {
@@ -18,7 +18,7 @@
             };
         }
 
-        public static Account ToModel(AccountDTO accountDTO)
+        public static Account ToModel(this AccountDTO accountDTO)
         {
             return new Account
             {
