@@ -1,7 +1,21 @@
-FROM mcr.microsoft.com/dotnet/sdk:9.0@sha256:3fcf6f1e809c0553f9feb222369f58749af314af6f063f389cbd2f913b4ad556 AS build
+FROM mcr.microsoft.com/dotnet/nightly/sdk:10.0 as base
 
-WORKDIR /App
+WORKDIR /src
 
 COPY ./backend ./
 
-CMD ["dotnet", "run"]
+RUN sed -i 's|localhost|db|g' appsettings.json
+
+RUN dotnet publish -c Release -o publish
+
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS runtime
+
+WORKDIR /app
+
+COPY --from=base /src/publish ./
+
+EXPOSE 5059
+
+ENV ASPNETCORE_URLS=http://+:5059
+
+CMD ["dotnet", "BlogApp.dll"]
