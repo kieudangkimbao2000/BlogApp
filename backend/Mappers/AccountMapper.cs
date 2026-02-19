@@ -1,5 +1,5 @@
     namespace BlogApp.Mappers;
-    using BlogApp.Models;
+    using BlogApp.Entities;
     using BlogApp.DTOs;
 
     public static class AccountMapper

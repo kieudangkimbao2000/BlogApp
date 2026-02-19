@@ -1,5 +1,5 @@
 namespace BlogApp.Mappers;
-    using BlogApp.Models;
+    using BlogApp.Entities;
     using BlogApp.DTOs;
 
     public static class BlogMapper
@@ -34,5 +34,10 @@ namespace BlogApp.Mappers;
                 AmountOfRates = blogDTO.AmountOfRates,
                 AuthorId = blogDTO.AuthorId
             };
+        }
+
+        public static List<BlogDTO> ToDTOList(this List<Blog> blogs)
+        {
+            return blogs.Select(b => b.ToDTO()).ToList();
         }
     }

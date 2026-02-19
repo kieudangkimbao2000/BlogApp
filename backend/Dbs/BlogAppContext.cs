@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using BlogApp.Entities;
 
 namespace BlogApp.Dbs
 {
@@ -10,26 +12,26 @@ namespace BlogApp.Dbs
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //Account
-            modelBuilder.Entity<Models.Account>()
+            modelBuilder.Entity<Account>()
                 .HasIndex(a => a.Phone).IsUnique();
-            modelBuilder.Entity<Models.Account>()
+            modelBuilder.Entity<Account>()
                 .HasIndex(a => a.Email).IsUnique();
 
             //Category
-            modelBuilder.Entity<Models.Category>()
+            modelBuilder.Entity<Category>()
                 .HasIndex(c => c.Name).IsUnique();
 
             //Comment
-            modelBuilder.Entity<Models.Comment>()
+            modelBuilder.Entity<Comment>()
                 .HasOne(c => c.Parent)
                 .WithMany()
                 .OnDelete(DeleteBehavior.NoAction);
         }
 
-        public DbSet<Models.Account> Accounts { get; set; }
-        public DbSet<Models.Blog> Blogs { get; set; }
-        public DbSet<Models.Category> Categories { get; set; }
-        public DbSet<Models.Comment> Comments { get; set; }
-        public DbSet<Models.Rate> Rates { get; set; }
+        public DbSet<Account> Accounts { get; set; }
+        public DbSet<Blog> Blogs { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Rate> Rates { get; set; }
     }
 }

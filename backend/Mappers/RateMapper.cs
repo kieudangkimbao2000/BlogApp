@@ -1,7 +1,7 @@
 namespace BlogApp.Mappers
 {
     using BlogApp.DTOs;
-    using BlogApp.Models;
+    using BlogApp.Entities;
 
     public static class RateMapper
     {

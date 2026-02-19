@@ -1,6 +1,6 @@
-namespace BlogApp.Models.Authentications
+namespace BlogApp.DTOs.Authentications
 {
-    public class Login
+    public class LoginDTO
     {
         public string Username { get; set; }
         public string Password { get; set; }

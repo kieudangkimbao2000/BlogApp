@@ -1,6 +1,6 @@
 namespace BlogApp.Handlers;
 
-public class PasswordHandlers
+public class PasswordHandler
 {
     /// <summary>
     /// Hash the password with a salt.

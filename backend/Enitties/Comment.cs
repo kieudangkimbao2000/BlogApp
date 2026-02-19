@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using BlogApp.Models;
+using BlogApp.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace BlogApp.Models;
+namespace BlogApp.Entities;
 
 public class Comment
 {
