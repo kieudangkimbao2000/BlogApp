@@ -17,6 +17,9 @@ namespace BlogApp.Entities
         public string Email { get; set; }
         public string OtherContact{ get; set; }
         public string Description { get; set; }
+        public string Avatar { get; set; }
+        [MaxLength(1)]
+        public string Role { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
 

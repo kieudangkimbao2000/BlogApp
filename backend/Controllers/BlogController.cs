@@ -1,5 +1,6 @@
 namespace BlogApp.Controllers;
 
+using BlogApp.Common;
 using BlogApp.DTOs;
 using BlogApp.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -19,9 +20,10 @@ public class BlogController(IBlogService service) : ControllerBase
     [HttpGet("{id}")]
     public ActionResult<BlogDTO> GetBlogById(string id)
     {
-        var blog = service.GetBlogById(id);
+        string errCode = "";
+        var blog = service.GetBlogById(id, ref errCode);
 
-        if (blog == null) return NotFound("Blog not found!");
+        if (blog == null) return NotFound(AppMessages.GetMessage(errCode));
 
         return Ok(blog);
     }
@@ -29,30 +31,61 @@ public class BlogController(IBlogService service) : ControllerBase
     [HttpPost]
     public ActionResult AddBlog([FromBody] BlogDTO blogDTO)
     {
-        var success = service.AddBlog(blogDTO);
+        string errCode = "";
+        var result = service.AddBlog(blogDTO, ref errCode);
 
-        if (!success) return BadRequest("Blog with the same ID already exists!");
+        if (!result)
+        {
+            if (errCode == "E1002")
+            {
+                return BadRequest(AppMessages.GetMessage(errCode));
+            }
+            else
+            {
+                return StatusCode(500,AppMessages.GetMessage(errCode));
+            }
+        }
 
-        return Ok("Blog added successfully!");
+        return Ok(AppMessages.GetMessage("I1001"));
     }
 
     [HttpPost("update")]
     public ActionResult UpdateBlog([FromBody] BlogDTO blogDTO)
     {
-        var success = service.UpdateBlog(blogDTO);
+        string errCode = "";
+        var result = service.UpdateBlog(blogDTO, ref errCode);
 
-        if (!success) return NotFound("Blog not found!");
-
-        return Ok("Blog updated successfully!");
+        if (!result){
+            if (errCode == "E1001")
+            {
+                return NotFound(AppMessages.GetMessage(errCode));
+            }
+            else
+            {
+                return StatusCode(500,AppMessages.GetMessage(errCode));
+            }
+        
+        }
+        return Ok(AppMessages.GetMessage("I1002"));
     }
 
     [HttpDelete("{id}")]
     public ActionResult DeleteBlog(string id)
     {
-        var success = service.DeleteBlog(id);
+        string errCode = "";
+        var result = service.DeleteBlog(id, ref errCode);
 
-        if (!success) return NotFound("Blog not found!");
+        if (!result){
+            if (errCode == "E1001")
+            {
+                return NotFound(AppMessages.GetMessage(errCode));
+            }
+            else
+            {
+                return StatusCode(500,AppMessages.GetMessage(errCode));
+            }
+        }
 
-        return Ok("Blog deleted successfully!");
+        return Ok(AppMessages.GetMessage("I1003"));
     }
 }

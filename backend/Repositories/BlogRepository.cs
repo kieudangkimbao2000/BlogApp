@@ -4,11 +4,23 @@ using BlogApp.Dbs;
 using BlogApp.Entities;
 using BlogApp.Interfaces;
 
-public class BlogRepository(BlogAppContext context) : IBlogRepository
+/// <summary>
+///    Implement Blog Repository Interface
+/// </summary>
+/// <param name="context"></param>
+/// <param name="logger"></param>
+public class BlogRepository(BlogAppContext context, 
+                            ILogger<BlogRepository> logger) : IBlogRepository
 {
     public List<Blog> GetAllBlogs()
     {
-        return context.Blogs.OrderBy(b => b.CreatedAt).ToList();
+        return context.Blogs.OrderByDescending(b => b.CreatedAt).ToList();
+    }
+
+    public List<Blog> GetBlogsByAuthor(string author)
+    {
+        return context.Blogs.Where(b => b.Author.Username == author)
+                            .OrderByDescending(b => b.CreatedAt).ToList();
     }
 
     public Blog? GetBlogById(string id)
@@ -26,6 +38,7 @@ public class BlogRepository(BlogAppContext context) : IBlogRepository
             return true;
         } catch(Exception ex)
         {
+            logger.LogError(ex, "Error adding blog with id {BlogId}", blog.Id);
             return false;
         }
     }
@@ -40,6 +53,7 @@ public class BlogRepository(BlogAppContext context) : IBlogRepository
             return true;
         } catch(Exception ex)
         {
+            logger.LogError(ex, "Error updating blog with id {BlogId}", blog.Id);
             return false;
         }
     }
@@ -55,6 +69,7 @@ public class BlogRepository(BlogAppContext context) : IBlogRepository
         }
         catch(Exception ex)
         {
+            logger.LogError(ex, "Error deleting blog with id {BlogId}", blog.Id);
             return false;
         }
     }

@@ -3,17 +3,55 @@ namespace BlogApp.Interfaces;
 using BlogApp.Mappers;
 using BlogApp.DTOs;
 
+/// <summary>
+///     Implement business logic for blogs
+/// </summary>
 public interface IBlogService
 {
+    /// <summary>
+    ///    Get all blogs
+    /// </summary>
+    /// <returns>List of all blogs</returns>
     List<BlogDTO> GetAllBlogs();
 
-    BlogDTO GetBlogById(string id);
+    /// <summary>
+    ///     Get blogs by author
+    /// </summary>
+    /// <param name="author">Author's username</param>
+    /// <returns>List of blogs was created by the author</returns>
+    List<BlogDTO> GetBlogsByAuthor(string author);
 
-    bool AddBlog(BlogDTO blogDTO);
+    /// <summary>
+    ///   Get blogs by id
+    /// </summary>
+    /// <param name="id">Blog's Id</param>
+    /// <param name="errCode">Error code be returned</param>
+    /// <returns>Blog if found, otherwise null</returns>
+    BlogDTO GetBlogById(string id, ref string errCode);
 
-    bool UpdateBlog(BlogDTO blogDTO);
+    /// <summary>
+    ///     Add a blog
+    /// </summary>
+    /// <param name="blogDTO">Blog data</param>
+    /// <param name="errCode">Error code be returned</param>
+    /// <returns>True if successfully, otherwise false</returns>
+    bool AddBlog(BlogDTO blogDTO, ref string errCode);
 
-    bool DeleteBlog(string id);
+    /// <summary>
+    ///     Update a blog
+    /// </summary>
+    /// <param name="blogDTO">Blog data</param>
+    /// <param name="errCode">Error code be returned</param>
+    /// <returns>True if successfully, otherwise false</returns>
+    bool UpdateBlog(BlogDTO blogDTO, ref string errCode);
+
+    /// <summary>
+    ///    Delete a blog
+    /// </summary>
+    /// <param name="id">Blog's Id</param>
+    /// <param name="errCode">Error code be returned</param>
+    /// <returns>True if successfully, otherwise false</returns>
+    bool DeleteBlog(string id, ref string errCode);
 }
 
 

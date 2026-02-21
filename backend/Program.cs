@@ -26,6 +26,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ClockSkew = TimeSpan.Zero
         };
     });
+builder.Services.AddHttpLogging();
 
 //DbContexts
 builder.Services.AddDbContext<BlogAppContext>(options =>{
@@ -36,6 +37,8 @@ builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IAuthenService, AuthenService>();
 builder.Services.AddScoped<IBlogRepository, BlogRepository>();
 builder.Services.AddScoped<IBlogService, BlogService>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddSingleton<BlogApp.Handlers.TokenHandler>();
 
 var app = builder.Build();
@@ -53,6 +56,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseHttpLogging();
 
 app.UseAuthentication();
 app.UseAuthorization();

@@ -20,7 +20,8 @@ namespace BlogApp.Handlers
                 {
                     new System.Security.Claims.Claim("Username", accountDTO.Username),
                     new System.Security.Claims.Claim("Name", accountDTO.Name),
-                    new System.Security.Claims.Claim("Email", accountDTO.Email ?? string.Empty)
+                    new System.Security.Claims.Claim("Email", accountDTO.Email ?? string.Empty),
+                    new System.Security.Claims.Claim("Role", accountDTO.Role ?? string.Empty)
                 }),
                 Expires = DateTime.UtcNow.AddMinutes(configuration.GetValue<int>("Jwt:ExpireMinutes", 60)),
                 SigningCredentials = credentials,

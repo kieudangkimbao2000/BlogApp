@@ -8,29 +8,41 @@ using BlogApp.Interfaces;
 using System.Text;
 using BlogApp.Entities;
 
-public class AuthenService (IAccountRepository repository, TokenHandler tokenHandler): IAuthenService
+/// <summary>
+///   Implement Authentication Service Interface
+/// </summary>
+/// <param name="repository"></param>
+/// <param name="tokenHandler"></param>
+public class AuthenService (IAccountRepository repository, 
+                            TokenHandler tokenHandler): IAuthenService
 {
-    public (string,string) LoginUser(LoginDTO login)
+    public string LoginUser(LoginDTO login, ref string errCode)
     {
         var user = repository.GetAccountByUsername(login.Username);
 
-        if (user != null && PasswordHandler.VerifyPassword(login.Password, Encoding.UTF8.GetString(user.Password)))
+        if (user != null && 
+            PasswordHandler
+                .VerifyPassword(login.Password, Encoding.UTF8.GetString(user.Password)))
         {
             string token = tokenHandler.CreateToken(user.ToDTO());
 
-            return (token, "");
+            return token;
         }
-        return ("", "Invalid username or password.");
+        
+        errCode = "E0001"; // Invalid username or password
+
+        return "";
     }
 
-    public (AccountDTO?,string) RegisterUser(RegisterDTO register)
+    public AccountDTO? RegisterUser(RegisterDTO register, ref string errCode)
     {
-        bool isSuccess = false;
-        var existingUser = repository.GetAccountByUsername(register.Username);
+        bool result = false;
+        var existingAccount = repository.GetAccountByUsername(register.Username);
 
-        if (existingUser != null)
+        if (existingAccount != null)
         {
-            return (null, "Username already exists.");
+            errCode = "E0002"; // Username already exists
+            return null;
         }
 
         var account = new Account
@@ -45,13 +57,14 @@ public class AuthenService (IAccountRepository repository, TokenHandler tokenHan
             Description = register.Description
         };
 
-        isSuccess = repository.AddAccount(account);
+        result = repository.AddAccount(account);
 
-        if (!isSuccess)
+        if (!result)
         {
-            return (null, "Failed to create account. Please try again.");
+            errCode = "E0003"; // Failed to create account
+            return null;
         }
 
-        return (account.ToDTO(), "");
+        return account.ToDTO();
     }
 }

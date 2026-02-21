@@ -31,4 +31,9 @@
                 Description = accountDTO.Description
             };
         }
+    
+        public static List<AccountDTO> ToDTOList(this List<Account> accounts)
+        {
+                return accounts.Select(a => a.ToDTO()).ToList();
+        }
     }

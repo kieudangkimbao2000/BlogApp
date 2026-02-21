@@ -4,31 +4,38 @@ using BlogApp.DTOs;
 using BlogApp.Interfaces;
 using BlogApp.DTOs.Authentications;
 using Microsoft.AspNetCore.Mvc;
+using BlogApp.Common;
 
-    [ApiController]
-    [Route("api/authen")]
-    public class AuthenController(IAuthenService authenService) : ControllerBase
+[ApiController]
+[Route("api/authen")]
+public class AuthenController(IAuthenService authenService) : ControllerBase
+{
+
+    [HttpPost("login")]
+    public ActionResult<AccountDTO?> LoginUser([FromBody] LoginDTO login)
     {
+        string errCode = "";
+        var token = authenService.LoginUser(login, ref errCode);
 
-        [HttpPost("login")]
-        public ActionResult<AccountDTO?> LoginUser([FromBody] LoginDTO login)
+        if (token == "")
         {
-            var (token, errMessage) = authenService.LoginUser(login);
-            if (token == "")
-            {
-                return BadRequest(errMessage);
-            }
-            return Ok(token);
+            return BadRequest(AppMessages.GetMessage(errCode));
         }
-
-        [HttpPost("register")]
-        public ActionResult<AccountDTO?> Register([FromBody] RegisterDTO register)
-        {
-            var (accountDTO, errMessage) = authenService.RegisterUser(register);
-            if (accountDTO == null)
-            {
-                return BadRequest(errMessage);
-            }
-            return Ok(accountDTO);
-        }
+        
+        return Ok(token);
     }
+
+    [HttpPost("register")]
+    public ActionResult<AccountDTO?> Register([FromBody] RegisterDTO register)
+    {
+        string errCode = "";
+        var accountDTO = authenService.RegisterUser(register, ref errCode);
+
+        if (accountDTO == null)
+        {
+            return BadRequest(AppMessages.GetMessage(errCode));
+        }
+
+        return Ok(accountDTO);
+    }
+}
