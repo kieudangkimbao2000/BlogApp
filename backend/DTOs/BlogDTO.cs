@@ -1,3 +1,5 @@
+using System.ComponentModel;
+
 namespace BlogApp.DTOs
 {
     public class BlogDTO
@@ -6,10 +8,12 @@ namespace BlogApp.DTOs
         public string Title { get; set; }
         public string Content { get; set; }
         public string Categories { get; set; }
-        public decimal Rating { get; set; }
+        public int State { get; set; }
         public int AmountOfAccesses { get; set; }
-        public int AmountOfComments { get; set; }
-        public int AmountOfRates { get; set; }
+        public DateTime? PublishedAt { get; set; }
+        public bool? LikedOrDislikedByUser { get; set; }
         public string AuthorId { get; set; }
+        public DateTime? CreatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
     }
 }

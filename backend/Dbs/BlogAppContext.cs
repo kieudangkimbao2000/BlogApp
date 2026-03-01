@@ -32,6 +32,7 @@ namespace BlogApp.Dbs
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Comment> Comments { get; set; }
-        public DbSet<Rate> Rates { get; set; }
+        public DbSet<BlogLike> BlogLikes { get; set; }
+        public DbSet<CommentLike> CommentLikes { get; set; }
     }
 }

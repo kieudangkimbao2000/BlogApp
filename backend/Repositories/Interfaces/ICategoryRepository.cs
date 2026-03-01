@@ -14,29 +14,29 @@ public interface ICategoryRepository
     List<Category> GetAllCategories();
 
     /// <summary>
-    ///     Get a category by id
+    ///     Get a category by name
     /// </summary>
-    /// <param name="id">Category's id</param>
-    Category? GetCategoryById(string id);
+    /// <param name="name">Category's name</param>
+    Category? GetCategoryByName(string name);
 
     /// <summary>
     ///    Add a category
     /// </summary>
     /// <param name="category">Category data</param>
-    /// <returns>True if added successfully, otherwise false</returns>
+    /// <returns>True if successfully, otherwise false</returns>
     bool AddCategory(Category category);
 
     /// <summary>
     ///     Update a category
     /// </summary>
     /// <param name="category">Category data</param>
-    /// <returns>True if updated successfully, otherwise false</returns>
+    /// <returns>True if successfully, otherwise false</returns>
     bool UpdateCategory(Category category);
 
     /// <summary>
     ///    Delete a category
     /// </summary>
     /// <param name="category">Category data</param>
-    /// <returns>True if deleted successfully, otherwise false</returns>
+    /// <returns>True if successfully, otherwise false</returns>
     bool DeleteCategory(Category category);
 }

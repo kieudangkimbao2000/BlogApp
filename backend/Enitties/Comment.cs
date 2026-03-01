@@ -1,9 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using BlogApp.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿namespace BlogApp.Entities;
 
-namespace BlogApp.Entities;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 public class Comment
 {
@@ -11,9 +10,8 @@ public class Comment
     public string Id { get; set; }
     [Required]
     public string Content { get; set; }
-    public int Likes { get; set; }
-    public int Dislikes { get; set; }
-    public string State { get; set; }
+    [MaxLength(1)]
+    public int State { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
 
@@ -23,11 +21,13 @@ public class Comment
     [ForeignKey("BlogPost")]
     public string BlogId { get; set; }
     [ForeignKey("Parent")]
-    public string ParentId { get; set; }
+    public string? ParentId { get; set; }
 
     //Relationships
     public Account Author { get; set; }
     public Blog BlogPost { get; set; }
     [DeleteBehavior(DeleteBehavior.NoAction)]
     public Comment Parent{ get; set; }
+    public ICollection<Comment> Replies { get; set; }
+    public ICollection<CommentLike> Likes { get; set; }
 }

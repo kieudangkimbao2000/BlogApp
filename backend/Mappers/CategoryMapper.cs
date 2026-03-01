@@ -4,45 +4,45 @@ namespace BlogApp.Mappers
     using BlogApp.Entities;
 
     /// <summary>
-    ///     Mapper for Category
+    ///     Map between Category Entity and DTO
     /// </summary>
     public static class CategoryMapper
     {
         /// <summary>
-        ///    Convert Category Entity to Category DTO
+        ///    Map Category Entity to Category DTO
         /// </summary>
-        /// <param name="category">The category entity to be converted</param>
-        /// <returns>The corresponding CategoryDTO</returns>
+        /// <param name="category">Category Entity Object</param>
+        /// <returns>Category DTO Object</returns>
         public static CategoryDTO ToDTO(this Category category)
         {
             return new CategoryDTO
             {
-                Id = category.Id,
                 Name = category.Name,
-                Description = category.Description
+                Description = category.Description,
+                CreatedAt = category.CreatedAt,
+                UpdatedAt = category.UpdatedAt
             };
         }
 
         /// <summary>
-        ///     Convert Category DTO to Category Entity
+        ///     Map Category DTO to Category Entity
         /// </summary>
-        /// <param name="categoryDTO">The category DTO to be converted</param>
-        /// <returns>The corresponding Category entity</returns>
+        /// <param name="categoryDTO">Category DTO Object</param>
+        /// <returns>Category Entity Object</returns>
         public static Category ToModel(this CategoryDTO categoryDTO)
         {
             return new Category
             {
-                Id = categoryDTO.Id,
                 Name = categoryDTO.Name,
                 Description = categoryDTO.Description
             };
         }
 
         /// <summary>
-        ///    Convert a list of Category entities to a list of Category DTOs
+        ///    Map List of Category Entity to List of Category DTO
         /// </summary>
-        /// <param name="categories">The list of Category entities to be converted</param>
-        /// <returns>The corresponding list of CategoryDTOs</returns>
+        /// <param name="categories">List of Category Entities</param>
+        /// <returns>List of Category DTOs</returns>
         public static List<CategoryDTO> ToDTOList(this List<Category> categories)
         {
                 return categories.Select(c => c.ToDTO()).ToList();

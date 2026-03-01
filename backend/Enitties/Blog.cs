@@ -1,9 +1,9 @@
+namespace BlogApp.Entities;
+
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace BlogApp.Entities
-{
-    public class Blog
+public class Blog
     {
         [Key]
         public string Id { get; set; }
@@ -12,11 +12,10 @@ namespace BlogApp.Entities
         [Required]
         public string Content { get; set; }
         public string Categories { get; set; }
-        [Column(TypeName = "decimal(1,1)")]
-        public decimal Rating { get; set; }
+        [MaxLength(1)]
+        public int State { get; set; }
         public int AmountOfAccesses { get; set; }
-        public int AmountOfComments { get; set; }
-        public int AmountOfRates { get; set; }
+        public DateTime? PublishedAt { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
 
@@ -27,6 +26,5 @@ namespace BlogApp.Entities
         //Relationships
         public Account Author { get; set; }
         public ICollection<Comment> Comments { get; set; }
-        public ICollection<Rate> Rates { get; set; }
+        public ICollection<BlogLike> Likes { get; set; }
     }
-}

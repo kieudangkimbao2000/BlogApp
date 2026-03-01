@@ -27,7 +27,7 @@ public interface IBlogService
     /// <param name="id">Blog's Id</param>
     /// <param name="errCode">Error code be returned</param>
     /// <returns>Blog if found, otherwise null</returns>
-    BlogDTO GetBlogById(string id, ref string errCode);
+    BlogDTO GetBlogById(string id, string? userId, ref string errCode);
 
     /// <summary>
     ///     Add a blog

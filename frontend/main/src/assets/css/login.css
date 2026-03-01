@@ -1,0 +1,39 @@
+.login-form{
+    display: flex;
+    flex-wrap:  wrap;
+    justify-content: center;
+    margin-top: -55px;
+    min-width: 200px;
+    min-height: 200px;
+    background-color: #fffceb;
+}
+
+.login-title{
+    text-align: center;
+    font-family: myfont;
+    font-size: 84.5px;
+}
+
+@font-face {
+    font-family: myfont;
+    src: url('../fonts/symphony-pro-regular.otf');
+}
+
+.username-field{
+    width: 100%;
+    background-color: #fffceb;
+    height: 40px;
+    /* width: 250px; */
+    border-radius: 20px;
+    margin: 80px 40px 15px 40px;
+}
+
+.password-field
+{
+    width: 100%;
+    background-color: #fffceb;
+    height: 40px;
+    /* width: 250px; */
+    border-radius: 20px;
+    margin: 15px 40px 60px 40px;
+}

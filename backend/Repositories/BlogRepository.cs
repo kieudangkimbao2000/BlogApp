@@ -19,7 +19,7 @@ public class BlogRepository(BlogAppContext context,
 
     public List<Blog> GetBlogsByAuthor(string author)
     {
-        return context.Blogs.Where(b => b.Author.Username == author)
+        return context.Blogs.Where(b => b.AuthorId == author)
                             .OrderByDescending(b => b.CreatedAt).ToList();
     }
 

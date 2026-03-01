@@ -1,0 +1,23 @@
+#root{
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+.background{
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-image: url('../images/background.jpeg');
+  background-size: cover;
+  background-position: center;
+  filter: blur(2px);
+  opacity: 0.7;
+  inset: 0;
+  z-index: -1;
+}
+
+.center-area{
+  min-width: 200px;
+}

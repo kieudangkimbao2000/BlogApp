@@ -24,16 +24,25 @@ public class BlogService(IBlogRepository repository): IBlogService
         return blogs.ToDTOList();
     }
 
-    public BlogDTO GetBlogById(string id, ref string errCode)
+    public BlogDTO GetBlogById(string id, string? userId, ref string errCode)
     {
         var blog = repository.GetBlogById(id);
+
         if (blog == null) 
         {
             errCode = "E1001"; // Blog not found
             return null;
         }
 
-        return blog.ToDTO();
+        var blogDTO = blog.ToDTO();
+
+        if (userId != null)
+        {
+            bool? like = blog.Likes.FirstOrDefault(bl => bl.AuthorId == userId)?.LikeOrDislike;
+            blogDTO.LikedOrDislikedByUser = like;
+        }
+
+        return blogDTO;
     }
 
     public bool AddBlog(BlogDTO blogDTO, ref string errCode)

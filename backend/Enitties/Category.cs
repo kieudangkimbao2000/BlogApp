@@ -1,12 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿namespace BlogApp.Entities;
 
-namespace BlogApp.Entities;
+using System.ComponentModel.DataAnnotations;
 
 public class Category
 {
     [Key]
-    public string Id { get; set; }
-    [Required]
     public string Name { get; set; }
     public string Description { get; set; }
     public DateTime CreatedAt { get; set; }

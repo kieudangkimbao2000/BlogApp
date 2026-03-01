@@ -17,9 +17,9 @@ public class CategoryRepository(BlogAppContext context,
         return context.Categories.OrderByDescending(c => c.Name).ToList();
     }
 
-    public Category? GetCategoryById(string id)
+    public Category? GetCategoryByName(string name)
     {
-        return context.Categories.FirstOrDefault(c => c.Id == id);
+        return context.Categories.FirstOrDefault(c => c.Name == name);
     }
 
     public bool AddCategory(Category category)
@@ -33,7 +33,7 @@ public class CategoryRepository(BlogAppContext context,
         }
         catch(Exception ex)
         {
-            logger.LogError(ex, "Error adding category with id {CategoryId}", category.Id);
+            logger.LogError(ex, "Error adding category with name {CategoryName}", category.Name);
             return false;
         }
     }
@@ -49,7 +49,7 @@ public class CategoryRepository(BlogAppContext context,
         }
         catch(Exception ex)
         {
-            logger.LogError(ex, "Error updating category with id {CategoryId}", category.Id);
+            logger.LogError(ex, "Error updating category with name {CategoryName}", category.Name);
             return false;
         }
     }
@@ -65,7 +65,7 @@ public class CategoryRepository(BlogAppContext context,
         }
         catch(Exception ex)
         {
-            logger.LogError(ex, "Error deleting category with id {CategoryId}", category.Id);
+            logger.LogError(ex, "Error deleting category with name {CategoryName}", category.Name);
             return false;
         }
     }
