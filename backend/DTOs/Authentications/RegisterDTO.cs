@@ -1,4 +1,4 @@
-namespace BlogApp.DTOs.Authentications;
+namespace BlogApp.DTOs;
     
     public class RegisterDTO
     {

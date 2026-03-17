@@ -13,9 +13,17 @@ public class CategoryService(ICategoryRepository repository) : ICategoryService
         return categories.ToDTOList();
     }
 
-    public CategoryDTO? GetCategoryById(string id, ref string errCode)
+    public RespDTO GetTop5Categories()
     {
-        var category = repository.GetCategoryById(id);
+        var categories = repository.GetTop5Categories();
+        
+
+        return new CategoryListRespDTO(categories.ToDTOList(), 200, "");
+    }
+
+    public CategoryDTO? GetCategoryById(string name, ref string errCode)
+    {
+        var category = repository.GetCategoryByName(name);
 
         if (category == null)
         {
@@ -29,7 +37,7 @@ public class CategoryService(ICategoryRepository repository) : ICategoryService
     public bool AddCategory(CategoryDTO categoryDTO, ref string errCode)
     {
         bool result = false;
-        var category = repository.GetCategoryById(categoryDTO.Id);
+        var category = repository.GetCategoryByName(categoryDTO.Name);
 
         if(category != null) 
         {
@@ -50,7 +58,7 @@ public class CategoryService(ICategoryRepository repository) : ICategoryService
     public bool UpdateCategory(CategoryDTO categoryDTO, ref string errCode)
     {
         bool result = false;
-        var category = repository.GetCategoryById(categoryDTO.Id);
+        var category = repository.GetCategoryByName(categoryDTO.Name);
 
         if(category == null) 
         {
@@ -68,10 +76,10 @@ public class CategoryService(ICategoryRepository repository) : ICategoryService
         return result;
     }
 
-    public bool DeleteCategory(string id, ref string errCode)
+    public bool DeleteCategory(string name, ref string errCode)
     {
         bool result = false;
-        var category = repository.GetCategoryById(id);
+        var category = repository.GetCategoryByName(name);
 
         if(category == null) 
         {

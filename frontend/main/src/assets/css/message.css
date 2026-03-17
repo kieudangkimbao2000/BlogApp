@@ -1,0 +1,39 @@
+.message-box{
+  display: flex;
+  justify-content: center;
+  place-items: center;
+}
+
+.message-box .MuiBackdrop-root
+{
+  opacity: 0!important;
+}
+
+.message-box-body{
+  border: 3px solid;
+  outline: 0px;
+  width: 30%;
+  background-color: rgb(255, 255, 255);
+  border-radius: 5px;
+  z-index: 9999999;
+}
+
+.message-box-title{
+  padding: 10px;
+  font-size: 20px;
+}
+
+.message-box-content{
+  padding: 10px;
+  min-height: 100px;
+}
+
+.message-box-btn
+{
+  padding: 15px;
+}
+
+.ok-btn{
+  display: flex;
+  justify-content: right;
+}

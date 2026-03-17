@@ -3,6 +3,7 @@ namespace BlogApp.Repositories;
 using BlogApp.Dbs;
 using BlogApp.Entities;
 using BlogApp.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 /// <summary>
 ///   Implement Category Repository Interface
@@ -15,6 +16,28 @@ public class CategoryRepository(BlogAppContext context,
     public List<Category> GetAllCategories()
     {
         return context.Categories.OrderByDescending(c => c.Name).ToList();
+    }
+
+    public List<Category> GetTop5Categories()
+    {
+        var result = context.Categories.FromSqlRaw(@"
+            SELECT cat AS name, COUNT(*) AS blog_count
+            FROM ""Blogs"", UNNEST(""Categories"") AS cat
+            GROUP BY cat
+            ORDER BY blog_count DESC
+            LIMIT 5
+        ");
+        
+        List<Category> categs = new List<Category>();
+
+        foreach(var item in result)
+        {
+            Category categ = new Category();
+            categ.Name = item.Name;
+            categs.Add(categ);
+        }
+
+        return categs;
     }
 
     public Category? GetCategoryByName(string name)

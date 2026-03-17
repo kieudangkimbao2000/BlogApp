@@ -6,10 +6,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 public class CommentLike
 {
     //Keys
-    [Key]
     [ForeignKey("Author")]
     public string AuthorId { get; set; }
-    [Key]
     [ForeignKey("Comment")]
     public string CommentId { get; set; }
     [Required]

@@ -3,10 +3,11 @@ namespace BlogApp.Services;
 using BlogApp.Handlers;
 using BlogApp.Mappers;
 using BlogApp.DTOs;
-using BlogApp.DTOs.Authentications;
 using BlogApp.Interfaces;
 using System.Text;
 using BlogApp.Entities;
+using Npgsql.Internal;
+using BlogApp.Common;
 
 /// <summary>
 ///   Implement Authentication Service Interface
@@ -16,7 +17,7 @@ using BlogApp.Entities;
 public class AuthenService (IAccountRepository repository, 
                             TokenHandler tokenHandler): IAuthenService
 {
-    public string LoginUser(LoginDTO login, ref string errCode)
+    public RespDTO LoginUser(LoginDTO login)
     {
         var user = repository.GetAccountByUsername(login.Username);
 
@@ -24,25 +25,22 @@ public class AuthenService (IAccountRepository repository,
             PasswordHandler
                 .VerifyPassword(login.Password, Encoding.UTF8.GetString(user.Password)))
         {
-            string token = tokenHandler.CreateToken(user.ToDTO());
+            string jwt = tokenHandler.CreateToken(user.ToDTO());
 
-            return token;
+            return new LoginRespDTO(jwt, 200, "");
         }
-        
-        errCode = "E0001"; // Invalid username or password
 
-        return "";
+        return new RespDTO(400, AppMessages.E0001);
     }
 
-    public AccountDTO? RegisterUser(RegisterDTO register, ref string errCode)
+    public RespDTO RegisterUser(RegisterDTO register)
     {
         bool result = false;
         var existingAccount = repository.GetAccountByUsername(register.Username);
 
         if (existingAccount != null)
         {
-            errCode = "E0002"; // Username already exists
-            return null;
+            return new RespDTO(400, AppMessages.E0002);
         }
 
         var account = new Account
@@ -54,17 +52,19 @@ public class AuthenService (IAccountRepository repository,
             Phone = register.Phone,
             Email = register.Email,
             OtherContact = register.OtherContact,
-            Description = register.Description
+            Description = register.Description,
+            Avatar = " ",
+            Role = "2",
+            State = "1"
         };
 
         result = repository.AddAccount(account);
 
         if (!result)
         {
-            errCode = "E0003"; // Failed to create account
-            return null;
+           return new RespDTO(500, AppMessages.E0003);
         }
 
-        return account.ToDTO();
+        return new RegisterRespDTO(account.ToDTO(), 200, "");
     }
 }

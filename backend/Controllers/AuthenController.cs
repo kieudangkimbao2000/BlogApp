@@ -2,9 +2,10 @@ namespace BlogApp.Controllers;
 
 using BlogApp.DTOs;
 using BlogApp.Interfaces;
-using BlogApp.DTOs.Authentications;
 using Microsoft.AspNetCore.Mvc;
 using BlogApp.Common;
+using Microsoft.Build.Tasks;
+using Azure;
 
 [ApiController]
 [Route("api/authen")]
@@ -12,30 +13,33 @@ public class AuthenController(IAuthenService authenService) : ControllerBase
 {
 
     [HttpPost("login")]
-    public ActionResult<AccountDTO?> LoginUser([FromBody] LoginDTO login)
+    public ActionResult<LoginRespDTO> LoginUser([FromBody] LoginDTO login)
     {
-        string errCode = "";
-        var token = authenService.LoginUser(login, ref errCode);
+        RespDTO resp = authenService.LoginUser(login);
 
-        if (token == "")
-        {
-            return BadRequest(AppMessages.GetMessage(errCode));
+        if (resp.StatusCode == 400)
+        {   
+            return BadRequest(resp);
         }
         
-        return Ok(token);
+        return Ok(resp);
     }
 
     [HttpPost("register")]
-    public ActionResult<AccountDTO?> Register([FromBody] RegisterDTO register)
+    public ActionResult<RespDTO> Register([FromBody] RegisterDTO register)
     {
-        string errCode = "";
-        var accountDTO = authenService.RegisterUser(register, ref errCode);
+        var resp = authenService.RegisterUser(register);
 
-        if (accountDTO == null)
+        switch(resp.StatusCode)
         {
-            return BadRequest(AppMessages.GetMessage(errCode));
+            case 400:
+                return BadRequest(resp);
+            case 500:
+                return StatusCode(StatusCodes.Status500InternalServerError, resp);
+            default:
+                break;
         }
 
-        return Ok(accountDTO);
+        return Ok(resp);
     }
 }

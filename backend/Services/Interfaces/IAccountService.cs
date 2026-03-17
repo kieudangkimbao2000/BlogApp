@@ -17,31 +17,27 @@ public interface IAccountService
     ///     Get account by username
     /// </summary>
     /// <param name="username">username to be found</param>
-    /// <param name="errCode">Error code be returned if a error occurs</param>
     /// <returns>An account if found, otherwise null</returns>
-    AccountDTO? GetAccountByUsername(string username, ref string errCode);
+    AccountDTO? GetAccountByUsername(string username);
 
     /// <summary>
     ///    Add a account
     /// </summary>
     /// <param name="accountDTO">Account data</param>
-    /// <param name="errCode">Error code be returned if a error occurs</param>
     /// <returns>True if successful, otherwise false</returns>
-    bool AddAccount(AccountDTO accountDTO, ref string errCode);
+    bool AddAccount(AccountDTO accountDTO);
 
     /// <summary>
     ///     Update an account
     /// </summary>
     /// <param name="accountDTO">Account data</param>
-    /// <param name="errCode">Error code be returned if a error occurs</param>
     /// <returns>True if successful, otherwise false</returns>
-    bool UpdateAccount(AccountDTO accountDTO, ref string errCode);
+    bool UpdateAccount(AccountDTO accountDTO);
 
     /// <summary>
     ///    Delete an account
     /// </summary>
     /// <param name="username"></param>
-    /// <param name="errCode">Error code be returned if a error occurs</param>
     /// <returns>True if successful, otherwise false</returns>
-    bool DeleteAccount(string username, ref string errCode);
+    bool DeleteAccount(string username);
 }

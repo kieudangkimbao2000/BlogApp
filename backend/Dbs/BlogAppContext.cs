@@ -26,6 +26,15 @@ namespace BlogApp.Dbs
                 .HasOne(c => c.Parent)
                 .WithMany()
                 .OnDelete(DeleteBehavior.NoAction);
+            
+            //BlogLike
+            modelBuilder.Entity<BlogLike>()
+                // use the foreign key property for the composite key, not the navigation reference
+                .HasKey(e => new { e.AuthorId, e.BlogId });
+
+            //CommentLike
+            modelBuilder.Entity<CommentLike>()
+                .HasKey(e => new {e.AuthorId, e.CommentId});
         }
 
         public DbSet<Account> Accounts { get; set; }

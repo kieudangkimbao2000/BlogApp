@@ -1,5 +1,8 @@
+using TypeGen.Core.TypeAnnotations;
+
 namespace BlogApp.DTOs
 {
+     [ExportTsInterface]
     public class CategoryDTO
     {
         public string Name { get; set; }

@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "isRoot": true,
+  "tools": {
+    "geniteasy.cli": {
+      "version": "0.1.3-alpha",
+      "commands": [
+        "genit"
+      ],
+      "rollForward": false
+    }
+  }
+}

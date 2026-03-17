@@ -1,9 +1,6 @@
 .login-form{
-    display: flex;
-    flex-wrap:  wrap;
-    justify-content: center;
     margin-top: -55px;
-    min-width: 200px;
+    min-width: 400px;
     min-height: 200px;
     background-color: #fffceb;
 }
@@ -19,21 +16,39 @@
     src: url('../fonts/symphony-pro-regular.otf');
 }
 
+::placeholder{
+    font-style: italic;
+}
+
 .username-field{
+    font-family: 'Dejavu Serif';
+    font-size: 20px;
     width: 100%;
     background-color: #fffceb;
     height: 40px;
-    /* width: 250px; */
-    border-radius: 20px;
-    margin: 80px 40px 15px 40px;
+    border-radius: 10px;
+    padding-left: 10px;
 }
-
 .password-field
 {
     width: 100%;
     background-color: #fffceb;
     height: 40px;
-    /* width: 250px; */
-    border-radius: 20px;
-    margin: 15px 40px 60px 40px;
+    border-radius: 10px;
+    padding-left: 10px;
+}
+.login-btn, .login-btn:hover{
+    background-color: transparent;
+    border: none;
+    font-family: 'Dejavu Serif';
+    font-size: 18px;
+    padding: 0px;
+}
+.login-btn:hover{
+    text-decoration: underline;
+}
+.login-link{
+    font-family: 'Dejavu Serif';
+    color: black;
+    font-size: 15px;
 }

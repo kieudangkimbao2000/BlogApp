@@ -93,4 +93,12 @@ public class CategoryController(ICategoryService service) : ControllerBase
 
         return Ok(AppMessages.GetMessage("I3003"));
     }
+
+    [HttpGet("topfive")]
+    public ActionResult GetTop5Categories()
+    {
+        var resp = service.GetTop5Categories();
+
+        return Ok(resp);
+    }
 }

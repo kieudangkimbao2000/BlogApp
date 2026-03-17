@@ -1,23 +1,33 @@
 #root{
-  display: flex;
-  justify-content: center;
   height: 100%;
   width: 100%;
 }
 
 .background{
-  position: absolute;
+  position: fixed;
   height: 100%;
   width: 100%;
   background-image: url('../images/background.jpeg');
   background-size: cover;
   background-position: center;
-  filter: blur(2px);
+  filter: brightness(50%);
   opacity: 0.7;
   inset: 0;
-  z-index: -1;
+  z-index: 0;
 }
 
 .center-area{
   min-width: 200px;
+}
+
+.loading{
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  place-items: center;
+}
+
+.loading img {
+  height: 150px;
+  width: 150px;
 }

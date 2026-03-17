@@ -21,7 +21,7 @@ public class AccountController(IAccountService service) : ControllerBase
     public ActionResult<AccountDTO?> GetAccountByUsername(string username)
     {
         string errCode = "";
-        var account = service.GetAccountByUsername(username, ref errCode);
+        var account = service.GetAccountByUsername(username);
 
         if (account == null)
         {
@@ -35,7 +35,7 @@ public class AccountController(IAccountService service) : ControllerBase
     public ActionResult AddAccount([FromBody] AccountDTO accountDTO)
     {
         string errCode = "";
-        bool result = service.AddAccount(accountDTO, ref errCode);
+        bool result = service.AddAccount(accountDTO);
 
         if (!result)
         {
@@ -56,7 +56,7 @@ public class AccountController(IAccountService service) : ControllerBase
     public ActionResult UpdateAccount([FromBody] AccountDTO accountDTO)
     {
         string errCode = "";
-        bool result = service.UpdateAccount(accountDTO, ref errCode);
+        bool result = service.UpdateAccount(accountDTO);
 
         if (!result)
         {
@@ -77,7 +77,7 @@ public class AccountController(IAccountService service) : ControllerBase
     public ActionResult DeleteAccount(string username)
     {
         string errCode = "";
-        bool result = service.DeleteAccount(username, ref errCode);
+        bool result = service.DeleteAccount(username);
 
         if (!result)
         {

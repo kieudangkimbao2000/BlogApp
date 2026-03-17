@@ -11,7 +11,8 @@ public class Blog
         public string Title { get; set; }
         [Required]
         public string Content { get; set; }
-        public string Categories { get; set; }
+        public string CoverPhoto {get; set;}
+        public string[] Categories { get; set; }
         [MaxLength(1)]
         public int State { get; set; }
         public int AmountOfAccesses { get; set; }

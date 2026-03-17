@@ -4,7 +4,6 @@ using BlogApp.Entities;
 using BlogApp.Interfaces;
 using BlogApp.Mappers;
 using BlogApp.DTOs;
-using BlogApp.Repositories;
 
 /// <summary>
 ///     Implement Blog Service Interface
@@ -108,4 +107,25 @@ public class BlogService(IBlogRepository repository): IBlogService
 
         return result;
     }
+
+    public RespDTO Get5LatestBlogs()
+    {
+       List<Blog> result = repository.GetAllBlogs()
+                                .Take(5)
+                                .ToList(); 
+
+        return new BlogListRespDTO(result.ToDTOList(), 200, " ");
+    }
+
+    public RespDTO GetTop5Blogs()
+    {
+        List<Blog> result = repository.GetAllBlogs()
+                                .OrderByDescending(b => b.AmountOfAccesses)
+                                .Take(5)
+                                .ToList();
+
+        
+
+        return new BlogListRespDTO(result.ToDTOList(), 200, " ");
+    } 
 }

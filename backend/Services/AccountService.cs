@@ -89,4 +89,24 @@ public class AccountService(IAccountRepository repository) : IAccountService
 
         return result;
     }
+
+    public AccountDTO? GetAccountByUsername(string username)
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool AddAccount(AccountDTO accountDTO)
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool UpdateAccount(AccountDTO accountDTO)
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool DeleteAccount(string username)
+    {
+        throw new NotImplementedException();
+    }
 }

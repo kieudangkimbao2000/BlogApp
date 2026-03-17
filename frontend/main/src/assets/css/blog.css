@@ -1,0 +1,104 @@
+.main-area{
+    z-index: 1;
+    width: 70%;
+}
+
+.blog-title{
+    text-align: center;
+    font-family: myfont;
+    font-size: 100px;
+}
+
+@font-face {
+    font-family: myfont;
+    src: url('../fonts/symphony-pro-regular.otf');
+}
+
+.middle-area{
+    background-color: #fffceb;
+    margin-top: -75px;
+}
+
+.menu-area{
+    z-index: 1;
+    position: fixed;
+    width: 100%;
+    max-width: none;
+}
+
+.left-menu{
+    background-color: #fffceb;
+    width: 70%;
+    margin-top: 75px;
+    max-width: 180px;
+}
+
+.right-menu{
+    background-color: #fffceb;
+    width: 70%;
+    margin-top: 75px;
+    max-width: 180px;
+}
+
+.search-title{
+    text-align: right;
+    width: 100%;
+}
+.search-input, .search-input:focus{
+    font-family: 'Dejavu Serif';
+    font-style: italic;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    width: 30%;
+}
+
+.list-area{
+    padding-bottom: 10px;
+}
+
+.item{
+    border: 1px solid black;
+    height: 120px;
+    border-radius: 10px;
+    margin: 10px 0px 10px 0px;
+    padding: 10px 0px 10px 0px;
+}
+
+.item-title{
+    font-family: 'Dejavu Serif';
+    font-size: 20px;
+    word-break: break-all;
+}
+
+.item-date{
+    font-family: 'Dejavu Serif';
+    padding: 30px 0px 30px 0px;
+    font-size: 15px;
+}
+
+.left-link{
+    width: 100%;
+    text-align: center;
+    font-family: 'Dejavu Serif';
+    font-size: 20px;
+    padding-bottom: 3px;
+}
+
+.left-link a{
+    color: black;
+    text-decoration: none;
+}
+
+.right-link{
+    width: 100%;
+    text-align: center;
+    font-family: 'Dejavu Serif';
+    font-size: 20px;
+    padding-bottom: 3px;
+}
+
+.right-link a{
+    color: black;
+    text-decoration: none;
+}

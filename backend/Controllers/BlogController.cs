@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
 [Route("api/blog")]
-[Authorize]
 public class BlogController(IBlogService service) : ControllerBase
 {
     [HttpGet]
@@ -21,7 +20,7 @@ public class BlogController(IBlogService service) : ControllerBase
     public ActionResult<BlogDTO> GetBlogById(string id)
     {
         string errCode = "";
-        var blog = service.GetBlogById(id, ref errCode);
+        var blog = service.GetBlogById(id, null, ref errCode);
 
         if (blog == null) return NotFound(AppMessages.GetMessage(errCode));
 
@@ -87,5 +86,21 @@ public class BlogController(IBlogService service) : ControllerBase
         }
 
         return Ok(AppMessages.GetMessage("I1003"));
+    }
+
+    [HttpGet("fivelatest")]
+    public ActionResult Get5LatestBlogs()
+    {
+        var resp = service.Get5LatestBlogs();
+
+        return Ok(resp);
+    }
+
+    [HttpGet("topfive")]
+    public ActionResult GetTop5Blogs()
+    {
+        var resp = service.GetTop5Blogs();
+
+        return Ok(resp);
     }
 }

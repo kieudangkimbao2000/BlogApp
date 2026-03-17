@@ -9,7 +9,7 @@ using BlogApp.Interfaces;
 /// </summary>
 /// <param name="context"></param>
 /// <param name="logger"></param>
-public class BlogLikeRepository(BlogAppContext context, ILogger<BlogLikeRepository> logger) : IBlogLikeRepository
+public class BlogLikeRepository(List<DTOs.BlogDTO> blogDTOs, BlogAppContext context, ILogger<BlogLikeRepository> logger) : IBlogLikeRepository
 {
     public int CountNumberOfLikes(string blogId)
     {

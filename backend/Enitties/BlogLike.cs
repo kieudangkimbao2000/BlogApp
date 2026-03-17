@@ -6,10 +6,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 public class BlogLike
 {
     //Keys
-    [Key]
     [ForeignKey("Author")]
     public string AuthorId { get; set; }
-    [Key]
     [ForeignKey("BlogPost")]
     public string BlogId { get; set; }
     [Required]

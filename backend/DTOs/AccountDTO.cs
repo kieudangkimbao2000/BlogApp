@@ -1,5 +1,8 @@
+using TypeGen.Core.TypeAnnotations;
+
 namespace BlogApp.DTOs
 {
+    [ExportTsInterface]
     public class AccountDTO
     {
         public string Username { get; set; }

@@ -52,6 +52,18 @@ public interface IBlogService
     /// <param name="errCode">Error code be returned</param>
     /// <returns>True if successfully, otherwise false</returns>
     bool DeleteBlog(string id, ref string errCode);
+
+    /// <summary>
+    ///     Get 5 latest blogs
+    /// </summary>
+    /// <returns>List of 5 latest blogs</returns>
+   RespDTO Get5LatestBlogs();
+
+    /// <summary>
+    ///     Get 5 most popular blogs
+    /// </summary>
+    /// <returns>List of 5 most popular blogs</returns>
+    RespDTO GetTop5Blogs();
 }
 
 

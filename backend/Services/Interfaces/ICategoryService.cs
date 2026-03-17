@@ -15,6 +15,12 @@ public interface ICategoryService
     List<CategoryDTO> GetAllCategories();
 
     /// <summary>
+    ///     Get top 5 categories
+    /// </summary>
+    /// <returns>List of 5 most popular categories</returns>
+    RespDTO GetTop5Categories();
+
+    /// <summary>
     ///     Get a category by id
     /// </summary>
     /// <param name="id">Category's id</param>

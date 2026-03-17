@@ -14,6 +14,12 @@ public interface ICategoryRepository
     List<Category> GetAllCategories();
 
     /// <summary>
+    ///     Get top 5 categories
+    /// </summary>
+    /// <returns></returns>
+    List<Category> GetTop5Categories();
+
+    /// <summary>
     ///     Get a category by name
     /// </summary>
     /// <param name="name">Category's name</param>
