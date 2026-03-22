@@ -94,6 +94,7 @@ public class CategoryController(ICategoryService service) : ControllerBase
         return Ok(AppMessages.GetMessage("I3003"));
     }
 
+    [AllowAnonymous]
     [HttpGet("topfive")]
     public ActionResult GetTop5Categories()
     {

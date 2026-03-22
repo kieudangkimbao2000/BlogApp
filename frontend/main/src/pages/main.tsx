@@ -1,21 +1,54 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import '../assets/css/blog.css';
-import { Link } from 'react-router-dom';
+import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 import useAuthen from '../hooks/useAuthen';
 import { Avatar } from '@mui/material';
 import type { CategoryDTO } from '../models/category-dto';
 import type { BlogDTO } from '../models/blog-dto';
 import MainListComponent from '../components/main-list-component';
+import MainService from '../services/main-service';
+import useMessage from '../hooks/useMessage';
+import BlogAppMessage from '../common/message';
+import { height } from '@fortawesome/free-solid-svg-icons/fa0';
+
+const mainService = new MainService();
 
 const MainPage = () => {
+    const {showMessage, MessageComponent} = useMessage();
     const [search, setSearch] = useState<string>('');
     const [categs, setCategs] = useState<CategoryDTO[]>();
+    const [topFiveCategs, setTopFiveCategs] = useState<CategoryDTO[]>();
     const [fiveLatestBlogs, setFiveLatestBlogs] = useState<BlogDTO[]>();
     const [topFiveBlogs, setTopFiveBlogs] = useState<BlogDTO[]>();
     const [user] = useAuthen();
 
+    useEffect(()=> {
+        handleGetNeeds();
+    }, []);
+
+    const handleGetNeeds = async ()=> {
+        try
+        {
+            const needs = await mainService.GetNeeds();
+
+            if(!needs) return;
+
+            setTopFiveCategs(needs.top5Categs);
+            setFiveLatestBlogs(needs.fiveLatestBlogs);
+            setTopFiveBlogs(needs.top5Blogs);
+        }
+        catch(err)
+        {
+            showMessage({
+                type: BlogAppMessage.MSG_ERR_TYPE,
+                message: err?.toString()  ??  ' '
+            });
+        }
+    };
+
     return (
         <>
+            <MessageComponent/>
             <div className="background">
             </div>
             <div className='menu-area container'>
@@ -31,12 +64,12 @@ const MainPage = () => {
                             <div className='left-link'>
                                 <Link to={'/tags'}>Tag</Link>
                             </div>
-                            { (categs && categs.length > 0) ? 
+                            { (topFiveCategs && topFiveCategs.length > 0) ? 
                                 <>
                                     <div style={{border: '1px solid black', margin: '10px'}}></div>
-                                    {categs.map((categ, index) => (
+                                    {topFiveCategs.map((categ, index) => (
                                         <div className='left-link'>
-                                            <Link to={''}>categ.name</Link>
+                                            <Link to={''}>{categ.name}</Link>
                                         </div>
                                     ))}
                                 </> : null
@@ -72,28 +105,28 @@ const MainPage = () => {
                     </div>
                     <div className='col' style={{display: 'flex', justifyContent: 'end'}}>
                         <div className='right-menu'>
-                            <div className='right-link'  style={{paddingTop: '15px'}}>
+                            <div className='right-title'  style={{paddingTop: '15px'}}>
                                 New
                             </div>
                             <div style={{border: '1px solid black', margin: '0px 10px 10px 10px'}}></div>
                             {
                                 (fiveLatestBlogs && fiveLatestBlogs.length > 0) ?
-                                   fiveLatestBlogs.map((blog, index) => (
+                                   fiveLatestBlogs.map((blog) => (
                                         <div className='right-link'>
-                                            <Link to={'/new'}>{blog.title}</Link>
+                                             <Link to={'/blog/' + blog.id} title={blog.title}>{blog.title}1</Link>
                                         </div>
                                    )) : null
                             }
                             <div style={{height: '20px'}}></div>
-                            <div className='right-link'>
+                            <div className='right-title'>
                                 Top
                             </div>
                             <div style={{border: '1px solid black', margin: '0px 10px 10px 10px'}}></div>
                             {
                                 (topFiveBlogs && topFiveBlogs.length > 0) ?
-                                   topFiveBlogs.map((blog, index) => (
+                                   topFiveBlogs.map((blog) => (
                                         <div className='right-link'>
-                                            <Link to={'/new'}>{blog.title}1</Link>
+                                            <Link to={'/blog/' + blog.id} title={blog.title}>{blog.title}1</Link>
                                         </div>
                                    )) : null
                             }
@@ -111,7 +144,9 @@ const MainPage = () => {
                                         className='search-input'></input>
                             </div>
                             <div style={{border: '1px solid black'}}></div>
-                            <MainListComponent />
+                            <Routes>
+                                <Route path="/" element={<MainListComponent/>}></Route>
+                            </Routes>
                         </div>
                     </div>
                 </div>

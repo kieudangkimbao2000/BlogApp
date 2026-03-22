@@ -1,5 +1,22 @@
+import { useEffect, useState } from "react";
+import type { BlogDTO } from "../models/blog-dto";
+import BlogService from "../services/blog-service";
+import type { PageDTO } from "../models/page-dto";
+import PageComponent from "./page-component";
+
+const blogService = new BlogService();
+const currPage = 1 ;
+const pages = Array(50).fill(null);
+const pageSize = 23;
+
 const MainListComponent = () => {
     
+    const [blogs, setBlogs] = useState<PageDTO<BlogDTO>>();
+
+    const handleSearchBlogs = () => {
+        
+    }
+
     return (
         <div className='container list-area'>
             {[...Array(10)].map((_, index) => (
@@ -17,9 +34,10 @@ const MainListComponent = () => {
                     </div>
                 </div>
             ))}
+            <PageComponent curPage={blogs?.currPage ?? 1} totalPages={blogs?.pageSize ?? 1} />
         </div>
     );
 
 };
 
-export default MainListComponent;
+export default MainListComponent;   

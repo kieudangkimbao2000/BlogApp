@@ -21,3 +21,5 @@ class MainService
         return needs;
     }
 }
+
+export default MainService;

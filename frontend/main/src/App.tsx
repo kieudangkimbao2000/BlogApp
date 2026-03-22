@@ -18,8 +18,6 @@ function App() {
           <Route path="/blog" element={<MainPage/>}></Route>
         </Routes>
       </BrowserRouter>
-
-      <MessageComponent/>
     </>
   )
 }

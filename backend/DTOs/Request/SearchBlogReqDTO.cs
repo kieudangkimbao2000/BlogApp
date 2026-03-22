@@ -1,6 +1,6 @@
 using TypeGen.Core.TypeAnnotations;
 
-namespace SearchBlogReqDTO;
+namespace BlogApp.DTOs;
 
 [ExportTsInterface]
 public class SearchBlogReqDTO
@@ -9,4 +9,5 @@ public class SearchBlogReqDTO
     public string[] Categories { get; set;}
     //0 : New, 1: Top
     public int SearchFlag { get; set;} 
+    public int CurPage { get; set; }
 }

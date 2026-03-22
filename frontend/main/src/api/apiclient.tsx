@@ -25,7 +25,7 @@ class ApiClient
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${localStorage.getItem('JWT')}`
             },
-            body: JSON.stringify(req)
+            // body: JSON.stringify(req ?? {})
         });
         const data = await resp.json();
 

@@ -1,0 +1,25 @@
+.pagination{
+    display: flex;
+    justify-content: center;
+    place-items: center;
+    width: 100%;
+}
+
+.pagination div{
+    padding-left: 10px;
+}
+
+.pagination a{
+    padding-left: 5px;
+}
+
+.page{
+    font-family: 'Dejavu Serif';
+    font-size: 18px;
+    color: black;
+    text-decoration: none;
+}
+
+.page-enabled{
+    text-decoration: underline
+}

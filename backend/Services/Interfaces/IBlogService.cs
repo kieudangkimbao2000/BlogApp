@@ -64,6 +64,13 @@ public interface IBlogService
     /// </summary>
     /// <returns>List of 5 most popular blogs</returns>
     RespDTO GetTop5Blogs();
+
+    /// <summary>
+    ///     Search Blogs
+    /// </summary>
+    /// <param name="req">Search conditions</param>
+    /// <returns>List of blogs be suitable to search condtions</returns>
+    RespDTO SearchBlogs(SearchBlogReqDTO req);
 }
 
 

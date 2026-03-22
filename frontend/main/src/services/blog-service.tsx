@@ -15,7 +15,7 @@ class BlogService {
 
     async get5Latest() : Promise<BlogListRespDTO>
     {
-        const resp = ApiClient.get<BlogListRespDTO>('blog/fivenew', null);
+        const resp = ApiClient.get<BlogListRespDTO>('blog/fivelatest', null);
 
         return resp;
     }

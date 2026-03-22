@@ -20,20 +20,20 @@ public class CategoryRepository(BlogAppContext context,
 
     public List<Category> GetTop5Categories()
     {
-        var result = context.Categories.FromSqlRaw(@"
-            SELECT cat AS name, COUNT(*) AS blog_count
+        var result = context.Database.SqlQueryRaw<string>(@"
+            SELECT cat AS Name, COUNT(*) AS blog_count
             FROM ""Blogs"", UNNEST(""Categories"") AS cat
             GROUP BY cat
             ORDER BY blog_count DESC
             LIMIT 5
-        ");
+        ").ToList();
         
         List<Category> categs = new List<Category>();
 
-        foreach(var item in result)
+        foreach(var categName in result)
         {
             Category categ = new Category();
-            categ.Name = item.Name;
+            categ.Name = categName;
             categs.Add(categ);
         }
 

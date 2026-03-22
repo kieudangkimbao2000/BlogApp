@@ -1,5 +1,6 @@
 namespace BlogApp.Interfaces;
 
+using BlogApp.DTOs;
 using BlogApp.Entities;
 
 /// <summary>
@@ -47,4 +48,11 @@ public interface IBlogRepository
     /// <param name="blog">The blog to be deleted</param>
     /// <returns>True if successfully, otherwise false</returns>
     bool DeleteBlog(Blog blog);
+
+    /// <summary>
+    ///     Search Blogs
+    /// </summary>
+    /// <param name="req">search blogs conditions</param>
+    /// <returns>List of blogs be suitable to search conditions </returns>
+    (List<Blog>, int) SearchBlogs(SearchBlogReqDTO req);
 }

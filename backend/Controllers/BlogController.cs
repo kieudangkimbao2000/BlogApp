@@ -88,6 +88,7 @@ public class BlogController(IBlogService service) : ControllerBase
         return Ok(AppMessages.GetMessage("I1003"));
     }
 
+    [AllowAnonymous]
     [HttpGet("fivelatest")]
     public ActionResult Get5LatestBlogs()
     {
@@ -96,10 +97,20 @@ public class BlogController(IBlogService service) : ControllerBase
         return Ok(resp);
     }
 
+    [AllowAnonymous]
     [HttpGet("topfive")]
     public ActionResult GetTop5Blogs()
     {
         var resp = service.GetTop5Blogs();
+
+        return Ok(resp);
+    }
+
+    [AllowAnonymous]
+    [HttpGet("search")]
+    public ActionResult SearchBlogs(SearchBlogReqDTO req)
+    {
+        var resp = service.SearchBlogs(req);
 
         return Ok(resp);
     }
