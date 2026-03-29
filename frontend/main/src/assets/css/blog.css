@@ -17,6 +17,8 @@
 .middle-area{
     background-color: #fffceb;
     margin-top: -75px;
+    min-height: 605px;
+    max-width: 1200px;
 }
 
 .menu-area{
@@ -46,7 +48,6 @@
 }
 .search-input, .search-input:focus{
     font-family: 'Dejavu Serif';
-    font-style: italic;
     background-color: transparent;
     border: none;
     outline: none;
@@ -72,8 +73,9 @@
 }
 
 .item-date{
+    display: flex;
+    place-items: center;
     font-family: 'Dejavu Serif';
-    padding: 30px 0px 30px 0px;
     font-size: 15px;
 }
 
@@ -114,4 +116,10 @@
 .right-title a, .right-link a{
     color: black;
     text-decoration: none;
+}
+
+.btn-search, .btn-search:hover{
+    padding: 0px;
+    background-color: transparent;
+    border: none;
 }

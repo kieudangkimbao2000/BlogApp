@@ -4,6 +4,8 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import LoginPage from './pages/login'
 import MainPage from "./pages/main"
 import useMessage from "./hooks/useMessage"
+import MainListComponent from "./components/main-list-component"
+import SelectCategComponent from "./components/select-categ-component"
 
 function App() {
 
@@ -15,7 +17,13 @@ function App() {
         <Routes>
           <Route path="/login" element={<LoginPage/>}></Route>
           {/*  */}
-          <Route path="/blog" element={<MainPage/>}></Route>
+          <Route path="/blog" element={<MainPage/>}>
+            <Route path="" element={<MainListComponent />}>
+              <Route path="new" element={<MainListComponent />}></Route>
+              <Route path="top" element={<MainListComponent />}></Route>
+            </Route>
+            <Route path="tags" element={<SelectCategComponent />}></Route>
+          </Route>
         </Routes>
       </BrowserRouter>
     </>

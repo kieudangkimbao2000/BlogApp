@@ -1,26 +1,33 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import '../assets/css/blog.css';
-import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
+import { Link, Outlet, replace, useLocation, useNavigate } from 'react-router-dom';
 import useAuthen from '../hooks/useAuthen';
 import { Avatar } from '@mui/material';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import type { CategoryDTO } from '../models/category-dto';
 import type { BlogDTO } from '../models/blog-dto';
-import MainListComponent from '../components/main-list-component';
 import MainService from '../services/main-service';
 import useMessage from '../hooks/useMessage';
 import BlogAppMessage from '../common/message';
-import { height } from '@fortawesome/free-solid-svg-icons/fa0';
+import type { SearchBlogReqDTO } from '../models/search-blog-req-dto';
 
 const mainService = new MainService();
 
 const MainPage = () => {
     const {showMessage, MessageComponent} = useMessage();
-    const [search, setSearch] = useState<string>('');
-    const [categs, setCategs] = useState<CategoryDTO[]>();
     const [topFiveCategs, setTopFiveCategs] = useState<CategoryDTO[]>();
     const [fiveLatestBlogs, setFiveLatestBlogs] = useState<BlogDTO[]>();
     const [topFiveBlogs, setTopFiveBlogs] = useState<BlogDTO[]>();
+    const [searchTitle, setSearchTitle] = useState<string>('');
+    const [isSearching, setIsSearching] = useState<boolean>(false);
     const [user] = useAuthen();
+    const navigate = useNavigate();
+    const searchRef = useRef<SearchBlogReqDTO>({    searchTitle: '',
+                                                    categories: [],
+                                                    searchFlag: 0,
+                                                    curPage: 1
+                                                });
 
     useEffect(()=> {
         handleGetNeeds();
@@ -46,6 +53,40 @@ const MainPage = () => {
         }
     };
 
+    const handleSearch = () => {
+        navigate('');
+        setIsSearching(!isSearching);
+    };
+
+    const setValueToSearchRef = (value: any, item: string) => {
+        if(!searchRef.current) return;
+
+        switch(item)
+        {
+            case 'new':
+                searchRef.current = {searchTitle: '', searchFlag: value, categories: [], curPage: 1};
+                break;
+            case 'top':
+                searchRef.current = {searchTitle: '', searchFlag: value, categories: [], curPage: 1};
+                break;
+            case 'categ':
+                searchRef.current = {searchTitle: '', searchFlag: 0, categories: [value], curPage: 1};
+                break;
+        }
+    };
+
+    const handleOnChangeSearchTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchTitle(e.target.value);
+        searchRef.current = {...searchRef.current, searchTitle: e.target.value, curPage: 1};
+    }
+
+    const handleSearchKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if(e.key === 'Enter')
+        {
+            handleSearch();
+        }
+    };
+
     return (
         <>
             <MessageComponent/>
@@ -56,20 +97,28 @@ const MainPage = () => {
                     <div className='col'>
                         <div className='left-menu'>
                             <div className='left-link'  style={{paddingTop: '15px'}}>
-                                <Link to={'/new'}>New</Link>
+                                <Link to={''} 
+                                    onClick={() => {setValueToSearchRef(0, 'new'); handleSearch();}}
+                                >New</Link>
                             </div>
                             <div className='left-link'>
-                                <Link to={'/tags'}>Top</Link>
+                                <Link to={''} 
+                                    onClick={() => {setValueToSearchRef(1, 'top'); handleSearch();}}
+                                >Top</Link>
                             </div>
                             <div className='left-link'>
-                                <Link to={'/tags'}>Tag</Link>
+                                <Link to={'tags'}>Tags</Link>
                             </div>
                             { (topFiveCategs && topFiveCategs.length > 0) ? 
                                 <>
                                     <div style={{border: '1px solid black', margin: '10px'}}></div>
-                                    {topFiveCategs.map((categ, index) => (
+                                    {topFiveCategs.map((categ) => (
                                         <div className='left-link'>
-                                            <Link to={''}>{categ.name}</Link>
+                                            <Link to={''} onClick={() => {
+                                                setValueToSearchRef(categ.name, 'categ');
+                                                handleSearch();}}>
+                                                {categ.name}
+                                            </Link>
                                         </div>
                                     ))}
                                 </> : null
@@ -141,12 +190,16 @@ const MainPage = () => {
                         <div style={{margin: '0px 40px 0px 40px'}}>
                             <div className='search-title'>
                                 <input type='text' placeholder='Search...' 
+                                        value={searchTitle} onChange={handleOnChangeSearchTitle}
+                                        onKeyDown={handleSearchKeyDown}
                                         className='search-input'></input>
+                                <button className='btn-search' 
+                                        onClick={handleSearch}>
+                                    <FontAwesomeIcon  icon={faSearch} />
+                                </button>
                             </div>
                             <div style={{border: '1px solid black'}}></div>
-                            <Routes>
-                                <Route path="/" element={<MainListComponent/>}></Route>
-                            </Routes>
+                            <Outlet context={{searchRef, isSearching, setIsSearching}} />
                         </div>
                     </div>
                 </div>

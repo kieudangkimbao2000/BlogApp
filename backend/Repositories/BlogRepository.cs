@@ -4,6 +4,7 @@ using BlogApp.Dbs;
 using BlogApp.DTOs;
 using BlogApp.Entities;
 using BlogApp.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 /// <summary>
 ///    Implement Blog Repository Interface
@@ -78,20 +79,22 @@ public class BlogRepository(BlogAppContext context,
     public (List<Blog>, int) SearchBlogs(SearchBlogReqDTO req)
     {
         var query = context.Blogs.Where(x => (req.SearchTitle != "" ? x.Title.Contains(req.SearchTitle) : true) && 
-                                            ((req.Categories != null && req.Categories.Length > 0) ? x.Categories.ContainsAny(req.Categories) : true)
+                                            ((req.Categories != null && req.Categories.Length > 0) ? 
+                                                        req.Categories.Any(categ => x.Categories.Contains(categ))  : true)
                                         );
+
         if(req.SearchFlag == 0)
         {
             query = query.OrderByDescending(x => x.PublishedAt);
         }
         else
         {
-            query = query.OrderByDescending(x => x.Likes.Count());
+            query = query.Include(x => x.Likes).OrderByDescending(x => x.Likes.Count());
         }
 
 
-        int totalPages = (int)Math.Ceiling((decimal)(query.Count()/10));
-        List<Blog> blogs = query.Skip(10*(req.CurPage - 1)).Take(10).ToList();
+        int totalPages = (int)Math.Ceiling((query.Count()*1.0)/10);
+        List<Blog> blogs = query.Include(x => x.Author).Skip(10*(req.CurPage - 1)).Take(10).ToList();
 
         return (blogs, totalPages);
     }

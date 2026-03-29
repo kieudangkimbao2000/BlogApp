@@ -107,7 +107,7 @@ public class BlogController(IBlogService service) : ControllerBase
     }
 
     [AllowAnonymous]
-    [HttpGet("search")]
+    [HttpPost("search")]
     public ActionResult SearchBlogs(SearchBlogReqDTO req)
     {
         var resp = service.SearchBlogs(req);

@@ -7,4 +7,5 @@ export interface SearchBlogReqDTO {
     searchTitle: string;
     categories: string[];
     searchFlag: number;
+    curPage: number;
 }

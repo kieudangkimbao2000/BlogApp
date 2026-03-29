@@ -3,39 +3,72 @@ import type { BlogDTO } from "../models/blog-dto";
 import BlogService from "../services/blog-service";
 import type { PageDTO } from "../models/page-dto";
 import PageComponent from "./page-component";
+import useLoading from "../hooks/useLoading";
+import useMessage from "../hooks/useMessage";
+import BlogAppMessage from "../common/message";
+import type { SearchBlogReqDTO } from "../models/search-blog-req-dto";
+import { useOutletContext } from "react-router-dom";
 
 const blogService = new BlogService();
-const currPage = 1 ;
-const pages = Array(50).fill(null);
-const pageSize = 23;
 
 const MainListComponent = () => {
-    
     const [blogs, setBlogs] = useState<PageDTO<BlogDTO>>();
+    const {showLoading, hideLoading, LoadingComponent} = useLoading();
+    const {showMessage, MessageComponent} = useMessage();
+    var {searchRef, isSearching} = useOutletContext() as {searchRef: React.RefObject<SearchBlogReqDTO>, isSearching: boolean};
 
-    const handleSearchBlogs = () => {
-        
+    const handleSearchBlogs = async (page: number) => {
+        showLoading();
+        try {
+            const search = searchRef?.current ? {...searchRef.current, currPage: page} : 
+                                                {searchTitle: '', categories: [], searchFlag: 0, curPage: page};
+            const resp = await blogService.searchBlog(search)
+            
+            setBlogs(resp.blogs);
+            hideLoading();
+        } catch (err) {
+            hideLoading();
+            await showMessage({
+                type: BlogAppMessage.MSG_ERR_TYPE,
+                message: 'Đã có lỗi xảy ra. Xin vui lòng thử reload lại trang.'
+            });
+        }
     }
 
+    useEffect(() => {
+        handleSearchBlogs(1);
+    }, [isSearching]);
+
     return (
-        <div className='container list-area'>
-            {[...Array(10)].map((_, index) => (
-                <div className='row item'>
-                    <div className='col item-img' style={{width: '100%', height: '100%'}}>
-                        <img  style={{width: '100%', height: '100%'}} src='https://thumbs.dreamstime.com/b/blog-woodn-dice-depicting-letters-stack-newspapers-leaning-dice-34801080.jpg' />
+        <>
+            <MessageComponent />
+            <LoadingComponent />
+            <div className='container list-area'>
+                {blogs?.datas.map((blog, index) => (
+                    <div className='row item'>
+                        <div className='col item-img' style={{width: '100%', height: '100%'}}>
+                            <img  style={{width: '100%', height: '100%'}} src={(blog.coverPhoto && blog.coverPhoto.trim() != '') ? `data:image/png;base64,${blog.coverPhoto}`
+                                : 'https://thumbs.dreamstime.com/b/blog-woodn-dice-depicting-letters-stack-newspapers-leaning-dice-34801080.jpg'} />
+                        </div>
+                        <div className='col-8 item-title'>
+                            {blog.title}
+                        </div>
+                        <div className='col-2 item-date'>
+                            {blog.authorName}
+                            <br/> 
+                            {new Date(blog.publishedAt).toLocaleDateString('ja-JP',{year: 'numeric', 
+                                                                                    month: '2-digit', 
+                                                                                    day: '2-digit',
+                                                                                    hour: '2-digit',
+                                                                                    minute: '2-digit',
+                                                                                    second: '2-digit',
+                                                                                    hour12: false})}
+                        </div>
                     </div>
-                    <div className='col-8 item-title'>
-                        Blog Title
-                    </div>
-                    <div className='col-2 item-date'>
-                        username
-                        <br/> 
-                        25/01/02 15:33
-                    </div>
-                </div>
-            ))}
-            <PageComponent curPage={blogs?.currPage ?? 1} totalPages={blogs?.pageSize ?? 1} />
-        </div>
+                ))}
+                <PageComponent curPage={blogs?.currPage ?? 1} totalPages={blogs?.pageSize ?? 1} handleSearch={handleSearchBlogs}/>
+            </div>
+        </>
     );
 
 };

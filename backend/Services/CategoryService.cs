@@ -7,10 +7,11 @@ using BlogApp.Mappers;
 
 public class CategoryService(ICategoryRepository repository) : ICategoryService
 {
-    public List<CategoryDTO> GetAllCategories()
+    public RespDTO GetAllCategories()
     {
         var categories = repository.GetAllCategories();
-        return categories.ToDTOList();
+
+        return new CategoryListRespDTO(categories.ToDTOList(), 200, "");
     }
 
     public RespDTO GetTop5Categories()

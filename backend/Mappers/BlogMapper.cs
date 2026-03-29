@@ -23,6 +23,7 @@ public static class BlogMapper
             AmountOfAccesses = blog.AmountOfAccesses,
             PublishedAt = blog.PublishedAt,
             AuthorId = blog.AuthorId,
+            AuthorName = blog.Author != null ? blog.Author.Name : "",
             CreatedAt = blog.CreatedAt,
             UpdatedAt = blog.UpdatedAt
         };

@@ -136,8 +136,9 @@ public class BlogService(IBlogRepository repository): IBlogService
 
         PageDTO<BlogDTO> blogPage = new PageDTO<BlogDTO>();
         blogPage.CurrPage = (req.CurPage > totalPages) ? totalPages : req.CurPage;
+        blogPage.PageSize = totalPages;
         blogPage.Datas = blogs.ToDTOList();
         
-        return new BlogPageRespDTO(blogPage, 200, " ");
+        return new SearchBlogRespDTO(blogPage, 200, " ");
     }
 }

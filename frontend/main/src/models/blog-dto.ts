@@ -14,6 +14,7 @@ export interface BlogDTO {
     publishedAt: Date;
     likedOrDislikedByUser: boolean;
     authorId: string;
+    authorName: string;
     createdAt: Date;
     updatedAt: Date;
 }

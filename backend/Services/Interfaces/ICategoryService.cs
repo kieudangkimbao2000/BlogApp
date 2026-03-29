@@ -12,7 +12,7 @@ public interface ICategoryService
     ///   Get all categories in the database
     /// </summary>
     /// <returns>List of Categories</returns>
-    List<CategoryDTO> GetAllCategories();
+    RespDTO GetAllCategories();
 
     /// <summary>
     ///     Get top 5 categories

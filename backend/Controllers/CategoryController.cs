@@ -12,7 +12,8 @@ using Microsoft.AspNetCore.Mvc;
 public class CategoryController(ICategoryService service) : ControllerBase
 {
     [HttpGet]
-    public ActionResult<List<CategoryDTO>> GetAllCategories()
+    [AllowAnonymous]
+    public ActionResult<CategoryListRespDTO> GetAllCategories()
     {
         return Ok(service.GetAllCategories());
     }
