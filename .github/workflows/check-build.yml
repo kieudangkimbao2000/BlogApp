@@ -26,9 +26,7 @@ jobs:
         working-directory: frontend/main 
       - name: workflow for develop branch
         if: github.ref == 'refs/heads/develop'
-        run: npm install typescript
-        working-directory: frontend/main
-        run: tsc tsconfig.app.json --verbatimModuleSyntax false noUnusedLocals false noUnusedParameters false
+        run: sudo apt install node-typescript && tsc tsconfig.app.json --verbatimModuleSyntax false noUnusedLocals false noUnusedParameters false
         working-directory: frontend/main
       - run: npm run build
         working-directory: frontend/main
