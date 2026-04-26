@@ -24,12 +24,6 @@ jobs:
       - uses: actions/checkout@v3
       - run: npm install
         working-directory: frontend/main 
-      - run: npm install -g typescript
-        working-directory: frontend/main 
-      - name: workflow for develop branch
-        if: github.ref == 'refs/heads/develop'
-        run: tsc -p tsconfig.app.json --verbatimModuleSyntax false noUnusedLocals false noUnusedParameters false
-        working-directory: frontend/main
       - run: npm run build
         working-directory: frontend/main
       
