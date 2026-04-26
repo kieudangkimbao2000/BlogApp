@@ -1,6 +1,6 @@
 {
   "version": "0.2.0",
-  "configurations": [
+  "configurations": [    
     {
       "type": "pwa-chrome",
       "request": "launch",
@@ -9,6 +9,17 @@
       "webRoot": "${workspaceFolder}/frontend/main/src",
       "preLaunchTask": "npm:dev-main",
       "postDebugTask": "stop-dev"
+    },
+    {
+      "type": "coreclr",
+      "request": "launch",
+      "name": "BackEnd API",
+      "program": "${workspaceFolder}/backend/bin/Debug/net10.0/BlogApp.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "stopAtEntry": false,
+      "console": "integratedTerminal",
+      "preLaunchTask": "dotnet:build-api"
     }
   ]
 }

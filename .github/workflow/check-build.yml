@@ -1,0 +1,30 @@
+name: Test Project
+on:
+  push:
+    branches: 
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+jobs:
+  test-api:
+    runs-on: ubuntu-latest
+    container: 
+      image: mcr.microsoft.com/dotnet/sdk:10.0
+    steps:
+      - uses: actions/checkout@v3
+      - run: dotnet build backend
+  test-frontend-main:
+    runs-on: ubuntu-latest
+    container: 
+      image: node:24
+    steps:
+      - uses: actions/checkout@v3
+      - run: npm install
+        working-directory: frontend/main
+      - run: npm run build
+        working-directory: frontend/main
+      
+

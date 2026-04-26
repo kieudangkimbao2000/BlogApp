@@ -35,6 +35,14 @@
       "options": {
         "cwd": "${workspaceFolder}/frontend/main"
       }
-    }
+    },
+	{
+	  "label": "dotnet:build-api",
+	  "type": "shell",
+	  "command": "dotnet build",
+	  "options": {
+		"cwd": "${workspaceFolder}/backend"
+	  }
+	}
   ]
 }
