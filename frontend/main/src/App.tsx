@@ -6,6 +6,7 @@ import MainPage from "./pages/main"
 import useMessage from "./hooks/useMessage"
 import MainListComponent from "./components/main-list-component"
 import SelectCategComponent from "./components/select-categ-component"
+import EditBlogComponent from "./components/edit-blog-component"
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
               <Route path="top" element={<MainListComponent />}></Route>
             </Route>
             <Route path="tags" element={<SelectCategComponent />}></Route>
+            <Route path="edit" element={<EditBlogComponent />}></Route>
           </Route>
         </Routes>
       </BrowserRouter>

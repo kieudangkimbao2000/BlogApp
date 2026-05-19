@@ -5,6 +5,7 @@ services:
       - "5060:5059"
     depends_on:
       - db
+      
   db:
     image: postgres:13
     environment:
@@ -16,6 +17,17 @@ services:
       - db_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: bao@dbmn.com
+      PGADMIN_DEFAULT_PASSWORD: 12345
+    ports:
+      - "5050:80"
+    depends_on:
+      - db
+
 
 volumes:
   db_data:
