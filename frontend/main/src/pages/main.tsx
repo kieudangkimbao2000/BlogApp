@@ -1,16 +1,19 @@
+//liraries
 import { useEffect, useRef, useState } from 'react';
-import '../assets/css/blog.css';
 import { Link, Outlet, replace, useLocation, useNavigate } from 'react-router-dom';
-import useAuthen from '../hooks/useAuthen';
 import { Avatar } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+//modules
+import useAuthen from '../hooks/useAuthen';
 import type { CategoryDTO } from '../models/category-dto';
 import type { BlogDTO } from '../models/blog-dto';
 import MainService from '../services/main-service';
 import useMessage from '../hooks/useMessage';
 import BlogAppMessage from '../common/message';
 import type { SearchBlogReqDTO } from '../models/search-blog-req-dto';
+//css
+import '../assets/css/main.css';
 
 const mainService = new MainService();
 
