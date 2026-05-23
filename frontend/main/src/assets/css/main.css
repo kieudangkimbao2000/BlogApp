@@ -1,6 +1,7 @@
 .main-area{
     z-index: 1;
     width: 70%;
+    margin-bottom: 60px;
 }
 
 .blog-title{

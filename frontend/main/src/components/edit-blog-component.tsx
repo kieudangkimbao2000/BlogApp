@@ -1,8 +1,10 @@
 import useLoading from "../hooks/useLoading";
 import useMessage from "../hooks/useMessage";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCamera } from "@fortawesome/free-solid-svg-icons";
+import { faCamera, faAlignLeft, faAlignCenter, faAlignRight } from "@fortawesome/free-solid-svg-icons";
 import { useRef, useState } from "react";
+import {useEditor, EditorContent} from "@tiptap/react";
+import StarterKit from '@tiptap/starter-kit'
 //css
 import '../assets/css/edit-blog-component.css';
 
@@ -12,6 +14,10 @@ const EditBlogComponent = () => {
     const [blogTitle, setBlogTitle] = useState('');
     const [blogCoverImg, setBlogCoverImg] = useState('');
     const imgRef = useRef<HTMLInputElement>(null);
+    const editor = useEditor({
+        extensions: [StarterKit],
+        content: '<p>Hello World! 🌎️</p>',
+    });
 
     const handleSelectedImage = (e: React.ChangeEvent<HTMLInputElement>) => {
         if(e.target.files == null || e.target.files.length == 0) return;
@@ -48,7 +54,31 @@ const EditBlogComponent = () => {
                                 className="select-image"/>
                         </div>
                     </div>
-                </div>      
+                </div>
+                <div className="row" style={{marginTop: "20px"}}>
+                    <div className="col">
+                        <div className="row">
+                            <div className="col">
+                                <div className="editor-toolbar d-flex justify-content-center">
+                                    <button className="editor-toolbar-h1">H1</button>
+                                    <button className="editor-toolbar-h2">H2</button>
+                                    <button className="editor-toolbar-h3">H3</button>
+                                    <button className="editor-toolbar-bold"><b>B</b></button>
+                                    <button className="editor-toolbar-italic"><i>I</i></button>
+                                    <button className="editor-toolbar-underline" style={{textDecoration: "underline"}}>U</button>
+                                    <button className="editor-toolbar-align-left"><FontAwesomeIcon icon={faAlignLeft}/></button>
+                                    <button className="editor-toolbar-align-center"><FontAwesomeIcon icon={faAlignCenter}/></button>
+                                    <button className="editor-toolbar-align-right"><FontAwesomeIcon icon={faAlignRight}/></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col">
+                                <EditorContent editor={editor} className="editor-content"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </>
     );
