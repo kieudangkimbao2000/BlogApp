@@ -91,7 +91,7 @@ BlogApp là website cho phép mọi người viết và chia sẻ bài blog, cũ
 
 ---
 
-## Sơ đồ quan hệ
+## ERD
 ![Blog Web Diagram](/README/BlogAppDiagram.png)
 
 ```
