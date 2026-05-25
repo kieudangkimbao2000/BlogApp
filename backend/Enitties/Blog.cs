@@ -1,5 +1,6 @@
 namespace BlogApp.Entities;
 
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -11,11 +12,14 @@ public class Blog
         public string Title { get; set; }
         [Required]
         public string Content { get; set; }
-        public string CoverPhoto {get; set;}
-        public string[] Categories { get; set; }
+        public byte[] CoverPhoto {get; set;}
+        [Required]
+        public string[] Tags { get; set; }
+        [DefaultValue(0)]
+        public int AmountOfAccesses { get; set; }
+        [Required]
         [MaxLength(1)]
         public int State { get; set; }
-        public int AmountOfAccesses { get; set; }
         public DateTime? PublishedAt { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }

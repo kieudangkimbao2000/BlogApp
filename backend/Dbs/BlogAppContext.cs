@@ -17,8 +17,8 @@ namespace BlogApp.Dbs
             modelBuilder.Entity<Account>()
                 .HasIndex(a => a.Email).IsUnique();
 
-            //Category
-            modelBuilder.Entity<Category>()
+            //Tag
+            modelBuilder.Entity<Tag>()
                 .HasIndex(c => c.Name).IsUnique();
 
             //Comment
@@ -37,11 +37,32 @@ namespace BlogApp.Dbs
                 .HasKey(e => new {e.AuthorId, e.CommentId});
         }
 
+        public override int SaveChanges()
+        {
+            if (ChangeTracker.HasChanges())
+            {
+                var entries = ChangeTracker.Entries().Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
+
+                foreach (var entry in entries)
+                {
+                    if (entry.State == EntityState.Added)
+                    {
+                        ((dynamic)entry.Entity).CreatedAt = DateTime.UtcNow;
+                    }
+                    ((dynamic)entry.Entity).UpdatedAt = DateTime.UtcNow;
+                }
+            }
+
+            return base.SaveChanges();
+        }
+
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Blog> Blogs { get; set; }
-        public DbSet<Category> Categories { get; set; }
+        public DbSet<Tag> Tags { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<BlogLike> BlogLikes { get; set; }
         public DbSet<CommentLike> CommentLikes { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
+        public DbSet<Report> Reports { get; set; }
     }
 }

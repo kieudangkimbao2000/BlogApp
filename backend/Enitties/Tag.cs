@@ -2,7 +2,7 @@
 
 using System.ComponentModel.DataAnnotations;
 
-public class Category
+public class Tag
 {
     [Key]
     public string Name { get; set; }

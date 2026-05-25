@@ -9,19 +9,23 @@ public class Account
     [Required]
     public byte[] Password { get; set; }
     [Required]
-    public string Name {get; set; }
+    public string FullName {get; set; }
     public string Address { get; set; }
     [Phone]
     public string Phone { get; set; }
     [EmailAddress]
+    [Required]
     public string Email { get; set; }
     public string OtherContact{ get; set; }
     public string Description { get; set; }
-    public string Avatar { get; set; }
+    public byte[] Avatar { get; set; }
     [MaxLength(1)]
+    [Required]
     public string Role { get; set; }
+    public string[] Functions { get; set; }
     [MaxLength(1)]
-    public string State { get; set; }
+    [Required]
+    public int State { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
 
@@ -30,4 +34,6 @@ public class Account
     public ICollection<Comment> Comments { get; set; }
     public ICollection<BlogLike> BlogLikes { get; set; }
     public ICollection<CommentLike> CommentLikes { get; set; }
+    public ICollection<Notification> Notifications { get; set; }
+    public ICollection<Report> Reports { get; set; }
 }

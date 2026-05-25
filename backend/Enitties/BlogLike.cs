@@ -11,7 +11,7 @@ public class BlogLike
     [ForeignKey("BlogPost")]
     public string BlogId { get; set; }
     [Required]
-    public bool LikeOrDislike { get; set; }
+    public bool LikeOrNot { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
 

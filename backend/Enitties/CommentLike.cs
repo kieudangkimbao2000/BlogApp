@@ -11,7 +11,7 @@ public class CommentLike
     [ForeignKey("Comment")]
     public string CommentId { get; set; }
     [Required]
-    public bool LikeOrDislike { get; set; }
+    public bool LikeOrNot { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
 

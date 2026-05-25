@@ -11,6 +11,7 @@ public class Comment
     [Required]
     public string Content { get; set; }
     [MaxLength(1)]
+    [Required]
     public int State { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
