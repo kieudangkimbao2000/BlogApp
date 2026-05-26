@@ -18,12 +18,12 @@ public static class BlogMapper
             Title = blog.Title,
             Content = blog.Content,
             CoverPhoto = blog.CoverPhoto,
-            Categories = blog.Categories,
+            Tags = blog.Tags,
             State = blog.State,
             AmountOfAccesses = blog.AmountOfAccesses,
             PublishedAt = blog.PublishedAt,
             AuthorId = blog.AuthorId,
-            AuthorName = blog.Author != null ? blog.Author.Name : "",
+            AuthorName = blog.Author != null ? blog.Author.FullName : "",
             CreatedAt = blog.CreatedAt,
             UpdatedAt = blog.UpdatedAt
         };
@@ -42,9 +42,9 @@ public static class BlogMapper
             Title = blogDTO.Title,
             Content = blogDTO.Content,
             CoverPhoto = blogDTO.CoverPhoto,
-            Categories = blogDTO.Categories,
-            State = blogDTO.State,
+            Tags = blogDTO.Tags,
             AmountOfAccesses = blogDTO.AmountOfAccesses,
+            State = blogDTO.State,
             AuthorId = blogDTO.AuthorId
         };
     }

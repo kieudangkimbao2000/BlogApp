@@ -19,7 +19,7 @@ public static class CommentLikeMapper
         {
             AuthorId = commentLike.AuthorId,
             CommentId = commentLike.CommentId,
-            LikeOrDislike = commentLike.LikeOrDislike
+            LikeOrNot = commentLike.LikeOrNot
         };
     }
 
@@ -34,7 +34,7 @@ public static class CommentLikeMapper
         {
             AuthorId = commentLikeDTO.AuthorId,
             CommentId = commentLikeDTO.CommentId,
-            LikeOrDislike = commentLikeDTO.LikeOrDislike
+            LikeOrNot = commentLikeDTO.LikeOrNot
         };
     }
 

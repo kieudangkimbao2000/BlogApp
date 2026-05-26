@@ -19,7 +19,7 @@ public static class BlogLikeMapper
         {
             AuthorId = blogLike.AuthorId,
             BlogId = blogLike.BlogId,
-            LikeOrDislike = blogLike.LikeOrDislike
+            LikeOrNot = blogLike.LikeOrNot
         };
     }
 
@@ -34,7 +34,7 @@ public static class BlogLikeMapper
         {
             AuthorId = blogLikeDTO.AuthorId,
             BlogId = blogLikeDTO.BlogId,
-            LikeOrDislike = blogLikeDTO.LikeOrDislike
+            LikeOrNot = blogLikeDTO.LikeOrNot
         };
     }
 

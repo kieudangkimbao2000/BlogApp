@@ -17,7 +17,7 @@ public static class AccountMapper
         return new AccountDTO
         {
             Username = account.Username,
-            Name  = account.Name,
+            FullName = account.FullName,
             Address = account.Address,
             Phone = account.Phone,
             Email = account.Email,
@@ -40,7 +40,7 @@ public static class AccountMapper
         return new Account
         {
             Username = accountDTO.Username,
-            Name  = accountDTO.Name,
+            FullName = accountDTO.FullName,
             Address = accountDTO.Address,
             Phone = accountDTO.Phone,
             Email = accountDTO.Email,

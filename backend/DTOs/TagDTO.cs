@@ -3,7 +3,7 @@ using TypeGen.Core.TypeAnnotations;
 namespace BlogApp.DTOs
 {
      [ExportTsInterface]
-    public class CategoryDTO
+    public class TagDTO
     {
         public string Name { get; set; }
         public string Description { get; set; }

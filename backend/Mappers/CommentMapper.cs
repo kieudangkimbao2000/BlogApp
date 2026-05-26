@@ -6,7 +6,7 @@ using BlogApp.Entities;
 public static class CommentMapper
 {
     /// <summary>
-    ///     Map between Comment Entity and DTO
+    ///     Map Comment Entity to Comment DTO
     /// </summary>
     /// <param name="comment">Comment Entity Object</param>
     /// <returns>Comment DTO Object</returns>
