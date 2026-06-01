@@ -80,7 +80,7 @@ public class BlogRepository(BlogAppContext context,
     {
         var query = context.Blogs.Where(x => (req.SearchTitle != "" ? x.Title.Contains(req.SearchTitle) : true) && 
                                             ((req.Categories != null && req.Categories.Length > 0) ? 
-                                                        req.Categories.Any(categ => x.Categories.Contains(categ))  : true)
+                                                        req.Categories.Any(categ => x.Tags.Contains(categ))  : true)
                                         );
 
         if(req.SearchFlag == 0)

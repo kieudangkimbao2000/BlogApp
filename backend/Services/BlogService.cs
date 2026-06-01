@@ -37,8 +37,8 @@ public class BlogService(IBlogRepository repository): IBlogService
 
         if (userId != null)
         {
-            bool? like = blog.Likes.FirstOrDefault(bl => bl.AuthorId == userId)?.LikeOrDislike;
-            blogDTO.LikedOrDislikedByUser = like;
+            bool? like = blog.Likes.FirstOrDefault(bl => bl.AuthorId == userId)?.LikeOrNot;
+            blogDTO.LikedByUser = like;
         }
 
         return blogDTO;
@@ -135,7 +135,7 @@ public class BlogService(IBlogRepository repository): IBlogService
 
 
         PageDTO<BlogDTO> blogPage = new PageDTO<BlogDTO>();
-        blogPage.CurrPage = (req.CurPage > totalPages) ? totalPages : req.CurPage;
+        blogPage.CurPage = (req.CurPage > totalPages) ? totalPages : req.CurPage;
         blogPage.PageSize = totalPages;
         blogPage.Datas = blogs.ToDTOList();
         

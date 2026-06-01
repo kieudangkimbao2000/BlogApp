@@ -19,7 +19,7 @@ namespace BlogApp.Handlers
                 Subject = new System.Security.Claims.ClaimsIdentity(new[]
                 {
                     new System.Security.Claims.Claim("Username", accountDTO.Username),
-                    new System.Security.Claims.Claim("Name", accountDTO.Name),
+                    new System.Security.Claims.Claim("FullName", accountDTO.FullName),
                     new System.Security.Claims.Claim("Email", accountDTO.Email ?? string.Empty),
                     new System.Security.Claims.Claim("Role", accountDTO.Role ?? string.Empty)
                 }),

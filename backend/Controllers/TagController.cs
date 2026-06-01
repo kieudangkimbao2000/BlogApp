@@ -7,36 +7,36 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
-[Route("api/categ")]
+[Route("api/tags")]
 [Authorize]
-public class CategoryController(ICategoryService service) : ControllerBase
+public class TagController(ITagService service) : ControllerBase
 {
     [HttpGet]
     [AllowAnonymous]
-    public ActionResult<CategoryListRespDTO> GetAllCategories()
+    public ActionResult<TagListRespDTO> GetAllTags()
     {
-        return Ok(service.GetAllCategories());
+        return Ok(service.GetAllTags());
     }
 
-    [HttpGet("{id}")]
-    public ActionResult<CategoryDTO?> GetCategoryById(string id)
+    [HttpGet("{name}")]
+    public ActionResult<TagDTO?> GetTagByName(string name)
     {
         string errCode = "";
-        var category = service.GetCategoryById(id, ref errCode);
+        var tag = service.GetTagByName(name, ref errCode);
 
-        if (category == null)
+        if (tag == null)
         {
             return NotFound(AppMessages.GetMessage(errCode));
         }
 
-        return Ok(category);
+        return Ok(tag);
     }
 
     [HttpPost]
-    public ActionResult AddCategory([FromBody] CategoryDTO categoryDTO)
+    public ActionResult AddTag([FromBody] TagDTO tagDTO)
     {
         string errCode = "";
-        bool result = service.AddCategory(categoryDTO, ref errCode);
+        bool result = service.AddTag(tagDTO, ref errCode);
 
         if (!result)
         {
@@ -54,10 +54,10 @@ public class CategoryController(ICategoryService service) : ControllerBase
     }
 
     [HttpPut]
-    public ActionResult UpdateCategory([FromBody] CategoryDTO categoryDTO)
+    public ActionResult UpdateTag([FromBody] TagDTO tagDTO)
     {
         string errCode = "";
-        bool result = service.UpdateCategory(categoryDTO, ref errCode);
+        bool result = service.UpdateTag(tagDTO, ref errCode);
 
         if (!result)
         {
@@ -74,11 +74,11 @@ public class CategoryController(ICategoryService service) : ControllerBase
         return Ok(AppMessages.GetMessage("I3002"));
     }
 
-    [HttpDelete("{id}")]
-    public ActionResult DeleteCategory(string id)
+    [HttpDelete("{name}")]
+    public ActionResult DeleteTag(string name)
     {
         string errCode = "";
-        bool result = service.DeleteCategory(id, ref errCode);
+        bool result = service.DeleteTag(name, ref errCode);
 
         if (!result)
         {
@@ -97,9 +97,9 @@ public class CategoryController(ICategoryService service) : ControllerBase
 
     [AllowAnonymous]
     [HttpGet("topfive")]
-    public ActionResult GetTop5Categories()
+    public ActionResult GetTop5Tags()
     {
-        var resp = service.GetTop5Categories();
+        var resp = service.GetTop5Tags();
 
         return Ok(resp);
     }

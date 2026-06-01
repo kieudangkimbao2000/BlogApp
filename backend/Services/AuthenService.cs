@@ -47,15 +47,15 @@ public class AuthenService (IAccountRepository repository,
         {
             Username = register.Username,
             Password = Encoding.UTF8.GetBytes(PasswordHandler.HashPassword(register.Password)),
-            Name = register.Name,
+            FullName = register.FullName,
             Address = register.Address,
             Phone = register.Phone,
             Email = register.Email,
             OtherContact = register.OtherContact,
             Description = register.Description,
-            Avatar = " ",
+            Avatar = [],
             Role = "2",
-            State = "1"
+            State = 1
         };
 
         result = repository.AddAccount(account);
