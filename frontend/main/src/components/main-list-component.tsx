@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
-import type { BlogDTO } from "../models/blog-dto";
+import type { BlogDTO, SearchBlogReqDTO, PageDTO } from "../models/generated-interfaces";
 import BlogService from "../services/blog-service";
-import type { PageDTO } from "../models/page-dto";
 import PageComponent from "./page-component";
 import useLoading from "../hooks/useLoading";
 import useMessage from "../hooks/useMessage";
 import BlogAppMessage from "../common/message";
-import type { SearchBlogReqDTO } from "../models/search-blog-req-dto";
 import { useOutletContext } from "react-router-dom";
 
 const blogService = new BlogService();
@@ -44,7 +42,7 @@ const MainListComponent = () => {
             <MessageComponent />
             <LoadingComponent />
             <div className='container list-area'>
-                {blogs?.datas.map((blog, index) => (
+                {blogs?.datas?.map((blog, index) => (
                     <div className='row item'>
                         <div className='col item-img' style={{width: '100%', height: '100%'}}>
                             <img  style={{width: '100%', height: '100%'}} src={(blog.coverPhoto && blog.coverPhoto.trim() != '') ? `data:image/png;base64,${blog.coverPhoto}`
@@ -56,7 +54,7 @@ const MainListComponent = () => {
                         <div className='col-2 item-date'>
                             {blog.authorName}
                             <br/> 
-                            {new Date(blog.publishedAt).toLocaleDateString('ja-JP',{year: 'numeric', 
+                            {new Date(blog.publishedAt ?? '01/01/1900').toLocaleDateString('ja-JP',{year: 'numeric', 
                                                                                     month: '2-digit', 
                                                                                     day: '2-digit',
                                                                                     hour: '2-digit',
