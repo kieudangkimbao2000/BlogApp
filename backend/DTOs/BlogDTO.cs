@@ -1,9 +1,7 @@
 using System.ComponentModel;
-using TypeGen.Core.TypeAnnotations;
 
 namespace BlogApp.DTOs
 {
-     [ExportTsInterface]
     public class BlogDTO
     {
         public string Id { get; set; }

@@ -1,22 +1,22 @@
-import type { MainNeedsDTO } from "../models/common";
-import type { MainNeeds } from "../models/model";
+import type { MainNeedsDTO } from "../models/main-needs-dto";
 import BlogService from "./blog-service";
+import TagService from "./categ-service";
 import CategoryService from "./categ-service";
 
 class MainService
 {
-    async GetNeeds () : Promise<MainNeeds>
+    async GetNeeds () : Promise<MainNeedsDTO>
     {  
-        const categService = new CategoryService();
+        const tagService = new TagService();
         const blogService = new BlogService();
 
-        const [resp1, resp2, resp3] = await Promise.all([categService.getTop5(), 
-                                                        blogService.get5Latest(), 
-                                                        blogService.getTop5()]);
+        const [resp1, resp2, resp3] = await Promise.all([tagService.getTopFive(), 
+                                                        blogService.getFiveLatest(), 
+                                                        blogService.getTopFive()]);
 
-        const needs : MainNeeds = {top5Categs: resp1.datas, 
+        const needs : MainNeedsDTO = {topFiveTags: resp1.datas, 
                                     fiveLatestBlogs: resp2.datas,
-                                    top5Blogs: resp3.datas};
+                                    topFiveBlogs: resp3.datas};
 
         return needs;
     }

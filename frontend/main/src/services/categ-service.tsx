@@ -1,21 +1,21 @@
 import ApiClient from "../api/apiclient";
-import type { CategoryListRespDTO } from "../models/category-list-resp-dto";
+import type { TagListRespDTO } from "../models/generated-interfaces";
 
-class CategoryService{
+class TagService{
 
-    async getCategs() : Promise<CategoryListRespDTO>
+    async getCategs() : Promise<TagListRespDTO>
     {
-        const resp = await ApiClient.get<CategoryListRespDTO>('categ', null);
+        const resp = await ApiClient.get<TagListRespDTO>('tags', null);
 
         return resp;
     }
 
-    async getTop5() : Promise<CategoryListRespDTO>
+    async getTopFive() : Promise<TagListRespDTO>
     {
-        const resp = await ApiClient.get<CategoryListRespDTO>('categ/topfive', null);
+        const resp =    await ApiClient.get<TagListRespDTO>('tags/topfive', null);
 
         return resp;
     }
 }
 
-export default CategoryService;
+export default TagService;

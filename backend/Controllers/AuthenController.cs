@@ -4,7 +4,6 @@ using BlogApp.DTOs;
 using BlogApp.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using BlogApp.Common;
-using Microsoft.Build.Tasks;
 using Azure;
 
 [ApiController]
@@ -26,6 +25,7 @@ public class AuthenController(IAuthenService authenService) : ControllerBase
     }
 
     [HttpPost("register")]
+    
     public ActionResult<RespDTO> Register([FromBody] RegisterDTO register)
     {
         var resp = authenService.RegisterUser(register);

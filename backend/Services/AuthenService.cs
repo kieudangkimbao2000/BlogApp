@@ -55,6 +55,7 @@ public class AuthenService (IAccountRepository repository,
             Description = register.Description,
             Avatar = [],
             Role = "2",
+            Functions = [],
             State = 1
         };
 

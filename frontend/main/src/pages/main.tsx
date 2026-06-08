@@ -6,12 +6,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 //modules
 import useAuthen from '../hooks/useAuthen';
-import type { CategoryDTO } from '../models/category-dto';
-import type { BlogDTO } from '../models/blog-dto';
 import MainService from '../services/main-service';
 import useMessage from '../hooks/useMessage';
 import BlogAppMessage from '../common/message';
-import type { SearchBlogReqDTO } from '../models/search-blog-req-dto';
+import type { BlogDTO, TagDTO, SearchBlogReqDTO } from '../models/generated-interfaces';
 //css
 import '../assets/css/main.css';
 
@@ -19,7 +17,7 @@ const mainService = new MainService();
 
 const MainPage = () => {
     const {showMessage, MessageComponent} = useMessage();
-    const [topFiveCategs, setTopFiveCategs] = useState<CategoryDTO[]>();
+    const [topFiveCategs, setTopFiveCategs] = useState<TagDTO[]>();
     const [fiveLatestBlogs, setFiveLatestBlogs] = useState<BlogDTO[]>();
     const [topFiveBlogs, setTopFiveBlogs] = useState<BlogDTO[]>();
     const [searchTitle, setSearchTitle] = useState<string>('');
@@ -43,9 +41,9 @@ const MainPage = () => {
 
             if(!needs) return;
 
-            setTopFiveCategs(needs.top5Categs);
+            setTopFiveCategs(needs.topFiveTags);
             setFiveLatestBlogs(needs.fiveLatestBlogs);
-            setTopFiveBlogs(needs.top5Blogs);
+            setTopFiveBlogs(needs.topFiveBlogs);
         }
         catch(err)
         {

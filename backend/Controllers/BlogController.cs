@@ -16,6 +16,7 @@ public class BlogController(IBlogService service) : ControllerBase
         var blogs = service.GetAllBlogs();
         return Ok(blogs);
     }
+    
     [HttpGet("{id}")]
     public ActionResult<BlogDTO> GetBlogById(string id)
     {

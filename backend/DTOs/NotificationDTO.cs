@@ -1,5 +1,4 @@
 namespace BlogApp.DTOs;
-
 public class NotificationDTO
 {
     public string Content { get; set; }

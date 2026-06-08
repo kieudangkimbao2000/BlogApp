@@ -53,6 +53,9 @@ builder.Services.AddCors(option =>
     );
 });
 
+
+builder.Services.AddOpenApiDocument();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -1,8 +1,5 @@
-using TypeGen.Core.TypeAnnotations;
-
 namespace BlogApp.DTOs;
 
-[ExportTsInterface]
 public class BlogListRespDTO : RespDTO
 {
     public List<BlogDTO> datas { get; set; }

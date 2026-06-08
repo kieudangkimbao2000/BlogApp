@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json.schemastore.org/nswag",
+  "runtime": "Net100",
+  "documentGenerator": {
+    "fromDocument": {
+      "url": "http://localhost:5059/openapi/v1.json",
+      "output": null
+    }
+  },
+  "codeGenerators": {
+    "openApiToTypeScriptClient": {
+      "output": "../frontend/main/src/models/generated-interfaces.ts",
+      "template": "Fetch",
+      "typeStyle": "Interface",
+      "generateClientClasses": false,
+      "generateOptionalProperties": true,
+      "nullValue": "Undefined",
+      "dateTimeType": "string",
+      "exportTypes": true
+    }
+  }
+}

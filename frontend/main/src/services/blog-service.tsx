@@ -1,8 +1,5 @@
 import ApiClient from "../api/apiclient";
-import type { BlogListRespDTO } from "../models/blog-list-resp-dto";
-import type { SearchBlogDTO } from "../models/search-blog-dto";
-import type { SearchBlogReqDTO } from "../models/search-blog-req-dto";
-import type { SearchBlogRespDTO } from "../models/search-blog-resp-dto";
+import type { BlogListRespDTO, SearchBlogReqDTO,  SearchBlogRespDTO} from "../models/generated-interfaces";
 
 class BlogService {
 
@@ -13,14 +10,14 @@ class BlogService {
         return resp;
     }
     
-    async get5Latest() : Promise<BlogListRespDTO>
+    async getFiveLatest() : Promise<BlogListRespDTO>
     {
         const resp = ApiClient.get<BlogListRespDTO>('blog/fivelatest', null);
 
         return resp;
     }
 
-    async getTop5() : Promise<BlogListRespDTO>
+    async getTopFive() : Promise<BlogListRespDTO>
     {
         const resp = ApiClient.get<BlogListRespDTO>('blog/topfive', null);
 

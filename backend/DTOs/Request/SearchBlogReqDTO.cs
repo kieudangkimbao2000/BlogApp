@@ -1,8 +1,5 @@
-using TypeGen.Core.TypeAnnotations;
-
 namespace BlogApp.DTOs;
 
-[ExportTsInterface]
 public class SearchBlogReqDTO
 {
     public  string SearchTitle {get; set; }

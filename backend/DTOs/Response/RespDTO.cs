@@ -1,8 +1,5 @@
 namespace BlogApp.DTOs;
 
-using TypeGen.Core.TypeAnnotations;
-
-[ExportTsInterface]
 public class RespDTO
 {
     public int StatusCode {get; set;}

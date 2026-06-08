@@ -1,8 +1,5 @@
 namespace BlogApp.DTOs;
 
-using TypeGen.Core.TypeAnnotations;
-
-[ExportTsInterface]
 public class LoginRespDTO : RespDTO
 {
     public string JWT {get; set;}

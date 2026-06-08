@@ -26,10 +26,10 @@ public class AccountRepository(BlogAppContext context,
     {
         try
         {
-        context.Accounts.Add(account);
-        context.SaveChanges();
+            context.Accounts.Add(account);
+            context.SaveChanges();
 
-        return true;
+            return true;
         } catch(Exception ex)
         {
             logger.LogError(ex, "Error adding account with username {Username}", 
