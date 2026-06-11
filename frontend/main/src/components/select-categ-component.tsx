@@ -1,8 +1,7 @@
 import { useEffect, useState} from "react";
-import type { CategoryDTO } from "../models/category-dto";
+import type { TagDTO, SearchBlogReqDTO } from "../models/generated-interfaces";
 import '../assets/css/select-categ-component.css'
 import { useOutletContext } from "react-router-dom";
-import type { SearchBlogReqDTO } from "../models/search-blog-req-dto";
 import CategoryService from "../services/categ-service";
 import useLoading from "../hooks/useLoading";
 import useMessage from "../hooks/useMessage";
@@ -13,9 +12,9 @@ const service = new CategoryService();
 const SelectCategComponent = () => {
     const {showLoading, hideLoading, LoadingComponent} = useLoading();
     const {showMessage, MessageComponent} = useMessage(); 
-    const [categs, setCategs] = useState<CategoryDTO[]>([]);
+    const [tags, setTags] = useState<TagDTO[]>([]);
     var {searchRef, isSearching} = useOutletContext() as {searchRef: React.RefObject<SearchBlogReqDTO>, isSearching: boolean};
-    const [selectCategs, setSelectCategs] = useState<string[]>([...searchRef.current.categories]);
+    const [selectCategs, setSelectCategs] = useState<string[]>([...searchRef.current.tags]);
 
     useEffect(() => {
         handleGetCategs();
@@ -25,7 +24,7 @@ const SelectCategComponent = () => {
         showLoading();
         try{
             const resp = await service.getCategs();
-            setCategs(resp.datas);
+            setTags(resp.datas ?? []);
             hideLoading();
         }catch(err)
         {
@@ -59,14 +58,14 @@ const SelectCategComponent = () => {
     return (
         <>
             <MessageComponent />
-            <LoadingComponent />
+            <LoadingComponent />setTags
             <div className="categ-area">
                 <ul className="categ-list">
                     {
-                        categs.map((categ) =>
+                        tags.map((tag) =>
                             <li className={'categ-item ' +
-                                    (selectCategs.includes(categ.name, 0) ? 'select-categ-item' : '')} 
-                                onClick={() => handleSelectCateg(categ.name)}>{categ.name}</li>
+                                    (selectCategs.includes(tag.name ?? '', 0) ? 'select-categ-item' : '')} 
+                                onClick={() => handleSelectCateg(tag.name ?? '')}>{tag.name}</li>
                         )
                     }
                 </ul>
