@@ -13,7 +13,7 @@ public interface IAuthenService
    /// <param name="login">Login info</param>
    /// <param name="errCode">Error code be returned</param>
    /// <returns>A token if successful, otherwise an empty string</returns>
-   RespDTO LoginUser(LoginDTO login);
+   ResponseBaseDTO LoginUser(LoginDTO login);
 
    /// <summary>
    ///   Register a user
@@ -21,5 +21,5 @@ public interface IAuthenService
    /// <param name="register">Register info</param>
    /// <param name="errCode">Error code be returned</param>
    /// <returns>The registered account if successful, otherwise null</returns>
-   RespDTO RegisterUser(RegisterDTO register);
+   ResponseBaseDTO RegisterUser(RegisterDTO register);
 }

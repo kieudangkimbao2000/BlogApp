@@ -17,10 +17,25 @@ class ApiClient
                                                         resp.status : data.StatusCode} as T;
     }
 
-    static async get<T>(endpoint: string, req: any) : Promise<T>
+    static async get<T>(endpoint: string) : Promise<T>
     {
         const resp = await fetch(`${import.meta.env.VITE_API_URL}/${endpoint}`, {
             method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('JWT')}`
+            }
+        });
+        const data = await resp.json();
+
+        return {...data, StatusCode: (!data.StatusCode || data.StatusCode == 0) ? 
+                                                        resp.status : data.StatusCode} as T;
+    }
+
+    static async delete<T>(endpoint: string) : Promise<T>
+    {
+        const resp = await fetch(`${import.meta.env.VITE_API_URL}/${endpoint}`, {
+            method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${localStorage.getItem('JWT')}`

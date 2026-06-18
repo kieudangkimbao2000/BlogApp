@@ -5,6 +5,7 @@ using BlogApp.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using BlogApp.Common;
 using Azure;
+using Microsoft.AspNetCore.Authorization;
 
 [ApiController]
 [Route("api/authen")]
@@ -14,7 +15,7 @@ public class AuthenController(IAuthenService authenService) : ControllerBase
     [HttpPost("login")]
     public ActionResult<LoginRespDTO> LoginUser([FromBody] LoginDTO login)
     {
-        RespDTO resp = authenService.LoginUser(login);
+        ResponseBaseDTO resp = authenService.LoginUser(login);
 
         if (resp.StatusCode == 400)
         {   
@@ -26,7 +27,7 @@ public class AuthenController(IAuthenService authenService) : ControllerBase
 
     [HttpPost("register")]
     
-    public ActionResult<RespDTO> Register([FromBody] RegisterDTO register)
+    public ActionResult<ResponseBaseDTO> Register([FromBody] RegisterDTO register)
     {
         var resp = authenService.RegisterUser(register);
 
@@ -41,5 +42,12 @@ public class AuthenController(IAuthenService authenService) : ControllerBase
         }
 
         return Ok(resp);
+    }
+
+    [HttpGet("check-valid-token")]
+    [Authorize]
+    public ActionResult<ResponseBaseDTO> CheckValidToken()
+    {
+        return Ok(new ResponseBaseDTO(200, "Token is valid"));
     }
 }

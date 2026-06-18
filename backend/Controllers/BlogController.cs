@@ -115,4 +115,22 @@ public class BlogController(IBlogService service) : ControllerBase
 
         return Ok(resp);
     }
+
+    [HttpGet("being-edited-blog/{username}")]
+    public ActionResult GetBeingEditedBlog(string username)
+    {
+        if (username == null)
+        {
+            return Unauthorized(AppMessages.GetMessage("E1001"));
+        }
+
+        var resp = service.GetBeingEditedBlog(username);
+
+        if (resp.StatusCode == 404)
+        {
+            return NotFound(resp);
+        }
+
+        return Ok(resp);
+    }
 }

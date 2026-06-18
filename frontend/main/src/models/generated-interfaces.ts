@@ -27,6 +27,14 @@ export interface AccountDTO {
     [key: string]: any;
 }
 
+export interface AccountRespDTO {
+    account?: AccountDTO;
+    statusCode?: number;
+    message?: string;
+
+    [key: string]: any;
+}
+
 export interface BlogDTO {
     id?: string;
     title?: string;
@@ -62,6 +70,21 @@ export interface BlogListRespDTO {
 }
 
 export interface BlogPageRespDTO {
+    statusCode?: number;
+    message?: string;
+
+    [key: string]: any;
+}
+
+export interface BlogReqDTO {
+    blog?: BlogDTO;
+    page?: number;
+
+    [key: string]: any;
+}
+
+export interface BlogRespDTO {
+    blog?: BlogDTO | undefined;
     statusCode?: number;
     message?: string;
 
@@ -114,14 +137,6 @@ export interface NotificationDTO {
     [key: string]: any;
 }
 
-export interface PageDTO<T> {
-    datas?: T[];
-    curPage?: number;
-    pageSize?: number;
-
-    [key: string]: any;
-}
-
 export interface RegisterDTO {
     username?: string;
     password?: string;
@@ -131,14 +146,6 @@ export interface RegisterDTO {
     email?: string;
     otherContact?: string;
     description?: string;
-
-    [key: string]: any;
-}
-
-export interface RegisterRespDTO {
-    account?: AccountDTO;
-    statusCode?: number;
-    message?: string;
 
     [key: string]: any;
 }
@@ -154,13 +161,13 @@ export interface ReportDTO {
     [key: string]: any;
 }
 
-export interface ReqDTO {
+export interface RequestBaseDTO {
     page?: number;
 
     [key: string]: any;
 }
 
-export interface RespDTO {
+export interface ResponseBaseDTO {
     statusCode?: number;
     message?: string;
 
@@ -169,17 +176,10 @@ export interface RespDTO {
 
 export interface SearchBlogReqDTO {
     searchTitle?: string;
-    categories?: string[];
+    tags?: string[];
     searchFlag?: number;
     curPage?: number;
-
-    [key: string]: any;
-}
-
-export interface SearchBlogRespDTO {
-    blogs: PageDTO<BlogDTO>;
-    statusCode?: number;
-    message?: string;
+    page?: number;
 
     [key: string]: any;
 }

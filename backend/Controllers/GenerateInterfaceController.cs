@@ -1,10 +1,6 @@
 namespace BlogApp.Controllers;
 
-using BlogApp.Common;
 using BlogApp.DTOs;
-using BlogApp.Entities;
-using BlogApp.Interfaces;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
@@ -83,7 +79,13 @@ public class GenerateInterfaceController() : ControllerBase
 
     #region Request DTOs
     [HttpGet]
-    public ActionResult<ReqDTO> GetReqDTO()
+    public ActionResult<BlogReqDTO> GetBlogReqDTO()
+    {
+        return Ok();
+    }
+
+    [HttpGet]
+    public ActionResult<RequestBaseDTO> GetReqDTO()
     {
         return Ok();
     }
@@ -96,6 +98,13 @@ public class GenerateInterfaceController() : ControllerBase
     #endregion
 
     #region Response DTOs
+
+    [HttpGet]
+    public ActionResult<AccountRespDTO> GetAccountRespDTO()
+    {
+        return Ok();
+    }
+
     [HttpGet]
     public ActionResult<BlogListRespDTO> GetBlogListRespDTO()
     {
@@ -109,25 +118,19 @@ public class GenerateInterfaceController() : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<LoginRespDTO> GetLoginRespDTO()
+    public ActionResult<BlogRespDTO> GetBlogRespDTO()
     {
         return Ok();
     }
 
     [HttpGet]
-    public ActionResult<RegisterRespDTO> GetRegisterRespDTO()
+    public ActionResult<LoginRespDTO> GetLoginRespDTO()
     {
         return Ok();
     }
     
     [HttpGet]
-    public ActionResult<RespDTO> GetRespDTO()
-    {
-        return Ok();
-    }
-
-    [HttpGet]
-    public ActionResult<SearchBlogRespDTO> GetSearchBlogRespDTO()
+    public ActionResult<ResponseBaseDTO> GetRespDTO()
     {
         return Ok();
     }
@@ -138,5 +141,4 @@ public class GenerateInterfaceController() : ControllerBase
         return Ok();
     }
     #endregion
-
 }

@@ -1,6 +1,6 @@
 namespace BlogApp.DTOs;
 
-public class LoginRespDTO : RespDTO
+public class LoginRespDTO : ResponseBaseDTO
 {
     public string JWT {get; set;}
 

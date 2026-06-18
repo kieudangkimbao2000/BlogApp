@@ -4,6 +4,7 @@ using BlogApp.Entities;
 using BlogApp.Interfaces;
 using BlogApp.Mappers;
 using BlogApp.DTOs;
+using BlogApp.DTOs;
 
 /// <summary>
 ///     Implement Blog Service Interface
@@ -108,7 +109,7 @@ public class BlogService(IBlogRepository repository): IBlogService
         return result;
     }
 
-    public RespDTO Get5LatestBlogs()
+    public ResponseBaseDTO Get5LatestBlogs()
     {
        List<Blog> result = repository.GetAllBlogs()
                                 .Take(5)
@@ -117,7 +118,7 @@ public class BlogService(IBlogRepository repository): IBlogService
         return new BlogListRespDTO(result.ToDTOList(), 200, " ");
     }
 
-    public RespDTO GetTop5Blogs()
+    public ResponseBaseDTO GetTop5Blogs()
     {
         List<Blog> result = repository.GetAllBlogs()
                                 .OrderByDescending(b => b.AmountOfAccesses)
@@ -129,7 +130,19 @@ public class BlogService(IBlogRepository repository): IBlogService
         return new BlogListRespDTO(result.ToDTOList(), 200, " ");
     }
 
-    public RespDTO SearchBlogs(SearchBlogReqDTO req)
+    public ResponseBaseDTO GetBeingEditedBlog(string username)
+    {
+        var blog = repository.GetBeingEditedBlog(username);
+
+        if (blog == null)
+        {
+            return new ResponseBaseDTO(404, "Blog not found");
+        }
+
+        return new BlogRespDTO(blog.ToDTO(), 200, " ");
+    }
+
+    public ResponseBaseDTO SearchBlogs(SearchBlogReqDTO req)
     {
         (List<Blog> blogs, int totalPages) = repository.SearchBlogs(req);
 
@@ -139,6 +152,6 @@ public class BlogService(IBlogRepository repository): IBlogService
         blogPage.PageSize = totalPages;
         blogPage.Datas = blogs.ToDTOList();
         
-        return new SearchBlogRespDTO(blogPage, 200, " ");
+        return new BlogPageRespDTO(blogPage, 200, " ");
     }
 }

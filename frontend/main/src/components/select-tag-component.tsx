@@ -2,19 +2,19 @@ import { useEffect, useState} from "react";
 import type { TagDTO, SearchBlogReqDTO } from "../models/generated-interfaces";
 import '../assets/css/select-categ-component.css'
 import { useOutletContext } from "react-router-dom";
-import CategoryService from "../services/categ-service";
+import CategoryService from "../services/tag-service";
 import useLoading from "../hooks/useLoading";
 import useMessage from "../hooks/useMessage";
 import BlogAppMessage from "../common/message";
 
 const service = new CategoryService();
 
-const SelectCategComponent = () => {
+const SelectTagComponent = () => {
     const {showLoading, hideLoading, LoadingComponent} = useLoading();
     const {showMessage, MessageComponent} = useMessage(); 
     const [tags, setTags] = useState<TagDTO[]>([]);
     var {searchRef, isSearching} = useOutletContext() as {searchRef: React.RefObject<SearchBlogReqDTO>, isSearching: boolean};
-    const [selectCategs, setSelectCategs] = useState<string[]>([...searchRef.current.tags]);
+    const [selectTags, setSelectTags] = useState<string[]>([...searchRef.current.tags ?? []]);
 
     useEffect(() => {
         handleGetCategs();
@@ -37,7 +37,7 @@ const SelectCategComponent = () => {
     };
 
     const handleSelectCateg = (value: string) => {
-        let selCategs = selectCategs ? [...selectCategs] : [''] as string[];
+        let selCategs = selectTags ? [...selectTags] : [''] as string[];
         if(selCategs.includes(value, 0))
         {
             selCategs = selCategs.filter(x => x !== value);
@@ -47,13 +47,13 @@ const SelectCategComponent = () => {
             selCategs.push(value);
         }
 
-        setSelectCategs([...selCategs]);
+        setSelectTags([...selCategs]);
     };
 
     useEffect(() => {
         if(!searchRef?.current) return;
-        searchRef.current = {...searchRef.current, categories: [...selectCategs]}
-    },[selectCategs]);
+        searchRef.current = {...searchRef.current, categories: [...selectTags]}
+    },[selectTags]);
                                 
     return (
         <>
@@ -64,7 +64,7 @@ const SelectCategComponent = () => {
                     {
                         tags.map((tag) =>
                             <li className={'categ-item ' +
-                                    (selectCategs.includes(tag.name ?? '', 0) ? 'select-categ-item' : '')} 
+                                    (selectTags.includes(tag.name ?? '', 0) ? 'select-categ-item' : '')} 
                                 onClick={() => handleSelectCateg(tag.name ?? '')}>{tag.name}</li>
                         )
                     }
@@ -74,4 +74,4 @@ const SelectCategComponent = () => {
     );
 };
 
-export default SelectCategComponent;
+export default SelectTagComponent;

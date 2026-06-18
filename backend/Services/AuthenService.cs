@@ -17,7 +17,7 @@ using BlogApp.Common;
 public class AuthenService (IAccountRepository repository, 
                             TokenHandler tokenHandler): IAuthenService
 {
-    public RespDTO LoginUser(LoginDTO login)
+    public ResponseBaseDTO LoginUser(LoginDTO login)
     {
         var user = repository.GetAccountByUsername(login.Username);
 
@@ -30,17 +30,17 @@ public class AuthenService (IAccountRepository repository,
             return new LoginRespDTO(jwt, 200, "");
         }
 
-        return new RespDTO(400, AppMessages.E0001);
+        return new ResponseBaseDTO(400, AppMessages.E0001);
     }
 
-    public RespDTO RegisterUser(RegisterDTO register)
+    public ResponseBaseDTO RegisterUser(RegisterDTO register)
     {
         bool result = false;
         var existingAccount = repository.GetAccountByUsername(register.Username);
 
         if (existingAccount != null)
         {
-            return new RespDTO(400, AppMessages.E0002);
+            return new ResponseBaseDTO(400, AppMessages.E0002);
         }
 
         var account = new Account
@@ -63,9 +63,9 @@ public class AuthenService (IAccountRepository repository,
 
         if (!result)
         {
-           return new RespDTO(500, AppMessages.E0003);
+           return new ResponseBaseDTO(500, AppMessages.E0003);
         }
 
-        return new RegisterRespDTO(account.ToDTO(), 200, "");
+        return new AccountRespDTO(account.ToDTO(), 200, "");
     }
 }

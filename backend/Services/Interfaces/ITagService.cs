@@ -12,13 +12,13 @@ public interface ITagService
     ///   Get all tags in the database
     /// </summary>
     /// <returns>List of Tags</returns>
-    RespDTO GetAllTags();
+    ResponseBaseDTO GetAllTags();
 
     /// <summary>
     ///     Get top 5 tags
     /// </summary>
     /// <returns>List of 5 most popular tags</returns>
-    RespDTO GetTop5Tags();
+    ResponseBaseDTO GetTop5Tags();
 
     /// <summary>
     ///     Get a tag by name

@@ -79,8 +79,8 @@ public class BlogRepository(BlogAppContext context,
     public (List<Blog>, int) SearchBlogs(SearchBlogReqDTO req)
     {
         var query = context.Blogs.Where(x => (req.SearchTitle != "" ? x.Title.Contains(req.SearchTitle) : true) && 
-                                            ((req.Categories != null && req.Categories.Length > 0) ? 
-                                                        req.Categories.Any(categ => x.Tags.Contains(categ))  : true)
+                                            ((req.Tags != null && req.Tags.Length > 0) ? 
+                                                        req.Tags.Any(tag => x.Tags.Contains(tag))  : true)
                                         );
 
         if(req.SearchFlag == 0)
@@ -97,5 +97,10 @@ public class BlogRepository(BlogAppContext context,
         List<Blog> blogs = query.Include(x => x.Author).Skip(10*(req.CurPage - 1)).Take(10).ToList();
 
         return (blogs, totalPages);
+    }
+
+    public Blog? GetBeingEditedBlog(string username)
+    {
+        return context.Blogs.FirstOrDefault(b => b.AuthorId == username && b.State == 0);
     }
 }

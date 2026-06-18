@@ -1,6 +1,6 @@
 namespace BlogApp.DTOs;
 
-public class ReqDTO
+public class RequestBaseDTO
 {
     public int page {get; set;}
 }

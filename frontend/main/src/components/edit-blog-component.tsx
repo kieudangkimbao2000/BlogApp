@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera, faAlignLeft, faAlignCenter, faAlignRight, faImage } from "@fortawesome/free-solid-svg-icons";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {useEditor, EditorContent} from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Text from '@tiptap/extension-text';
@@ -11,15 +11,27 @@ import Paragraph from '@tiptap/extension-paragraph';
 //modules
 import useLoading from "../hooks/useLoading";
 import useMessage from "../hooks/useMessage";
+import useAuthen from "../hooks/useAuthen";
+import TagService from "../services/tag-service";
+import BlogService from "../services/blog-service";
+import type { BlogReqDTO } from "../models/generated-interfaces";
 //css
 import '../assets/css/edit-blog-component.css';
+
+const blogService = new BlogService();
+const tagService = new TagService();
 
 const EditBlogComponent = () => {
     const {showLoading, hideLoading, LoadingComponent} = useLoading();
     const {showMessage, MessageComponent} = useMessage();
+    const [user] = useAuthen();
     const [blogTitle, setBlogTitle] = useState('');
     const [blogCoverImg, setBlogCoverImg] = useState('');
     const imgRef = useRef<HTMLInputElement>(null);
+    const [tags, setTags] = useState<string[]>([]);
+    const [selectedTags, setSelectedTags] = useState<string[]>([]);
+    const [blog, setBlog] = useState<BlogReqDTO>({});
+    const [errMsg, setErrMsg] = useState<string>();
     const editor = useEditor({
         extensions: [
             StarterKit,
@@ -29,8 +41,27 @@ const EditBlogComponent = () => {
             ImageResize,
             TextAlign.configure({types: ['heading', 'paragraph'],})
         ],
-        content: '<p>Hello World! 🌎️</p>',
+        content: ''
     });
+
+    useEffect(() => {
+        getTags();
+    },[]);
+
+    const getTags = async () => {
+        try
+        {
+            const resp = await tagService.getCategs();
+            setTags(resp.datas?.map(x => x.name ?? '') ?? []);
+        }
+        catch(err)
+        {
+            await showMessage({
+                type: 'error',
+                message: 'Lỗi hệ thống. Hãy thử load lại trang.'
+            });
+        }
+    }
 
     const handleSelectedImage = (e: React.ChangeEvent<HTMLInputElement>) => {
         if(e.target.files == null || e.target.files.length == 0) return;
@@ -46,11 +77,6 @@ const EditBlogComponent = () => {
         }
         reader.readAsDataURL(file);
     }
-
-    // const handleSelectedImageFromToolbar = (url: string) => {
-        
-    //     editor.chain().focus().setImage({src: url}).run();
-    // }
     
     const handleToolbarClick = (action: string) => {
         if(editor == null) return;
@@ -117,11 +143,89 @@ const EditBlogComponent = () => {
         }
     }
 
+    const handleDeleteBlog = async () => {
+        const ok = window.confirm('Are you sure you want to delete this blog?');
+        if(!ok) return;
+
+        if(blog.blog == null || blog.blog.id == null)
+        {
+            await showMessage({
+                type: 'error',
+                message: 'Blog ID is not exist. Cannot delete blog.'
+            });
+            return;
+        }
+        
+        try
+        {
+            showLoading();
+            const resp = await blogService.deleteBlog(blog.blog.id);
+            hideLoading();
+
+            if(resp.StatusCode != 200)
+            {
+                if(resp.statusCode == 403)
+                {
+                    await showMessage({
+                        type: 'error',
+                        message: 'Your request is denied'
+                    });
+                    window.location.href = '/login'
+                }
+                else
+                {
+                    await showMessage({
+                        type: 'error',
+                        message: 'Failed to delete blog. Please try again.'
+                    });
+                }
+            }
+            else
+            {
+                await showMessage({
+                    type: 'success',
+                    message: 'Blog deleted successfully'
+                });
+            }
+        }
+        catch(err)
+        {
+            hideLoading();
+            await showMessage({
+                type: 'error',
+                message: 'Failed to delete blog. Please try again.'
+            });
+        }
+    }
+
+    const handleSaveBlog = async () => {
+        
+    };
+
+    const checkRequirement = () : boolean => {
+        const content = editor.getHTML() ?? '';
+        if(blogTitle == null || blogTitle == '')
+        {
+            return false;
+        }
+        if(content == '')
+        {
+            return false;
+        }
+
+        return true;
+    };
+
     return (
         <>
             <LoadingComponent />
             <MessageComponent />
             <div className="container">
+                <div className="row">
+                    <div className="col err-msg-elm">
+                        {errMsg}
+                    </div>
+                </div>
                 <div className="row" style={{marginTop: "20px"}}>
                     <div className="col">
                         <textarea className="title-field" placeholder="Title..." value={blogTitle} onChange={(e) => setBlogTitle(e.target.value)}></textarea>
@@ -173,6 +277,36 @@ const EditBlogComponent = () => {
                         <div className="row">
                             <div className="col">
                                 <EditorContent editor={editor} className="editor-content"/>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col">
+                                <div className="tags-container">
+                                    <ul className="tags-list">
+                                        { tags.map(x => (
+                                            <li 
+                                                key={x} 
+                                                className={`tag-item ${selectedTags.includes(x) ? "selected-tag-item" : ""}`}
+                                                onClick={() => {
+                                                    if (selectedTags.includes(x)) {
+                                                        setSelectedTags(selectedTags.filter(tag => tag !== x));
+                                                    } else {
+                                                        setSelectedTags([...selectedTags, x]);
+                                                    }
+                                                }}
+                                            >
+                                                {x}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col d-flex justify-content-end btn-area">
+                                <button className="btn btn-danger" onClick={handleDeleteBlog}>Delete</button>
+                                <button className="btn btn-primary">Save</button>
+                                <button className="btn btn-success">Submit</button>
                             </div>
                         </div>
                     </div>

@@ -18,12 +18,16 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         options.RequireHttpsMetadata = false;
         options.TokenValidationParameters = new TokenValidationParameters
         {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateIssuerSigningKey = true,
+            ValidateLifetime = true,
             ValidIssuer = builder.Configuration["Jwt:Issuer"],
             ValidAudience = builder.Configuration["Jwt:Audience"],
             IssuerSigningKey = new SymmetricSecurityKey(
                 System.Text.Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecrectKey"])
             ),
-            ClockSkew = TimeSpan.FromMinutes(30)
+            ClockSkew = TimeSpan.FromSeconds(5) // Set clock skew to zero to prevent token expiration issues
         };
     });
 builder.Services.AddHttpLogging();

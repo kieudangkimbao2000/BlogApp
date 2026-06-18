@@ -57,20 +57,27 @@ public interface IBlogService
     ///     Get 5 latest blogs
     /// </summary>
     /// <returns>List of 5 latest blogs</returns>
-   RespDTO Get5LatestBlogs();
+    ResponseBaseDTO Get5LatestBlogs();
 
     /// <summary>
     ///     Get 5 most popular blogs
     /// </summary>
     /// <returns>List of 5 most popular blogs</returns>
-    RespDTO GetTop5Blogs();
+    ResponseBaseDTO GetTop5Blogs();
 
     /// <summary>
     ///     Search Blogs
     /// </summary>
     /// <param name="req">Search conditions</param>
     /// <returns>List of blogs be suitable to search condtions</returns>
-    RespDTO SearchBlogs(SearchBlogReqDTO req);
+    ResponseBaseDTO SearchBlogs(SearchBlogReqDTO req);
+
+    /// <summary>
+    ///    Get the blog that is being edited by an author
+    /// </summary>
+    /// <param name="username">the author</param>
+    /// <returns>Being edited blog if found, otherwise null</returns>
+    ResponseBaseDTO GetBeingEditedBlog(string username);
 }
 
 

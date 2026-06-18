@@ -7,14 +7,14 @@ using BlogApp.Mappers;
 
 public class TagService(ITagRepository repository) :   ITagService
 {
-    public RespDTO GetAllTags()
+    public ResponseBaseDTO GetAllTags()
     {
         var tags = repository.GetAllTags();
 
         return new TagListRespDTO(tags.ToDTOList(), 200, "");
     }
 
-    public RespDTO GetTop5Tags()
+    public ResponseBaseDTO GetTop5Tags()
     {
         var tags = repository.GetTop5Tags();
         

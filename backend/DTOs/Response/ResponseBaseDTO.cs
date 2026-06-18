@@ -1,11 +1,11 @@
 namespace BlogApp.DTOs;
 
-public class RespDTO
+public class ResponseBaseDTO
 {
     public int StatusCode {get; set;}
     public string Message { get; set;}
 
-    public RespDTO(int stat, string msg)
+    public ResponseBaseDTO(int stat, string msg)
     {
         this.StatusCode = stat;
         this.Message = msg;

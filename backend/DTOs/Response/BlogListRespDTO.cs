@@ -1,6 +1,6 @@
 namespace BlogApp.DTOs;
 
-public class BlogListRespDTO : RespDTO
+public class BlogListRespDTO : ResponseBaseDTO
 {
     public List<BlogDTO> datas { get; set; }
 

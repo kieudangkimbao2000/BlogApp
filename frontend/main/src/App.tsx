@@ -1,12 +1,13 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 
 import 'bootstrap/dist/css/bootstrap.min.css'
-import LoginPage from './pages/login'
-import MainPage from "./pages/main"
+import LoginPage from './pages/login-page'
+import MainPage from "./pages/main-page"
 import useMessage from "./hooks/useMessage"
 import MainListComponent from "./components/main-list-component"
-import SelectCategComponent from "./components/select-categ-component"
+import SelectTagComponent from "./components/select-tag-component"
 import EditBlogComponent from "./components/edit-blog-component"
+import ErrorPage from "./pages/error-page"
 
 function App() {
 
@@ -23,9 +24,10 @@ function App() {
               <Route path="new" element={<MainListComponent />}></Route>
               <Route path="top" element={<MainListComponent />}></Route>
             </Route>
-            <Route path="tags" element={<SelectCategComponent />}></Route>
+            <Route path="tags" element={<SelectTagComponent />}></Route>
             <Route path="edit" element={<EditBlogComponent />}></Route>
           </Route>
+          <Route path="error" element={<ErrorPage/>}></Route>
         </Routes>
       </BrowserRouter>
     </>

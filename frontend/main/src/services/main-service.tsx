@@ -1,7 +1,7 @@
 import type { MainNeedsDTO } from "../models/main-needs-dto";
 import BlogService from "./blog-service";
-import TagService from "./categ-service";
-import CategoryService from "./categ-service";
+import TagService from "./tag-service";
+import CategoryService from "./tag-service";
 
 class MainService
 {

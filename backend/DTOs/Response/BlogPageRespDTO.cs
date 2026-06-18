@@ -2,7 +2,7 @@ using Azure;
 
 namespace BlogApp.DTOs;
 
-public class BlogPageRespDTO : RespDTO
+public class BlogPageRespDTO : ResponseBaseDTO
 {
     PageDTO<BlogDTO> page { get; set;}
 
