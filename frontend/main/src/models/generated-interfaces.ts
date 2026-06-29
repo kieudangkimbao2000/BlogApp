@@ -4,6 +4,8 @@
 // </auto-generated>
 //----------------------
 
+import type { PageDTO } from "./page-dto";
+
 /* eslint-disable */
 // ReSharper disable InconsistentNaming
 
@@ -39,7 +41,7 @@ export interface BlogDTO {
     id?: string;
     title?: string;
     content?: string;
-    coverPhoto?: string;
+    coverImage?: string;
     tags?: string[];
     amountOfAccesses?: number;
     state?: number;
@@ -70,6 +72,7 @@ export interface BlogListRespDTO {
 }
 
 export interface BlogPageRespDTO {
+    page : PageDTO<BlogDTO>;
     statusCode?: number;
     message?: string;
 
@@ -78,7 +81,7 @@ export interface BlogPageRespDTO {
 
 export interface BlogReqDTO {
     blog?: BlogDTO;
-    page?: number;
+    datas?: any;
 
     [key: string]: any;
 }
@@ -162,7 +165,7 @@ export interface ReportDTO {
 }
 
 export interface RequestBaseDTO {
-    page?: number;
+    datas?: any;
 
     [key: string]: any;
 }
@@ -179,7 +182,6 @@ export interface SearchBlogReqDTO {
     tags?: string[];
     searchFlag?: number;
     curPage?: number;
-    page?: number;
 
     [key: string]: any;
 }
@@ -197,6 +199,60 @@ export interface TagListRespDTO {
     datas?: TagDTO[];
     statusCode?: number;
     message?: string;
+
+    [key: string]: any;
+}
+
+export interface Body {
+    Username?: string;
+    Password?: string;
+
+    [key: string]: any;
+}
+
+export interface Body2 {
+    "Blog.Id"?: string;
+    "Blog.Title"?: string;
+    "Blog.Content"?: string;
+    "Blog.CoverImage"?: string;
+    "Blog.Tags"?: string[];
+    "Blog.AmountOfAccesses"?: number;
+    "Blog.State"?: number;
+    "Blog.PublishedAt"?: string;
+    "Blog.LikedByUser"?: boolean;
+    "Blog.AuthorId"?: string;
+    "Blog.AuthorName"?: string;
+    "Blog.CreatedAt"?: string;
+    "Blog.UpdatedAt"?: string;
+    datas?: any;
+
+    [key: string]: any;
+}
+
+export interface Body3 {
+    "Blog.Id"?: string;
+    "Blog.Title"?: string;
+    "Blog.Content"?: string;
+    "Blog.CoverImage"?: string;
+    "Blog.Tags"?: string[];
+    "Blog.AmountOfAccesses"?: number;
+    "Blog.State"?: number;
+    "Blog.PublishedAt"?: string;
+    "Blog.LikedByUser"?: boolean;
+    "Blog.AuthorId"?: string;
+    "Blog.AuthorName"?: string;
+    "Blog.CreatedAt"?: string;
+    "Blog.UpdatedAt"?: string;
+    datas?: any;
+
+    [key: string]: any;
+}
+
+export interface Body4 {
+    SearchTitle?: string;
+    Tags?: string[];
+    SearchFlag?: number;
+    CurPage?: number;
 
     [key: string]: any;
 }

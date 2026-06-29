@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
 [Route("api/blog")]
+[Authorize]
 public class BlogController(IBlogService service) : ControllerBase
 {
     [HttpGet]
@@ -28,65 +29,28 @@ public class BlogController(IBlogService service) : ControllerBase
         return Ok(blog);
     }
 
-    [HttpPost]
-    public ActionResult AddBlog([FromBody] BlogDTO blogDTO)
+    [HttpPost("add")]
+    public async Task<ActionResult> AddBlog([FromForm] BlogReqDTO req)
     {
-        string errCode = "";
-        var result = service.AddBlog(blogDTO, ref errCode);
+        var result = await service.AddBlog(req);
 
-        if (!result)
-        {
-            if (errCode == "E1002")
-            {
-                return BadRequest(AppMessages.GetMessage(errCode));
-            }
-            else
-            {
-                return StatusCode(500,AppMessages.GetMessage(errCode));
-            }
-        }
-
-        return Ok(AppMessages.GetMessage("I1001"));
+        return StatusCode(result.StatusCode, result);
     }
 
     [HttpPost("update")]
-    public ActionResult UpdateBlog([FromBody] BlogDTO blogDTO)
+    public async Task<ActionResult> UpdateBlog([FromForm] BlogReqDTO req)
     {
-        string errCode = "";
-        var result = service.UpdateBlog(blogDTO, ref errCode);
-
-        if (!result){
-            if (errCode == "E1001")
-            {
-                return NotFound(AppMessages.GetMessage(errCode));
-            }
-            else
-            {
-                return StatusCode(500,AppMessages.GetMessage(errCode));
-            }
+        var result = await service.UpdateBlog(req);
         
-        }
-        return Ok(AppMessages.GetMessage("I1002"));
+        return StatusCode(result.StatusCode, result);
     }
 
     [HttpDelete("{id}")]
-    public ActionResult DeleteBlog(string id)
+    public async Task<ActionResult> DeleteBlog(string id)
     {
-        string errCode = "";
-        var result = service.DeleteBlog(id, ref errCode);
+        var result = await service.DeleteBlog(id);
 
-        if (!result){
-            if (errCode == "E1001")
-            {
-                return NotFound(AppMessages.GetMessage(errCode));
-            }
-            else
-            {
-                return StatusCode(500,AppMessages.GetMessage(errCode));
-            }
-        }
-
-        return Ok(AppMessages.GetMessage("I1003"));
+        return StatusCode(result.StatusCode, result);
     }
 
     [AllowAnonymous]
@@ -109,11 +73,11 @@ public class BlogController(IBlogService service) : ControllerBase
 
     [AllowAnonymous]
     [HttpPost("search")]
-    public ActionResult SearchBlogs(SearchBlogReqDTO req)
+    public ActionResult SearchBlogs([FromForm]SearchBlogReqDTO req)
     {
         var resp = service.SearchBlogs(req);
 
-        return Ok(resp);
+         return Ok(resp);
     }
 
     [HttpGet("being-edited-blog/{username}")]

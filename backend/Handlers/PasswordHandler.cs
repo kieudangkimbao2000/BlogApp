@@ -14,6 +14,12 @@ public class PasswordHandler
         return BCrypt.Net.BCrypt.HashPassword(password , salt);
     }
 
+    /// <summary>
+    /// Verify password
+    /// </summary>
+    /// <param name="password"></param>
+    /// <param name="hashedPassword"></param>
+    /// <returns></returns>
     public static bool VerifyPassword(string password, string hashedPassword)
     {
         return BCrypt.Net.BCrypt.Verify(password, hashedPassword);

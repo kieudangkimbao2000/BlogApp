@@ -13,7 +13,7 @@ public class AuthenController(IAuthenService authenService) : ControllerBase
 {
 
     [HttpPost("login")]
-    public ActionResult<LoginRespDTO> LoginUser([FromBody] LoginDTO login)
+    public ActionResult<LoginRespDTO> LoginUser([FromForm] LoginReqDTO login)
     {
         ResponseBaseDTO resp = authenService.LoginUser(login);
 

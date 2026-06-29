@@ -17,7 +17,7 @@ using BlogApp.Common;
 public class AuthenService (IAccountRepository repository, 
                             TokenHandler tokenHandler): IAuthenService
 {
-    public ResponseBaseDTO LoginUser(LoginDTO login)
+    public ResponseBaseDTO LoginUser(LoginReqDTO login)
     {
         var user = repository.GetAccountByUsername(login.Username);
 
@@ -53,7 +53,7 @@ public class AuthenService (IAccountRepository repository,
             Email = register.Email,
             OtherContact = register.OtherContact,
             Description = register.Description,
-            Avatar = [],
+            Avatar = "",
             Role = "2",
             Functions = [],
             State = 1

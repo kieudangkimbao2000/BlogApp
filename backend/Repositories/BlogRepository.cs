@@ -78,12 +78,26 @@ public class BlogRepository(BlogAppContext context,
 
     public (List<Blog>, int) SearchBlogs(SearchBlogReqDTO req)
     {
-        var query = context.Blogs.Where(x => (req.SearchTitle != "" ? x.Title.Contains(req.SearchTitle) : true) && 
-                                            ((req.Tags != null && req.Tags.Length > 0) ? 
-                                                        req.Tags.Any(tag => x.Tags.Contains(tag))  : true)
-                                        );
+        var page = req.CurPage > 0 ? req.CurPage : 1;
+        const int pageSize = 10;
 
-        if(req.SearchFlag == 0)
+        var query = context.Blogs.AsQueryable<Blog>();
+
+        if (!string.IsNullOrWhiteSpace(req.SearchTitle))
+        {
+            query = query.Where(x => x.Title.Contains(req.SearchTitle));
+        }
+
+        if (req.Tags is { Length: > 0 })
+        {
+            var normalizedTags = req.Tags.Where(tag => !string.IsNullOrWhiteSpace(tag)).ToArray();
+            if (normalizedTags.Length > 0)
+            {
+                query = query.Where(x => x.Tags != null && normalizedTags.Any(tag => x.Tags.Contains(tag)));
+            }
+        }
+
+        if (req.SearchFlag == 0)
         {
             query = query.OrderByDescending(x => x.PublishedAt);
         }
@@ -92,9 +106,12 @@ public class BlogRepository(BlogAppContext context,
             query = query.Include(x => x.Likes).OrderByDescending(x => x.Likes.Count());
         }
 
-
-        int totalPages = (int)Math.Ceiling((query.Count()*1.0)/10);
-        List<Blog> blogs = query.Include(x => x.Author).Skip(10*(req.CurPage - 1)).Take(10).ToList();
+        var totalItems = query.Count();
+        int totalPages = totalItems == 0 ? 0 : (int)Math.Ceiling(totalItems / (double)pageSize);
+        List<Blog> blogs = query.Include(x => x.Author)
+                                 .Skip((page - 1) * pageSize)
+                                 .Take(pageSize)
+                                 .ToList();
 
         return (blogs, totalPages);
     }

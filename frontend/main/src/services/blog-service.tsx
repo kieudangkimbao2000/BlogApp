@@ -41,7 +41,7 @@ class BlogService {
 
     async createBlog(req: BlogReqDTO) : Promise<ResponseBaseDTO>
     {
-        const resp = await ApiClient.post<ResponseBaseDTO>('blog/create', req);
+        const resp = await ApiClient.post<ResponseBaseDTO>('blog/add', req);
 
         return resp;
     }

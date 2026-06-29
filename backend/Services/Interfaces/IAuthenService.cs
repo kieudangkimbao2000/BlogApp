@@ -13,7 +13,7 @@ public interface IAuthenService
    /// <param name="login">Login info</param>
    /// <param name="errCode">Error code be returned</param>
    /// <returns>A token if successful, otherwise an empty string</returns>
-   ResponseBaseDTO LoginUser(LoginDTO login);
+   ResponseBaseDTO LoginUser(LoginReqDTO login);
 
    /// <summary>
    ///   Register a user

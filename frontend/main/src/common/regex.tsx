@@ -6,6 +6,4 @@ class BlogAppRegex
 
         return regex.test(email.toLowerCase());
     }
-
-    
 }

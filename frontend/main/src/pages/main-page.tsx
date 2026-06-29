@@ -25,7 +25,7 @@ const MainPage = () => {
     const [user] = useAuthen();
     const navigate = useNavigate();
     const searchRef = useRef<SearchBlogReqDTO>({    searchTitle: '',
-                                                    categories: [],
+                                                    tags: [],
                                                     searchFlag: 0,
                                                     curPage: 1
                                                 });
@@ -65,13 +65,13 @@ const MainPage = () => {
         switch(item)
         {
             case 'new':
-                searchRef.current = {searchTitle: '', searchFlag: value, categories: [], curPage: 1};
+                searchRef.current = {searchTitle: '', searchFlag: value, tags: [], curPage: 1};
                 break;
             case 'top':
-                searchRef.current = {searchTitle: '', searchFlag: value, categories: [], curPage: 1};
+                searchRef.current = {searchTitle: '', searchFlag: value, tags: [], curPage: 1};
                 break;
             case 'categ':
-                searchRef.current = {searchTitle: '', searchFlag: 0, categories: [value], curPage: 1};
+                searchRef.current = {searchTitle: '', searchFlag: 0, tags: [value], curPage: 1};
                 break;
         }
     };

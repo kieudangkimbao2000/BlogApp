@@ -52,13 +52,13 @@ const SelectTagComponent = () => {
 
     useEffect(() => {
         if(!searchRef?.current) return;
-        searchRef.current = {...searchRef.current, categories: [...selectTags]}
+        searchRef.current = {...searchRef.current, tags: [...selectTags]}
     },[selectTags]);
                                 
     return (
         <>
             <MessageComponent />
-            <LoadingComponent />setTags
+            <LoadingComponent />
             <div className="categ-area">
                 <ul className="categ-list">
                     {

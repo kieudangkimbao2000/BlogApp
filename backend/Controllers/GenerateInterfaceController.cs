@@ -45,7 +45,7 @@ public class GenerateInterfaceController() : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<PageDTO<T>> GetPageDTO<T>()
+    public ActionResult<PageDTO<BlogDTO>> GetPageDTO()
     {
         return Ok();
     }
@@ -65,7 +65,7 @@ public class GenerateInterfaceController() : ControllerBase
 
     #region Authentication DTOs
     [HttpGet]
-    public ActionResult<LoginDTO> GetLoginDTO()
+    public ActionResult<LoginReqDTO> GetLoginDTO()
     {
         return Ok();
     }

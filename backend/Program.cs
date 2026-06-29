@@ -1,10 +1,12 @@
 using BlogApp.Dbs;
 using BlogApp.Interfaces;
+using BlogApp.Middlewares;
 using BlogApp.Repositories;
 using BlogApp.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,7 +32,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ClockSkew = TimeSpan.FromSeconds(5) // Set clock skew to zero to prevent token expiration issues
         };
     });
-builder.Services.AddHttpLogging();
 
 //DbContexts
 builder.Services.AddDbContext<BlogAppContext>(options =>{
@@ -44,6 +45,7 @@ builder.Services.AddScoped<IBlogService, BlogService>();
 builder.Services.AddScoped<ITagRepository, TagRepository>();
 builder.Services.AddScoped<ITagService, TagService>();
 builder.Services.AddSingleton<BlogApp.Handlers.TokenHandler>();
+builder.Services.AddSingleton<BlogApp.Handlers.FileHandler>();
 
 builder.Services.AddCors(option =>
 {
@@ -59,6 +61,12 @@ builder.Services.AddCors(option =>
 
 
 builder.Services.AddOpenApiDocument();
+
+Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(builder.Configuration)
+                .CreateLogger();
+
+builder.Host.UseSerilog();
 
 var app = builder.Build();
 
@@ -76,8 +84,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors("AllowSpecificOrigin");
 
+app.UseSerilogRequestLogging();
+
+app.UseMiddleware<ExceptionMiddleware>();
+
 // app.UseHttpsRedirection();
-app.UseHttpLogging();
 
 app.UseAuthentication();
 app.UseAuthorization();

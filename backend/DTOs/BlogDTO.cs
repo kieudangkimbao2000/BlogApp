@@ -7,7 +7,7 @@ namespace BlogApp.DTOs
         public string Id { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
-        public byte[] CoverPhoto { get; set;}
+        public string CoverImage { get; set;}
         public string[] Tags { get; set; }
         public int AmountOfAccesses { get; set; }
         public int State { get; set; }

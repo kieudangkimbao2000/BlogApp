@@ -12,7 +12,7 @@ public class Blog
         public string Title { get; set; }
         [Required]
         public string Content { get; set; }
-        public byte[] CoverPhoto {get; set;}
+        public string CoverImage {get; set;}
         [Required]
         public string[] Tags { get; set; }
         [DefaultValue(0)]

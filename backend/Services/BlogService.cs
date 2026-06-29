@@ -5,12 +5,14 @@ using BlogApp.Interfaces;
 using BlogApp.Mappers;
 using BlogApp.DTOs;
 using BlogApp.DTOs;
+using BlogApp.Handlers;
 
 /// <summary>
 ///     Implement Blog Service Interface
 /// </summary>
 /// <param name="repository"></param>
-public class BlogService(IBlogRepository repository): IBlogService
+public class BlogService(IBlogRepository repository,
+                            FileHandler handler): IBlogService
 {
     public List<BlogDTO> GetAllBlogs()
     {
@@ -45,68 +47,94 @@ public class BlogService(IBlogRepository repository): IBlogService
         return blogDTO;
     }
 
-    public bool AddBlog(BlogDTO blogDTO, ref string errCode)
+    public async Task<ResponseBaseDTO> AddBlog(BlogReqDTO req)
     {
         bool result = false;
-        blogDTO.Id = "blog-"+DateTime.Now.ToString("yyyyMMddHHmmss");
+        BlogDTO blog = req.Blog;
+        blog.Id = "blog-"+DateTime.Now.ToString("yyyyMMddHHmmss");
 
-        var blog = repository.GetBlogById(blogDTO.Id);
+        // if(req.files != null && req.files.Length > 0)
+        // {
+        //     string fileName = blog.Id + ".png";
+        //     bool resultSave = await handler.SaveImgFile(blog.AuthorId, fileName, "blogs", req.files[0]);
+        //     if(!resultSave)
+        //     {
+        //         return new ResponseBaseDTO(stat: 500, "A error occured when add a blog!");
+        //     }
+        //     blog.CoverImage = Path.Combine(blog.AuthorId, fileName);
+        // }
+
+        var exBlog = repository.GetBlogById(blog.Id);
         if (blog != null) 
         {
-            errCode = "E1002"; // Blog with this ID already exists
-            return false;
+            return new ResponseBaseDTO(stat: 409, "Blog's already exist!");
         }
 
-        result = repository.AddBlog(blogDTO.ToModel());
+        result = repository.AddBlog(blog.ToModel());
+        
+        if(!result)
+        {
+            return new ResponseBaseDTO(stat: 500, "A error occured when add a blog!");
+        }
+
+        return new ResponseBaseDTO(stat: 200, "");
+    }
+
+    public async Task<ResponseBaseDTO> UpdateBlog(BlogReqDTO req)
+    {
+        BlogDTO blog = req.Blog;
+        var exsBlog = repository.GetBlogById(blog.Id);
+
+        if (exsBlog == null) 
+        {
+            return new ResponseBaseDTO(403, "Blog's not found!");
+        }
+
+        // if(req.files != null && req.files.Length > 0)
+        // {
+        //     string fileName = blog.Id + ".png";
+        //     var resultSave = await handler.SaveImgFile(blog.AuthorId, fileName, "blogs", req.files[0]);
+        //     if(!resultSave)
+        //     {
+        //         return new ResponseBaseDTO(500, "A error occured when updating the blog!");
+        //     }
+        //     blog.CoverImage = Path.Combine(blog.AuthorId, fileName);
+        // }
+
+        var result = repository.UpdateBlog(blog.ToModel());
 
         if (!result)
         {
-            errCode = "E1003"; // Failed to add blog
+            return new ResponseBaseDTO(403, "Blog's not found!");
         }
 
-        return result;
+        return new ResponseBaseDTO(200, "");;
     }
 
-    public bool UpdateBlog(BlogDTO blogDTO, ref string errCode)
+    public async Task<ResponseBaseDTO> DeleteBlog(string id)
     {
-        bool result = false;
-        var blog = repository.GetBlogById(blogDTO.Id);
-
-        if (blog == null) 
-        {
-            errCode = "E1001"; // Blog not found
-            return false;
-        }
-
-        result = repository.UpdateBlog(blogDTO.ToModel());
-
-        if (!result)
-        {
-            errCode = "E1004"; // Failed to update blog
-        }
-
-        return result;
-    }
-
-    public bool DeleteBlog(string id, ref string errCode)
-    {
-        bool result = false;
         var blog = repository.GetBlogById(id);
 
         if (blog == null) 
         {
-            errCode = "E1001"; // Blog not found
-            return false;
+            return new ResponseBaseDTO(403, "Blog's not found!");
         }
 
-        result = repository.DeleteBlog(blog);
+        string fileName = Path.GetFileName(blog.CoverImage);
+        var resultDel = handler.DeleteImgFile(blog.AuthorId, fileName, "blogs");
+        if(!resultDel)
+        {
+            return new ResponseBaseDTO(500, "A error occured when deleting the blog!");
+        }
+
+        var result = repository.DeleteBlog(blog);
 
         if (!result)
         {
-            errCode = "E1005"; // Failed to delete blog
+            return new ResponseBaseDTO(500, "A error occured when deleting the blog!");
         }
 
-        return result;
+        return new ResponseBaseDTO(200, "");
     }
 
     public ResponseBaseDTO Get5LatestBlogs()

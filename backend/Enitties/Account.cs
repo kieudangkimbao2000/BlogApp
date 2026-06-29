@@ -18,7 +18,7 @@ public class Account
     public string Email { get; set; }
     public string OtherContact{ get; set; }
     public string Description { get; set; }
-    public byte[] Avatar { get; set; }
+    public string Avatar { get; set; }
     [MaxLength(1)]
     [Required]
     public string Role { get; set; }

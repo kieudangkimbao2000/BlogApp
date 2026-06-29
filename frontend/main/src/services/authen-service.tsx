@@ -1,10 +1,9 @@
 import ApiClient from "../api/apiclient";
-import type { LoginReq, LoginResp, Resp } from "../common/model"
-import type { ResponseBaseDTO } from "../models/generated-interfaces";
+import type { LoginDTO, LoginRespDTO, ResponseBaseDTO } from "../models/generated-interfaces"
 
 class AuthenService {
-    async Login(req:LoginReq) : Promise<LoginResp> {
-        const resp = await ApiClient.post<LoginResp>('authen/login', req);
+    async Login(req:LoginDTO) : Promise<LoginRespDTO> {
+        const resp = await ApiClient.post<LoginRespDTO>('authen/login', req);
 
         return resp;
     }

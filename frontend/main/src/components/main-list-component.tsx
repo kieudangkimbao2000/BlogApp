@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import type { BlogDTO, SearchBlogReqDTO, PageDTO } from "../models/generated-interfaces";
+import type { BlogDTO, SearchBlogReqDTO, BlogPageRespDTO } from "../models/generated-interfaces";
+import type { PageDTO } from "../models/page-dto";
 import BlogService from "../services/blog-service";
 import PageComponent from "./page-component";
 import useLoading from "../hooks/useLoading";
@@ -10,7 +11,7 @@ import { useOutletContext } from "react-router-dom";
 const blogService = new BlogService();
 
 const MainListComponent = () => {
-    const [blogs, setBlogs] = useState<PageDTO<BlogDTO>>();
+    const [page, setPage] = useState<PageDTO<BlogDTO>>();
     const {showLoading, hideLoading, LoadingComponent} = useLoading();
     const {showMessage, MessageComponent} = useMessage();
     var {searchRef, isSearching} = useOutletContext() as {searchRef: React.RefObject<SearchBlogReqDTO>, isSearching: boolean};
@@ -18,17 +19,17 @@ const MainListComponent = () => {
     const handleSearchBlogs = async (page: number) => {
         showLoading();
         try {
-            const search = searchRef?.current ? {...searchRef.current, currPage: page} : 
-                                                {searchTitle: '', categories: [], searchFlag: 0, curPage: page};
+            const search = searchRef?.current ? {...searchRef.current, curPage: page} : 
+                                                {searchTitle: '', tags: [], searchFlag: 0, curPage: page};
             const resp = await blogService.searchBlog(search)
             
-            setBlogs(resp.blogs);
+            setPage(resp.page);
             hideLoading();
         } catch (err) {
             hideLoading();
             await showMessage({
                 type: BlogAppMessage.MSG_ERR_TYPE,
-                message: 'Đã có lỗi xảy ra. Xin vui lòng thử reload lại trang.'
+                message: 'A error occured. Please try to reload page!'
             });
         }
     }
@@ -42,7 +43,7 @@ const MainListComponent = () => {
             <MessageComponent />
             <LoadingComponent />
             <div className='container list-area'>
-                {blogs?.datas?.map((blog, index) => (
+                {page?.datas?.map((blog, index) => (
                     <div className='row item'>
                         <div className='col item-img' style={{width: '100%', height: '100%'}}>
                             <img  style={{width: '100%', height: '100%'}} src={(blog.coverPhoto && blog.coverPhoto.trim() != '') ? `data:image/png;base64,${blog.coverPhoto}`
@@ -64,7 +65,7 @@ const MainListComponent = () => {
                         </div>
                     </div>
                 ))}
-                <PageComponent curPage={blogs?.currPage ?? 1} totalPages={blogs?.pageSize ?? 1} handleSearch={handleSearchBlogs}/>
+                <PageComponent curPage={page?.curPage ?? 1} totalPages={page?.pageSize ?? 1} handleSearch={handleSearchBlogs}/>
             </div>
         </>
     );

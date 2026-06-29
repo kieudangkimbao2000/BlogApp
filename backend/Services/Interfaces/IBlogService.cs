@@ -33,9 +33,8 @@ public interface IBlogService
     ///     Add a blog
     /// </summary>
     /// <param name="blogDTO">Blog data</param>
-    /// <param name="errCode">Error code be returned</param>
     /// <returns>True if successfully, otherwise false</returns>
-    bool AddBlog(BlogDTO blogDTO, ref string errCode);
+    Task<ResponseBaseDTO> AddBlog(BlogReqDTO req);
 
     /// <summary>
     ///     Update a blog
@@ -43,7 +42,7 @@ public interface IBlogService
     /// <param name="blogDTO">Blog data</param>
     /// <param name="errCode">Error code be returned</param>
     /// <returns>True if successfully, otherwise false</returns>
-    bool UpdateBlog(BlogDTO blogDTO, ref string errCode);
+    Task<ResponseBaseDTO> UpdateBlog(BlogReqDTO blogDTO);
 
     /// <summary>
     ///    Delete a blog
@@ -51,7 +50,7 @@ public interface IBlogService
     /// <param name="id">Blog's Id</param>
     /// <param name="errCode">Error code be returned</param>
     /// <returns>True if successfully, otherwise false</returns>
-    bool DeleteBlog(string id, ref string errCode);
+    Task<ResponseBaseDTO> DeleteBlog(string id);
 
     /// <summary>
     ///     Get 5 latest blogs

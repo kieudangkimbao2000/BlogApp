@@ -2,5 +2,6 @@ namespace BlogApp.DTOs;
 
 public class RequestBaseDTO
 {
-    public int page {get; set;}
+    public object datas { get; set; }
+    public IFormFile[]? files {get; set;}
 }
