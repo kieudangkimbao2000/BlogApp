@@ -55,11 +55,4 @@ public interface IBlogRepository
     /// <param name="req">search blogs conditions</param>
     /// <returns>List of blogs be suitable to search conditions </returns>
     (List<Blog>, int) SearchBlogs(SearchBlogReqDTO req);
-
-    /// <summary>
-    ///    Get the blog that is being edited by an author
-    /// </summary>
-    /// <param name="username">The author</param>
-    /// <returns>Being edited blog if found, otherwise null</returns>
-    Blog? GetBeingEditedBlog(string username);
 }

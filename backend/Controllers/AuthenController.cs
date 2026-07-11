@@ -3,51 +3,58 @@ namespace BlogApp.Controllers;
 using BlogApp.DTOs;
 using BlogApp.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using BlogApp.Common;
-using Azure;
 using Microsoft.AspNetCore.Authorization;
 
+/// <summary>
+///   Authentication Controller
+/// </summary>
+/// <param name="authenService"></param>
 [ApiController]
 [Route("api/authen")]
-public class AuthenController(IAuthenService authenService) : ControllerBase
+public class AuthenController(IAuthenService authenService, 
+                                IAuthenValidator validator) : ControllerBase
 {
 
+    /// <summary>
+    ///     Route for user login
+    /// </summary>
+    /// <param name="req">Login request</param>
+    /// <returns>Token / Error Message</returns>
     [HttpPost("login")]
-    public ActionResult<LoginRespDTO> LoginUser([FromForm] LoginReqDTO login)
+    public IActionResult LoginUser([FromBody] RequestBaseDTO<LoginReqDTO> req)
     {
-        ResponseBaseDTO resp = authenService.LoginUser(login);
-
-        if (resp.StatusCode == 400)
-        {   
-            return BadRequest(resp);
+        if(!validator.ValidateLoginRequest(req.Datas))
+        {
+            return BadRequest();
         }
-        
-        return Ok(resp);
+
+        var resp = authenService.LoginUser(req.Datas);
+
+        return StatusCode(resp.StatusCode, resp);    
     }
 
     [HttpPost("register")]
     
-    public ActionResult<ResponseBaseDTO> Register([FromBody] RegisterDTO register)
+    /// <summary>
+    ///    Route for user registration
+    /// </summary>
+    /// <param name="req">Registration request</param>
+    /// <returns>Account Info / Error Message</returns>
+    public IActionResult Register([FromForm] RequestBaseDTO<RegisterDTO> req)
     {
-        var resp = authenService.RegisterUser(register);
+        var resp = authenService.RegisterUser(req.Datas);
 
-        switch(resp.StatusCode)
-        {
-            case 400:
-                return BadRequest(resp);
-            case 500:
-                return StatusCode(StatusCodes.Status500InternalServerError, resp);
-            default:
-                break;
-        }
-
-        return Ok(resp);
+        return StatusCode(resp.StatusCode, resp);
     }
 
+    /// <summary>
+    ///   Route for checking the validity of the token
+    /// </summary>
+    /// <returns>Status Code</returns>
     [HttpGet("check-valid-token")]
     [Authorize]
-    public ActionResult<ResponseBaseDTO> CheckValidToken()
+    public IActionResult CheckValidToken()
     {
-        return Ok(new ResponseBaseDTO(200, "Token is valid"));
+        return StatusCode(200, new ResponseBaseDTO(200));
     }
 }

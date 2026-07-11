@@ -1,7 +1,6 @@
 import type { MainNeedsDTO } from "../models/main-needs-dto";
 import BlogService from "./blog-service";
 import TagService from "./tag-service";
-import CategoryService from "./tag-service";
 
 class MainService
 {
@@ -14,9 +13,9 @@ class MainService
                                                         blogService.getFiveLatest(), 
                                                         blogService.getTopFive()]);
 
-        const needs : MainNeedsDTO = {topFiveTags: resp1.datas, 
-                                    fiveLatestBlogs: resp2.datas,
-                                    topFiveBlogs: resp3.datas};
+        const needs : MainNeedsDTO = {topFiveTags: resp1.datas ?? [], 
+                                    fiveLatestBlogs: resp2.datas ?? [],
+                                    topFiveBlogs: resp3.datas ?? []};
 
         return needs;
     }

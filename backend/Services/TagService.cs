@@ -11,7 +11,7 @@ public class TagService(ITagRepository repository) :   ITagService
     {
         var tags = repository.GetAllTags();
 
-        return new TagListRespDTO(tags.ToDTOList(), 200, "");
+        return new ResponseBaseDTO<List<TagDTO>>(tags.ToDTOList(), 200);
     }
 
     public ResponseBaseDTO GetTop5Tags()
@@ -19,7 +19,7 @@ public class TagService(ITagRepository repository) :   ITagService
         var tags = repository.GetTop5Tags();
         
 
-        return new TagListRespDTO(tags.ToDTOList(), 200, "");
+        return new ResponseBaseDTO<List<TagDTO>>(tags.ToDTOList(), 200);
     }
 
     public TagDTO? GetTagByName(string name, ref string errCode)

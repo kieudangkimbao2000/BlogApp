@@ -14,10 +14,13 @@ import useMessage from "../hooks/useMessage";
 import useAuthen from "../hooks/useAuthen";
 import TagService from "../services/tag-service";
 import BlogService from "../services/blog-service";
-import type { BlogDTO, BlogReqDTO, BlogRespDTO } from "../models/generated-interfaces";
+import type { BlogDTO, TagDTO} from "../models/generated-interfaces";
 import Constant from "../common/constant";
 //css
 import '../assets/css/edit-blog-component.css';
+import type { RequestBaseDTO } from "../models/request-base-dto";
+import type { ResponseBaseDTO } from "../models/response-base-dto";
+import { BlogValidator } from "../validator/blog-validator";
 
 const blogService = new BlogService();
 const tagService = new TagService();
@@ -54,14 +57,17 @@ const EditBlogComponent = () => {
         try
         {
             const resp = await tagService.getCategs();
-            setTags(resp.datas?.map(x => x.name ?? '') ?? []);
+
+            if(!resp || !resp.datas || resp.statusCode != 200)
+            {
+                return;
+            }
+
+            setTags(resp.datas.map((x: TagDTO) => x.name ?? '') ?? []);
         }
         catch(err)
         {
-            await showMessage({
-                type: 'error',
-                message: 'Failed to load tags. Please try to reload website!'
-            });
+            window.console.error(err);
         }
     }
 
@@ -75,9 +81,9 @@ const EditBlogComponent = () => {
         {
             setBlogTitle(savedBlog.title);
         }
-        if(savedBlog.coverPhoto != null && savedBlog.coverPhoto != '')
+        if(savedBlog.coverImage != null && savedBlog.coverImage != '')
         {
-            setBlogCoverImg(savedBlog.coverPhoto);
+            setBlogCoverImg(savedBlog.coverImage);
         }
         if(savedBlog.content != null && savedBlog.content != '')
         {
@@ -170,14 +176,17 @@ const EditBlogComponent = () => {
     }
 
     const handleDelete = async () => {
-        const ok = window.confirm('Are you sure you want to delete this blog?');
+        const ok = await showMessage({
+            type: Constant.CONFIRM_MESSAGE_TYPE,
+            message: 'Are you sure you want to delete this blog?'
+        });
         if(!ok) return;
 
-        if(blog.id == null)
+        if(blog.id == null || blog.id == '')
         {
             await showMessage({
-                type: 'error',
-                message: 'Blog ID is not exist. Cannot delete blog.'
+                type: Constant.ERROR_MESSAGE_TYPE,
+                message: 'This blog is new. You cannot delete it!'
             });
             return;
         }
@@ -190,10 +199,10 @@ const EditBlogComponent = () => {
 
             if(resp.StatusCode != 200)
             {
-                if(resp.statusCode == 403)
+                if(resp.StatusCode == 403)
                 {
                     await showMessage({
-                        type: 'error',
+                        type: Constant.ERROR_MESSAGE_TYPE,
                         message: 'Your request is denied'
                     });
                     window.location.href = '/login'
@@ -201,16 +210,21 @@ const EditBlogComponent = () => {
                 else
                 {
                     await showMessage({
-                        type: 'error',
+                        type: Constant.ERROR_MESSAGE_TYPE,
                         message: 'Failed to delete blog. Please try again.'
                     });
                 }
             }
             else
             {
-                setBlog({...blog, id: ''});
+                setBlog({id: '', title: '', content: '', coverImage: '', tags: []});
+                setBlogTitle('');
+                setBlogCoverImg('');
+                editor.commands.setContent('');
+                setSelectedTags([]);
+                localStorage.removeItem('BlogApp-saveblog');
                 await showMessage({
-                    type: 'success',
+                    type: Constant.SUCCESS_MESSAGE_TYPE,
                     message: 'Blog deleted successfully'
                 });
             }
@@ -219,112 +233,104 @@ const EditBlogComponent = () => {
         {
             hideLoading();
             await showMessage({
-                type: 'error',
+                type: Constant.ERROR_MESSAGE_TYPE,
                 message: 'Failed to delete blog. Please try again.'
             });
         }
     }
 
     const handleSave = () => {
-        showLoading();
-        const blogContent = editor.getHTML().toString() ?? '';
-        const savedBlog = ({...blog,
-            title: blogTitle,
-            content: blogContent,
-            coverPhoto: blogCoverImg ?? '',
-            tag: selectedTags ?? []
-        });
-        localStorage.setItem('BlogApp-saveblog', JSON.stringify(blog));
-        hideLoading();
+        try
+        {
+            showLoading();
+            const blogContent = editor.getHTML().toString() ?? '';
+            const savedBlog = ({...blog,
+                title: blogTitle,
+                content: blogContent,
+                coverImage: blogCoverImg ?? '',
+                tags: selectedTags ?? []
+            });
+            localStorage.setItem('BlogApp-saveblog', JSON.stringify(savedBlog));
+            showMessage({
+                type: Constant.SUCCESS_MESSAGE_TYPE,
+                message: 'Blog saved successfully'
+            });
+            hideLoading();
+        }catch(err)
+        {
+            hideLoading();
+            showMessage({
+                type: Constant.ERROR_MESSAGE_TYPE,
+                message: 'Failed to save blog. Please try again.'
+            });
+        }
     }
 
     const handleSubmit = async () => {
         const blogContent = editor.getHTML().toString() ?? '';
 
-        const result = await checkForSubmit();
-        if(!result) return;
-
         const req = ({
-            blog: {...blog,
+            datas: {...blog,
                 title: blogTitle,
                 content: blogContent,
-                authorId: user.Usename,
-                tag: selectedTags ?? [],
+                authorId: user.Username,
+                tags: [...selectedTags ?? []],
                 state: Constant.SAVED_BLOG_STATE,
             } as BlogDTO,
-            files: (imgRef.current?.files && imgRef.current.files.length > 0) ? imgRef.current?.files[0] : []
-        }) as BlogReqDTO;
+            base64Strings: (imgRef.current?.files && imgRef.current.files.length > 0) ? [blogCoverImg] : []
+        }) as RequestBaseDTO<BlogDTO>;
 
         try
         {
             showLoading();
-            let resp : BlogRespDTO = {};
-            if(blog == null || blog.id == null || blog.id == '')
-            {
-                resp = await blogService.createBlog(req);
+            let resp : ResponseBaseDTO;
+            const [isValid, errorMessage] = BlogValidator.validateAddBlogRequest(req.datas);
+            if(!isValid) {
+                hideLoading();
+                setErrMsg(errorMessage ?? 'Invalid blog data. Please check your input.');
+                window.scrollTo(0, 0);
+                return;
             }
-            else
-            {
-                resp = await blogService.updateBlog(req);
-            }
+
+            resp = await blogService.addBlog(req);
             hideLoading();
 
-            if(resp.statusCode != 200)
+            if(resp.StatusCode != 200)
             {
-                if(resp.statusCode == 403)
+                if(resp.StatusCode == 403)
                 {
                     await showMessage({
-                        type: 'error',
-                        message: 'Your request is denied!'
+                        type: Constant.ERROR_MESSAGE_TYPE,
+                        message: 'Your request is denied'
                     });
-                    window.location.href = '/login';
+                    window.location.href = '/login'
                 }
                 else
                 {
                     await showMessage({
-                        type: 'error',
-                        message: 'Failed to save blog. Please try again!'   
+                        type: Constant.ERROR_MESSAGE_TYPE,
+                        message: 'Failed to save blog. Please try again!'
                     });
                 }
             }
             else
             {
-                    await showMessage({
-                        type: 'success',
-                        message: 'Blog is saved successfully!'   
-                    });
+                setBlog({...blog, id: resp.datas?.id});
+                await showMessage({
+                    type: Constant.SUCCESS_MESSAGE_TYPE,
+                    message: 'Blog saved successfully'
+                });
             }
         }
         catch(ex)
         {
             hideLoading();
             await showMessage({
-                type: 'error',
+                type: Constant.ERROR_MESSAGE_TYPE,
                 message: 'Failed to save blog. Please try again!'   
             });
         }
     };
-
-    const checkForSubmit = async () : Promise<boolean> => {
-        const blogContent = editor.getHTML().toString() ?? '';
-        if(blogTitle == null || blogTitle == '')
-        {
-            setErrMsg("Please enter blog's title!");
-            return false
-        }
-        if(blogContent == '')
-        {
-            setErrMsg("Please enter blog's content!");
-            return false;
-        }
-        if(selectedTags == null || selectedTags.length == 0)
-        {
-            setErrMsg("Please select blog's tags!");
-            return false;
-        }
-
-        return true;
-    }
 
     return (
         <>

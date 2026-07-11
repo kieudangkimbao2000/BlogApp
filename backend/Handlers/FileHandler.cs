@@ -11,27 +11,32 @@ public class FileHandler(ILogger<FileHandler> logger)
     /// <param name="desFolder"></param>
     /// <param name="file"></param>
     /// <returns>True if saving file successfully, else fase</returns>
-    public async Task<bool> SaveImgFile(string username, string fileName,string desFolder , IFormFile file)
+    public async Task<bool> SaveImgFile(string username, string fileName,string desFolder , String base64String)
     {
         try
         {
+            // Accept both raw base64 and data URL format: data:image/jpeg;base64,...
+            int commaIndex = base64String.IndexOf(',');
+            string rawBase64 = commaIndex >= 0 ? base64String[(commaIndex + 1)..] : base64String;
+
             string folderPath = Path.Combine("./datas", username, desFolder);
             string filePath = Path.Combine(folderPath, fileName);
 
-            if(Directory.Exists(Directory.GetParent(folderPath).FullName))
+            if(!Directory.Exists(folderPath))
             {
                 Directory.CreateDirectory(folderPath);
             }
 
             using var stream = new FileStream(filePath, FileMode.Create);
 
-            await file.CopyToAsync(stream);
+            byte[] bytes = Convert.FromBase64String(rawBase64);
+            await stream.WriteAsync(bytes, 0, bytes.Length);
         }
         catch(UnauthorizedAccessException ex)
         {
             logger.LogError(ex,"");
             return false;
-        }
+        } 
         catch(Exception ex)
         {
             logger.LogError(ex,"");
@@ -51,7 +56,7 @@ public class FileHandler(ILogger<FileHandler> logger)
     public bool DeleteImgFile(string username, string fileName, string desFolder)
     {
         try{
-            string filePath = Path.Combine(username, desFolder, fileName);
+            string filePath = Path.Combine("datas", username, desFolder, fileName);
             if(!File.Exists(filePath)) return false;
 
             File.Delete(filePath);

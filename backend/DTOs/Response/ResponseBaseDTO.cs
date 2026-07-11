@@ -3,11 +3,19 @@ namespace BlogApp.DTOs;
 public class ResponseBaseDTO
 {
     public int StatusCode {get; set;}
-    public string Message { get; set;}
-
-    public ResponseBaseDTO(int stat, string msg)
+    public ResponseBaseDTO(int stat)
     {
         this.StatusCode = stat;
-        this.Message = msg;
+
     }
 }
+
+public class ResponseBaseDTO<T> : ResponseBaseDTO
+{
+    public T Datas { get; set; }
+
+    public ResponseBaseDTO(T datas, int stat) : base(stat)
+    {
+        this.Datas = datas;
+    }
+}   

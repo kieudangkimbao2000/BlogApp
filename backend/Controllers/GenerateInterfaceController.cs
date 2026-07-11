@@ -45,12 +45,6 @@ public class GenerateInterfaceController() : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<PageDTO<BlogDTO>> GetPageDTO()
-    {
-        return Ok();
-    }
-
-    [HttpGet]
     public ActionResult<ReportDTO> GetReportDTO()
     {
         return Ok();
@@ -79,18 +73,6 @@ public class GenerateInterfaceController() : ControllerBase
 
     #region Request DTOs
     [HttpGet]
-    public ActionResult<BlogReqDTO> GetBlogReqDTO()
-    {
-        return Ok();
-    }
-
-    [HttpGet]
-    public ActionResult<RequestBaseDTO> GetReqDTO()
-    {
-        return Ok();
-    }
-
-    [HttpGet]
     public ActionResult<SearchBlogReqDTO> GetSearchBlogReqDTO()
     {
         return Ok();
@@ -98,45 +80,12 @@ public class GenerateInterfaceController() : ControllerBase
     #endregion
 
     #region Response DTOs
-
-    [HttpGet]
-    public ActionResult<AccountRespDTO> GetAccountRespDTO()
-    {
-        return Ok();
-    }
-
-    [HttpGet]
-    public ActionResult<BlogListRespDTO> GetBlogListRespDTO()
-    {
-        return Ok();
-    }
-
-    [HttpGet]
-    public ActionResult<BlogPageRespDTO> GetBlogPageRespDTO()
-    {
-        return Ok();
-    }
-
-    [HttpGet]
-    public ActionResult<BlogRespDTO> GetBlogRespDTO()
-    {
-        return Ok();
-    }
-
-    [HttpGet]
+        [HttpGet]
     public ActionResult<LoginRespDTO> GetLoginRespDTO()
     {
         return Ok();
     }
-    
-    [HttpGet]
-    public ActionResult<ResponseBaseDTO> GetRespDTO()
-    {
-        return Ok();
-    }
-
-    [HttpGet]
-    public ActionResult<TagListRespDTO> GetTagListRespDTO()
+    public ActionResult<ErrorRespDTO> GetResponseBaseDTO()
     {
         return Ok();
     }

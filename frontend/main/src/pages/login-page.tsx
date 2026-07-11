@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import type { LoginReq } from '../common/model';
+import type { LoginReqDTO } from '../models/generated-interfaces';
 
 import '../assets/css/common.css';
 import '../assets/css/login.css';
@@ -10,11 +10,12 @@ import BlogAppMessage from '../common/message';
 import useLoading from '../hooks/useLoading';
 import useMessage from '../hooks/useMessage';
 import { Modal } from '@mui/material';
+import type { RequestBaseDTO } from '../models/request-base-dto';
 
 const LoginPage = () => {
     const service = new LoginService();
 
-    const [login, setLogin] = useState<LoginReq>({username: '', password: ''});
+    const [login, setLogin] = useState<LoginReqDTO>({username: '', password: ''});
     const [message, setMessage] = useState<string>('');
     const navigate = useNavigate();
     const {showLoading, hideLoading, LoadingComponent} = useLoading();
@@ -39,13 +40,18 @@ const LoginPage = () => {
         //main handle
         try
         {
-            const resp = await service.Login({...login});
+            const req : RequestBaseDTO<LoginReqDTO> = {
+                datas: login,
+                base64Files: []
+            };
+
+            const resp = await service.Login(req);
 
             if(resp != null)
             {
-                if(resp.statusCode == 200 && resp.jwt != null)
+                if(resp.statusCode == 200 && resp.datas != null)
                 {
-                    localStorage.setItem('JWT', resp.jwt);
+                    localStorage.setItem('JWT', resp.datas.token ?? '');
                     navigate('/blog');
                     
                     return;

@@ -3,6 +3,7 @@ namespace BlogApp.Entities;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 public class Blog
     {
@@ -11,8 +12,9 @@ public class Blog
         [Required]
         public string Title { get; set; }
         [Required]
-        public string Content { get; set; }
-        public string CoverImage {get; set;}
+        public byte[] Content { get; set; }
+        [AllowNull]
+        public string CoverImage { get; set; }
         [Required]
         public string[] Tags { get; set; }
         [DefaultValue(0)]

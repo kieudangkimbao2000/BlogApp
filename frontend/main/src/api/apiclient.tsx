@@ -4,18 +4,13 @@ class ApiClient
 {
     static async post<T>(endpoint: string, req: any) : Promise<T>
     {
-        const formdata = new FormData();
-        for(const key in req)
-        {
-            formdata.append(key, req[key]);
-        }
-
         const resp = await fetch(`${import.meta.env.VITE_API_URL}/${endpoint}`, {
             method: 'POST',
             headers: {
-                'Authorization': `Bearer ${localStorage.getItem('JWT')}`
+                'Authorization': `Bearer ${localStorage.getItem('JWT')}`,
+                'Content-Type': 'application/json'
             },
-            body: formdata
+            body: JSON.stringify(req)
         });
 
         const data = await resp.json();

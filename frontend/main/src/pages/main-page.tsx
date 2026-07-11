@@ -1,6 +1,6 @@
 //liraries
 import { useEffect, useRef, useState } from 'react';
-import { Link, Outlet, replace, useLocation, useNavigate } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { Avatar } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';

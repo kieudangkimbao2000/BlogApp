@@ -24,7 +24,14 @@ const SelectTagComponent = () => {
         showLoading();
         try{
             const resp = await service.getCategs();
-            setTags(resp.datas ?? []);
+
+            if(!resp || !resp.datas || resp.statusCode != 200)
+            {
+                hideLoading();
+                return;
+            }
+
+            setTags(resp.datas as TagDTO[]);
             hideLoading();
         }catch(err)
         {

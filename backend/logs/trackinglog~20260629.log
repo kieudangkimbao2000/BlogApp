@@ -1848,3 +1848,148 @@ ORDER BY t."Name" DESC
 2026-06-29 22:48:24.529 +07:00 [INF] Application started. Press Ctrl+C to shut down.
 2026-06-29 22:48:24.529 +07:00 [INF] Hosting environment: Development
 2026-06-29 22:48:24.529 +07:00 [INF] Content root path: /home/kieudangkimbao2000/WorkSpace/BlogApp/backend
+2026-06-29 23:28:26.108 +07:00 [INF] User profile is available. Using '/home/kieudangkimbao2000/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2026-06-29 23:28:26.316 +07:00 [WRN] The ASP.NET Core developer certificate is not trusted. For information about trusting the ASP.NET Core developer certificate, see https://aka.ms/aspnet/https-trust-dev-cert
+2026-06-29 23:28:26.329 +07:00 [INF] Now listening on: https://localhost:7065
+2026-06-29 23:28:26.329 +07:00 [INF] Now listening on: http://localhost:5059
+2026-06-29 23:28:26.331 +07:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-29 23:28:26.331 +07:00 [INF] Hosting environment: Development
+2026-06-29 23:28:26.331 +07:00 [INF] Content root path: /home/kieudangkimbao2000/WorkSpace/BlogApp/backend
+2026-06-29 23:28:32.485 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5059/openapi/v1.json - null null
+2026-06-29 23:28:32.531 +07:00 [INF] Executing endpoint 'HTTP: GET /openapi/{documentName}.json'
+2026-06-29 23:28:32.681 +07:00 [INF] Executed endpoint 'HTTP: GET /openapi/{documentName}.json'
+2026-06-29 23:28:32.683 +07:00 [INF] HTTP GET /openapi/v1.json responded 200 in 173.4939 ms
+2026-06-29 23:28:32.686 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5059/openapi/v1.json - 200 null application/json;charset=utf-8 202.1547ms
+2026-06-29 23:29:58.061 +07:00 [INF] User profile is available. Using '/home/kieudangkimbao2000/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2026-06-29 23:29:58.265 +07:00 [WRN] The ASP.NET Core developer certificate is not trusted. For information about trusting the ASP.NET Core developer certificate, see https://aka.ms/aspnet/https-trust-dev-cert
+2026-06-29 23:29:58.279 +07:00 [INF] Now listening on: https://localhost:7065
+2026-06-29 23:29:58.280 +07:00 [INF] Now listening on: http://localhost:5059
+2026-06-29 23:29:58.281 +07:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-29 23:29:58.281 +07:00 [INF] Hosting environment: Development
+2026-06-29 23:29:58.281 +07:00 [INF] Content root path: /home/kieudangkimbao2000/WorkSpace/BlogApp/backend
+2026-06-29 23:38:30.050 +07:00 [INF] User profile is available. Using '/home/kieudangkimbao2000/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2026-06-29 23:38:30.256 +07:00 [WRN] The ASP.NET Core developer certificate is not trusted. For information about trusting the ASP.NET Core developer certificate, see https://aka.ms/aspnet/https-trust-dev-cert
+2026-06-29 23:38:30.270 +07:00 [INF] Now listening on: https://localhost:7065
+2026-06-29 23:38:30.270 +07:00 [INF] Now listening on: http://localhost:5059
+2026-06-29 23:38:30.272 +07:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-29 23:38:30.272 +07:00 [INF] Hosting environment: Development
+2026-06-29 23:38:30.272 +07:00 [INF] Content root path: /home/kieudangkimbao2000/WorkSpace/BlogApp/backend
+2026-06-29 23:38:34.418 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5059/openapi/v1.json - null null
+2026-06-29 23:38:34.462 +07:00 [INF] Executing endpoint 'HTTP: GET /openapi/{documentName}.json'
+2026-06-29 23:38:34.605 +07:00 [INF] Executed endpoint 'HTTP: GET /openapi/{documentName}.json'
+2026-06-29 23:38:34.607 +07:00 [INF] HTTP GET /openapi/v1.json responded 200 in 165.8404 ms
+2026-06-29 23:38:34.610 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5059/openapi/v1.json - 200 null application/json;charset=utf-8 193.9485ms
+2026-06-29 23:40:22.094 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5059/openapi/v1.json - null null
+2026-06-29 23:40:22.095 +07:00 [INF] Executing endpoint 'HTTP: GET /openapi/{documentName}.json'
+2026-06-29 23:40:22.115 +07:00 [INF] Executed endpoint 'HTTP: GET /openapi/{documentName}.json'
+2026-06-29 23:40:22.116 +07:00 [INF] HTTP GET /openapi/v1.json responded 200 in 20.6731 ms
+2026-06-29 23:40:22.116 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5059/openapi/v1.json - 200 null application/json;charset=utf-8 22.3278ms
+2026-06-29 23:41:42.814 +07:00 [INF] User profile is available. Using '/home/kieudangkimbao2000/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2026-06-29 23:41:43.008 +07:00 [WRN] The ASP.NET Core developer certificate is not trusted. For information about trusting the ASP.NET Core developer certificate, see https://aka.ms/aspnet/https-trust-dev-cert
+2026-06-29 23:41:43.021 +07:00 [INF] Now listening on: https://localhost:7065
+2026-06-29 23:41:43.021 +07:00 [INF] Now listening on: http://localhost:5059
+2026-06-29 23:41:43.023 +07:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-29 23:41:43.023 +07:00 [INF] Hosting environment: Development
+2026-06-29 23:41:43.023 +07:00 [INF] Content root path: /home/kieudangkimbao2000/WorkSpace/BlogApp/backend
+2026-06-29 23:41:46.473 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5059/openapi/v1.json - null null
+2026-06-29 23:41:46.518 +07:00 [INF] Executing endpoint 'HTTP: GET /openapi/{documentName}.json'
+2026-06-29 23:41:46.665 +07:00 [INF] Executed endpoint 'HTTP: GET /openapi/{documentName}.json'
+2026-06-29 23:41:46.667 +07:00 [INF] HTTP GET /openapi/v1.json responded 200 in 170.1387 ms
+2026-06-29 23:41:46.670 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5059/openapi/v1.json - 200 null application/json;charset=utf-8 198.8415ms
+2026-06-29 23:42:32.057 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5059/openapi/v1.json - null null
+2026-06-29 23:42:32.059 +07:00 [INF] Executing endpoint 'HTTP: GET /openapi/{documentName}.json'
+2026-06-29 23:42:32.077 +07:00 [INF] Executed endpoint 'HTTP: GET /openapi/{documentName}.json'
+2026-06-29 23:42:32.077 +07:00 [INF] HTTP GET /openapi/v1.json responded 200 in 18.7440 ms
+2026-06-29 23:42:32.077 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5059/openapi/v1.json - 200 null application/json;charset=utf-8 20.1396ms
+2026-06-29 23:42:59.132 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5059/openapi/v1.json - null null
+2026-06-29 23:42:59.134 +07:00 [INF] Executing endpoint 'HTTP: GET /openapi/{documentName}.json'
+2026-06-29 23:42:59.147 +07:00 [INF] Executed endpoint 'HTTP: GET /openapi/{documentName}.json'
+2026-06-29 23:42:59.147 +07:00 [INF] HTTP GET /openapi/v1.json responded 200 in 14.6935 ms
+2026-06-29 23:42:59.147 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5059/openapi/v1.json - 200 null application/json;charset=utf-8 15.3712ms
+2026-06-29 23:45:35.064 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5059/openapi/v1.json - null null
+2026-06-29 23:45:35.065 +07:00 [INF] Executing endpoint 'HTTP: GET /openapi/{documentName}.json'
+2026-06-29 23:45:35.076 +07:00 [INF] Executed endpoint 'HTTP: GET /openapi/{documentName}.json'
+2026-06-29 23:45:35.076 +07:00 [INF] HTTP GET /openapi/v1.json responded 200 in 10.8880 ms
+2026-06-29 23:45:35.076 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5059/openapi/v1.json - 200 null application/json;charset=utf-8 11.8012ms
+2026-06-29 23:45:53.747 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5059/openapi/v1.json - null null
+2026-06-29 23:45:53.747 +07:00 [INF] Executing endpoint 'HTTP: GET /openapi/{documentName}.json'
+2026-06-29 23:45:53.756 +07:00 [INF] Executed endpoint 'HTTP: GET /openapi/{documentName}.json'
+2026-06-29 23:45:53.756 +07:00 [INF] HTTP GET /openapi/v1.json responded 200 in 8.8458 ms
+2026-06-29 23:45:53.756 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5059/openapi/v1.json - 200 null application/json;charset=utf-8 9.3587ms
+2026-06-29 23:45:56.608 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5059/openapi/v1.json - null null
+2026-06-29 23:45:56.608 +07:00 [INF] Executing endpoint 'HTTP: GET /openapi/{documentName}.json'
+2026-06-29 23:45:56.614 +07:00 [INF] Executed endpoint 'HTTP: GET /openapi/{documentName}.json'
+2026-06-29 23:45:56.615 +07:00 [INF] HTTP GET /openapi/v1.json responded 200 in 6.4124 ms
+2026-06-29 23:45:56.615 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5059/openapi/v1.json - 200 null application/json;charset=utf-8 7.0096ms
+2026-06-29 23:46:20.188 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5059/openapi/v1.json - null null
+2026-06-29 23:46:20.189 +07:00 [INF] Executing endpoint 'HTTP: GET /openapi/{documentName}.json'
+2026-06-29 23:46:20.194 +07:00 [INF] Executed endpoint 'HTTP: GET /openapi/{documentName}.json'
+2026-06-29 23:46:20.194 +07:00 [INF] HTTP GET /openapi/v1.json responded 200 in 5.6848 ms
+2026-06-29 23:46:20.195 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5059/openapi/v1.json - 200 null application/json;charset=utf-8 6.2196ms
+2026-06-29 23:46:42.938 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5059/openapi/v1.json - null null
+2026-06-29 23:46:42.938 +07:00 [INF] Executing endpoint 'HTTP: GET /openapi/{documentName}.json'
+2026-06-29 23:46:42.952 +07:00 [INF] Executed endpoint 'HTTP: GET /openapi/{documentName}.json'
+2026-06-29 23:46:42.952 +07:00 [INF] HTTP GET /openapi/v1.json responded 200 in 14.3355 ms
+2026-06-29 23:46:42.953 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5059/openapi/v1.json - 200 null application/json;charset=utf-8 14.8179ms
+2026-06-29 23:50:05.453 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5059/openapi/v1.json - null null
+2026-06-29 23:50:05.454 +07:00 [INF] Executing endpoint 'HTTP: GET /openapi/{documentName}.json'
+2026-06-29 23:50:05.459 +07:00 [INF] Executed endpoint 'HTTP: GET /openapi/{documentName}.json'
+2026-06-29 23:50:05.459 +07:00 [INF] HTTP GET /openapi/v1.json responded 200 in 5.4674 ms
+2026-06-29 23:50:05.459 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5059/openapi/v1.json - 200 null application/json;charset=utf-8 5.8908ms
+2026-06-29 23:58:33.171 +07:00 [INF] User profile is available. Using '/home/kieudangkimbao2000/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2026-06-29 23:58:33.375 +07:00 [WRN] The ASP.NET Core developer certificate is not trusted. For information about trusting the ASP.NET Core developer certificate, see https://aka.ms/aspnet/https-trust-dev-cert
+2026-06-29 23:58:33.390 +07:00 [INF] Now listening on: https://localhost:7065
+2026-06-29 23:58:33.390 +07:00 [INF] Now listening on: http://localhost:5059
+2026-06-29 23:58:33.392 +07:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-29 23:58:33.392 +07:00 [INF] Hosting environment: Development
+2026-06-29 23:58:33.392 +07:00 [INF] Content root path: /home/kieudangkimbao2000/WorkSpace/BlogApp/backend
+2026-06-29 23:58:38.633 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5059/openapi/v1.json - null null
+2026-06-29 23:58:38.681 +07:00 [INF] Executing endpoint 'HTTP: GET /openapi/{documentName}.json'
+2026-06-29 23:58:38.836 +07:00 [INF] Executed endpoint 'HTTP: GET /openapi/{documentName}.json'
+2026-06-29 23:58:38.839 +07:00 [INF] HTTP GET /openapi/v1.json responded 200 in 180.7691 ms
+2026-06-29 23:58:38.843 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5059/openapi/v1.json - 200 null application/json;charset=utf-8 211.0215ms
+2026-06-29 23:59:04.969 +07:00 [INF] User profile is available. Using '/home/kieudangkimbao2000/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2026-06-29 23:59:05.175 +07:00 [WRN] The ASP.NET Core developer certificate is not trusted. For information about trusting the ASP.NET Core developer certificate, see https://aka.ms/aspnet/https-trust-dev-cert
+2026-06-29 23:59:05.189 +07:00 [INF] Now listening on: https://localhost:7065
+2026-06-29 23:59:05.189 +07:00 [INF] Now listening on: http://localhost:5059
+2026-06-29 23:59:05.191 +07:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-29 23:59:05.191 +07:00 [INF] Hosting environment: Development
+2026-06-29 23:59:05.191 +07:00 [INF] Content root path: /home/kieudangkimbao2000/WorkSpace/BlogApp/backend
+2026-06-29 23:59:10.223 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5059/openapi/v1.json - null null
+2026-06-29 23:59:10.273 +07:00 [INF] Executing endpoint 'HTTP: GET /openapi/{documentName}.json'
+2026-06-29 23:59:10.437 +07:00 [INF] Executed endpoint 'HTTP: GET /openapi/{documentName}.json'
+2026-06-29 23:59:10.440 +07:00 [INF] HTTP GET /openapi/v1.json responded 200 in 190.6747 ms
+2026-06-29 23:59:10.444 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5059/openapi/v1.json - 200 null application/json;charset=utf-8 221.8285ms
+2026-06-29 23:59:35.431 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5059/ - null null
+2026-06-29 23:59:35.432 +07:00 [INF] HTTP GET / responded 404 in 0.4401 ms
+2026-06-29 23:59:35.433 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5059/ - 404 0 null 1.8223ms
+2026-06-29 23:59:35.434 +07:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost:5059/, Response status code: 404
+2026-06-29 23:59:43.487 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5059/swagger - null null
+2026-06-29 23:59:43.493 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5059/swagger - 302 0 null 5.043ms
+2026-06-29 23:59:43.494 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5059/swagger/index.html?url=/openapi/v1.json - null null
+2026-06-29 23:59:43.555 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5059/swagger/index.html?url=/openapi/v1.json - 200 null text/html; charset=utf-8 61.223ms
+2026-06-29 23:59:43.561 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5059/swagger/index.css - null null
+2026-06-29 23:59:43.562 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5059/swagger/swagger-ui.css - null null
+2026-06-29 23:59:43.562 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5059/swagger/swagger-ui-standalone-preset.js - null null
+2026-06-29 23:59:43.562 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5059/swagger/swagger-ui-bundle.js - null null
+2026-06-29 23:59:43.573 +07:00 [INF] Sending file. Request path: '/index.css'. Physical path: 'N/A'
+2026-06-29 23:59:43.573 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5059/swagger/index.css - 200 218 text/css 11.4476ms
+2026-06-29 23:59:43.598 +07:00 [INF] Sending file. Request path: '/swagger-ui.css'. Physical path: 'N/A'
+2026-06-29 23:59:43.598 +07:00 [INF] Sending file. Request path: '/swagger-ui-standalone-preset.js'. Physical path: 'N/A'
+2026-06-29 23:59:43.598 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5059/swagger/swagger-ui.css - 200 154988 text/css 36.4224ms
+2026-06-29 23:59:43.598 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5059/swagger/swagger-ui-standalone-preset.js - 200 229224 text/javascript 36.3316ms
+2026-06-29 23:59:43.599 +07:00 [INF] Sending file. Request path: '/swagger-ui-bundle.js'. Physical path: 'N/A'
+2026-06-29 23:59:43.599 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5059/swagger/swagger-ui-bundle.js - 200 1468327 text/javascript 37.3944ms
+2026-06-29 23:59:43.837 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5059/openapi/v1.json - null null
+2026-06-29 23:59:43.840 +07:00 [INF] Executing endpoint 'HTTP: GET /openapi/{documentName}.json'
+2026-06-29 23:59:43.857 +07:00 [INF] Executed endpoint 'HTTP: GET /openapi/{documentName}.json'
+2026-06-29 23:59:43.857 +07:00 [INF] HTTP GET /openapi/v1.json responded 200 in 19.3051 ms
+2026-06-29 23:59:43.857 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5059/openapi/v1.json - 200 null application/json;charset=utf-8 20.1785ms
+2026-06-29 23:59:46.865 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5059/swagger/http://localhost:5059 - null null
+2026-06-29 23:59:46.866 +07:00 [INF] HTTP GET /swagger/http://localhost:5059 responded 404 in 0.1330 ms
+2026-06-29 23:59:46.866 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5059/swagger/http://localhost:5059 - 404 0 null 1.2828ms
+2026-06-29 23:59:46.866 +07:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost:5059/swagger/http://localhost:5059, Response status code: 404
+2026-06-29 23:59:58.304 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5059/swagger/openapi/v1.json - null null
+2026-06-29 23:59:58.306 +07:00 [INF] HTTP GET /swagger/openapi/v1.json responded 404 in 0.1920 ms
+2026-06-29 23:59:58.306 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5059/swagger/openapi/v1.json - 404 0 null 2.7923ms
+2026-06-29 23:59:58.307 +07:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost:5059/swagger/openapi/v1.json, Response status code: 404

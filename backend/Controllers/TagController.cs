@@ -1,21 +1,29 @@
 namespace BlogApp.Controllers;
 
-using BlogApp.Common;
 using BlogApp.DTOs;
 using BlogApp.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+/// <summary>
+///   Tag Controller
+/// </summary>
+/// <param name="service"></param>
 [ApiController]
 [Route("api/tags")]
 [Authorize]
 public class TagController(ITagService service) : ControllerBase
 {
+    /// <summary>
+    ///     Route for retrieving all tags
+    /// </summary>
+    /// <returns>List of all tags</returns>
     [HttpGet]
-    [AllowAnonymous]
-    public ActionResult<TagListRespDTO> GetAllTags()
+    public ActionResult GetAllTags()
     {
-        return Ok(service.GetAllTags());
+        var resp = service.GetAllTags();
+            
+        return StatusCode(resp.StatusCode, resp);
     }
 
     [HttpGet("{name}")]
@@ -26,7 +34,7 @@ public class TagController(ITagService service) : ControllerBase
 
         if (tag == null)
         {
-            return NotFound(AppMessages.GetMessage(errCode));
+            return NotFound();
         }
 
         return Ok(tag);
@@ -42,15 +50,15 @@ public class TagController(ITagService service) : ControllerBase
         {
             if (errCode == "E3002")
             {
-                return BadRequest(AppMessages.GetMessage(errCode));
+                return BadRequest();
             }
             else
             {
-                return StatusCode(500,AppMessages.GetMessage(errCode));
+                return StatusCode(500,"");
             }
         }
 
-        return Ok(AppMessages.GetMessage("I3001"));
+        return Ok();
     }
 
     [HttpPut]
@@ -63,15 +71,15 @@ public class TagController(ITagService service) : ControllerBase
         {
             if (errCode == "E3001")
             {
-                return NotFound(AppMessages.GetMessage(errCode));
+                return NotFound();
             }
             else
             {
-                return StatusCode(500,AppMessages.GetMessage(errCode));
+                return StatusCode(500,"");
             }
         }
 
-        return Ok(AppMessages.GetMessage("I3002"));
+        return Ok();
     }
 
     [HttpDelete("{name}")]
@@ -84,23 +92,27 @@ public class TagController(ITagService service) : ControllerBase
         {
             if (errCode == "E3001")
             {
-                return NotFound(AppMessages.GetMessage(errCode));
+                return NotFound();
             }
             else
             {
-                return StatusCode(500,AppMessages.GetMessage(errCode));
+                return StatusCode(500,"");
             }
         }
 
-        return Ok(AppMessages.GetMessage("I3003"));
+        return Ok();
     }
 
+    /// <summary>
+    ///    Route for retrieving the 5 most popular tags
+    /// </summary>
+    /// <returns>List of 5 most popular tags</returns>
     [AllowAnonymous]
     [HttpGet("topfive")]
     public ActionResult GetTop5Tags()
     {
         var resp = service.GetTop5Tags();
 
-        return Ok(resp);
+        return StatusCode(resp.StatusCode, resp);
     }
 }

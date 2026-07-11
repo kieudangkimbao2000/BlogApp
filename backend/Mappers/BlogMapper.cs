@@ -16,7 +16,7 @@ public static class BlogMapper
         {
             Id = blog.Id,
             Title = blog.Title,
-            Content = blog.Content,
+            Content = System.Text.Encoding.UTF8.GetString(blog.Content),
             CoverImage = blog.CoverImage,
             Tags = blog.Tags,
             State = blog.State,
@@ -40,10 +40,10 @@ public static class BlogMapper
         {
             Id = blogDTO.Id,
             Title = blogDTO.Title,
-            Content = blogDTO.Content,
-            CoverImage = blogDTO.CoverImage,
+            Content = System.Text.Encoding.UTF8.GetBytes(blogDTO.Content),
+            CoverImage = blogDTO.CoverImage ?? "",
             Tags = blogDTO.Tags,
-            AmountOfAccesses = blogDTO.AmountOfAccesses,
+            AmountOfAccesses = blogDTO.AmountOfAccesses ?? 0,
             State = blogDTO.State,
             AuthorId = blogDTO.AuthorId
         };

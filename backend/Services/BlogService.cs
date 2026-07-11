@@ -4,22 +4,18 @@ using BlogApp.Entities;
 using BlogApp.Interfaces;
 using BlogApp.Mappers;
 using BlogApp.DTOs;
-using BlogApp.DTOs;
 using BlogApp.Handlers;
+using Azure;
+using BlogApp.Common;
 
 /// <summary>
 ///     Implement Blog Service Interface
 /// </summary>
 /// <param name="repository"></param>
 public class BlogService(IBlogRepository repository,
-                            FileHandler handler): IBlogService
+                            FileHandler handler,
+                            IBlogValidator validator): IBlogService
 {
-    public List<BlogDTO> GetAllBlogs()
-    {
-        var blogs = repository.GetAllBlogs();
-        return blogs.ToDTOList();
-    }
-    
     public List<BlogDTO> GetBlogsByAuthor(string author)
     {
         var blogs = repository.GetBlogsByAuthor(author);
@@ -47,47 +43,44 @@ public class BlogService(IBlogRepository repository,
         return blogDTO;
     }
 
-    public async Task<ResponseBaseDTO> AddBlog(BlogReqDTO req)
+    public async Task<ResponseBaseDTO> AddBlog(BlogDTO blog, string[] base64Strings)
     {
         bool result = false;
-        BlogDTO blog = req.Blog;
         blog.Id = "blog-"+DateTime.Now.ToString("yyyyMMddHHmmss");
 
-        // if(req.files != null && req.files.Length > 0)
-        // {
-        //     string fileName = blog.Id + ".png";
-        //     bool resultSave = await handler.SaveImgFile(blog.AuthorId, fileName, "blogs", req.files[0]);
-        //     if(!resultSave)
-        //     {
-        //         return new ResponseBaseDTO(stat: 500, "A error occured when add a blog!");
-        //     }
-        //     blog.CoverImage = Path.Combine(blog.AuthorId, fileName);
-        // }
-
-        var exBlog = repository.GetBlogById(blog.Id);
-        if (blog != null) 
+        if(base64Strings != null && base64Strings.Length > 0)
         {
-            return new ResponseBaseDTO(stat: 409, "Blog's already exist!");
+            string fileName = blog.Id + ".png";
+            bool resultSave = await handler.SaveImgFile(blog.AuthorId, fileName, "blogs", base64Strings[0]);
+            if(!resultSave)
+            {
+                return new ResponseBaseDTO<ErrorRespDTO>(new ErrorRespDTO(AppMessages.E1003), 500);
+            }
+            blog.CoverImage = Path.Combine(blog.AuthorId, fileName);
         }
 
+        if(!validator.ValidateAddBlogRequest(blog))
+        {
+            return new ResponseBaseDTO(400);
+        }
+        
         result = repository.AddBlog(blog.ToModel());
         
         if(!result)
         {
-            return new ResponseBaseDTO(stat: 500, "A error occured when add a blog!");
+            return new ResponseBaseDTO<ErrorRespDTO>(new ErrorRespDTO(AppMessages.E1003), 500);
         }
 
-        return new ResponseBaseDTO(stat: 200, "");
+        return new ResponseBaseDTO<BlogDTO>(blog, stat: 200);
     }
 
-    public async Task<ResponseBaseDTO> UpdateBlog(BlogReqDTO req)
+    public async Task<ResponseBaseDTO> UpdateBlog(BlogDTO blog)
     {
-        BlogDTO blog = req.Blog;
         var exsBlog = repository.GetBlogById(blog.Id);
 
-        if (exsBlog == null) 
+        if (exsBlog == null)
         {
-            return new ResponseBaseDTO(403, "Blog's not found!");
+            return new ResponseBaseDTO<ErrorRespDTO>(new ErrorRespDTO(AppMessages.E1001), 403);
         }
 
         // if(req.files != null && req.files.Length > 0)
@@ -96,7 +89,7 @@ public class BlogService(IBlogRepository repository,
         //     var resultSave = await handler.SaveImgFile(blog.AuthorId, fileName, "blogs", req.files[0]);
         //     if(!resultSave)
         //     {
-        //         return new ResponseBaseDTO(500, "A error occured when updating the blog!");
+        //         return new ResponseBaseDTO<ErrorRespDTO>(new ErrorRespDTO(AppMessages.E1005), 500);
         //     }
         //     blog.CoverImage = Path.Combine(blog.AuthorId, fileName);
         // }
@@ -105,36 +98,36 @@ public class BlogService(IBlogRepository repository,
 
         if (!result)
         {
-            return new ResponseBaseDTO(403, "Blog's not found!");
+            return new ResponseBaseDTO<ErrorRespDTO>(new ErrorRespDTO(AppMessages.E1004), 403);
         }
 
-        return new ResponseBaseDTO(200, "");;
+        return new ResponseBaseDTO(stat: 200);
     }
 
     public async Task<ResponseBaseDTO> DeleteBlog(string id)
     {
-        var blog = repository.GetBlogById(id);
+        var exsBlog = repository.GetBlogById(id);
 
-        if (blog == null) 
+        if(!validator.ValidateBeforeDeleteBlog(exsBlog))
         {
-            return new ResponseBaseDTO(403, "Blog's not found!");
+            return new ResponseBaseDTO<ErrorRespDTO>(new ErrorRespDTO(AppMessages.E1002), 403);
         }
 
-        string fileName = Path.GetFileName(blog.CoverImage);
-        var resultDel = handler.DeleteImgFile(blog.AuthorId, fileName, "blogs");
+        string fileName = Path.GetFileName(exsBlog.CoverImage);
+        var resultDel = handler.DeleteImgFile(exsBlog.AuthorId, fileName, "blogs");
         if(!resultDel)
         {
-            return new ResponseBaseDTO(500, "A error occured when deleting the blog!");
+            return new ResponseBaseDTO<ErrorRespDTO>(new ErrorRespDTO(AppMessages.E1005), 500);
         }
 
-        var result = repository.DeleteBlog(blog);
+        var result = repository.DeleteBlog(exsBlog);
 
         if (!result)
         {
-            return new ResponseBaseDTO(500, "A error occured when deleting the blog!");
+            return new ResponseBaseDTO<ErrorRespDTO>(new ErrorRespDTO(AppMessages.E1005), 500);
         }
 
-        return new ResponseBaseDTO(200, "");
+        return new ResponseBaseDTO(200);
     }
 
     public ResponseBaseDTO Get5LatestBlogs()
@@ -143,7 +136,7 @@ public class BlogService(IBlogRepository repository,
                                 .Take(5)
                                 .ToList(); 
 
-        return new BlogListRespDTO(result.ToDTOList(), 200, " ");
+        return new ResponseBaseDTO<List<BlogDTO>>(result.ToDTOList(), 200);
     }
 
     public ResponseBaseDTO GetTop5Blogs()
@@ -155,31 +148,19 @@ public class BlogService(IBlogRepository repository,
 
         
 
-        return new BlogListRespDTO(result.ToDTOList(), 200, " ");
+        return new ResponseBaseDTO<List<BlogDTO>>(result.ToDTOList(), 200);
     }
 
-    public ResponseBaseDTO GetBeingEditedBlog(string username)
+    public ResponseBaseDTO SearchBlogs(SearchBlogReqDTO search)
     {
-        var blog = repository.GetBeingEditedBlog(username);
-
-        if (blog == null)
-        {
-            return new ResponseBaseDTO(404, "Blog not found");
-        }
-
-        return new BlogRespDTO(blog.ToDTO(), 200, " ");
-    }
-
-    public ResponseBaseDTO SearchBlogs(SearchBlogReqDTO req)
-    {
-        (List<Blog> blogs, int totalPages) = repository.SearchBlogs(req);
+        (List<Blog> blogs, int totalPages) = repository.SearchBlogs(search);
 
 
         PageDTO<BlogDTO> blogPage = new PageDTO<BlogDTO>();
-        blogPage.CurPage = (req.CurPage > totalPages) ? totalPages : req.CurPage;
+        blogPage.CurPage = (search.CurPage > totalPages) ? totalPages : search.CurPage;
         blogPage.PageSize = totalPages;
         blogPage.Datas = blogs.ToDTOList();
         
-        return new BlogPageRespDTO(blogPage, 200, " ");
+        return new ResponseBaseDTO<PageDTO<BlogDTO>>(blogPage, 200);
     }
 }

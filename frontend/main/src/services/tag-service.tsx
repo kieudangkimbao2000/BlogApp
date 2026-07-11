@@ -1,18 +1,18 @@
 import ApiClient from "../api/apiclient";
-import type { TagListRespDTO } from "../models/generated-interfaces";
+import type { ResponseBaseDTO } from "../models/response-base-dto";
 
 class TagService{
 
-    async getCategs() : Promise<TagListRespDTO>
+    async getCategs() : Promise<ResponseBaseDTO>
     {
-        const resp = await ApiClient.get<TagListRespDTO>('tags');
+        const resp = await ApiClient.get<ResponseBaseDTO>('tags');
 
         return resp;
     }
 
-    async getTopFive() : Promise<TagListRespDTO>
+    async getTopFive() : Promise<ResponseBaseDTO>
     {
-        const resp =    await ApiClient.get<TagListRespDTO>('tags/topfive');
+        const resp =    await ApiClient.get<ResponseBaseDTO>('tags/topfive');
 
         return resp;
     }

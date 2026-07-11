@@ -3,6 +3,7 @@ using BlogApp.Interfaces;
 using BlogApp.Middlewares;
 using BlogApp.Repositories;
 using BlogApp.Services;
+using BlogApp.Validators;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -29,6 +30,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             IssuerSigningKey = new SymmetricSecurityKey(
                 System.Text.Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecrectKey"])
             ),
+            NameClaimType = "Username",
+            RoleClaimType = "Role",
             ClockSkew = TimeSpan.FromSeconds(5) // Set clock skew to zero to prevent token expiration issues
         };
     });
@@ -38,12 +41,15 @@ builder.Services.AddDbContext<BlogAppContext>(options =>{
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IAuthenService, AuthenService>();
 builder.Services.AddScoped<IBlogRepository, BlogRepository>();
 builder.Services.AddScoped<IBlogService, BlogService>();
 builder.Services.AddScoped<ITagRepository, TagRepository>();
 builder.Services.AddScoped<ITagService, TagService>();
+builder.Services.AddScoped<IBlogValidator, BlogValidator>();
+builder.Services.AddScoped<IAuthenValidator, AuthenValidator>();
 builder.Services.AddSingleton<BlogApp.Handlers.TokenHandler>();
 builder.Services.AddSingleton<BlogApp.Handlers.FileHandler>();
 

@@ -1,7 +1,7 @@
 namespace BlogApp.DTOs;
 
-public class RequestBaseDTO
+public class RequestBaseDTO<T>
 {
-    public object datas { get; set; }
-    public IFormFile[]? files {get; set;}
+    public T Datas { get; set; } = default!;
+    public string[]? Base64Strings { get; set; }
 }

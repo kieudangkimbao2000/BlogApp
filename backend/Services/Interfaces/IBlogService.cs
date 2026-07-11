@@ -9,12 +9,6 @@ using BlogApp.DTOs;
 public interface IBlogService
 {
     /// <summary>
-    ///    Get all blogs
-    /// </summary>
-    /// <returns>List of all blogs</returns>
-    List<BlogDTO> GetAllBlogs();
-
-    /// <summary>
     ///     Get blogs by author
     /// </summary>
     /// <param name="author">Author's username</param>
@@ -34,7 +28,7 @@ public interface IBlogService
     /// </summary>
     /// <param name="blogDTO">Blog data</param>
     /// <returns>True if successfully, otherwise false</returns>
-    Task<ResponseBaseDTO> AddBlog(BlogReqDTO req);
+    Task<ResponseBaseDTO> AddBlog(BlogDTO req, string[] base64Strings);
 
     /// <summary>
     ///     Update a blog
@@ -42,7 +36,7 @@ public interface IBlogService
     /// <param name="blogDTO">Blog data</param>
     /// <param name="errCode">Error code be returned</param>
     /// <returns>True if successfully, otherwise false</returns>
-    Task<ResponseBaseDTO> UpdateBlog(BlogReqDTO blogDTO);
+    Task<ResponseBaseDTO> UpdateBlog(BlogDTO blogDTO);
 
     /// <summary>
     ///    Delete a blog
@@ -70,13 +64,6 @@ public interface IBlogService
     /// <param name="req">Search conditions</param>
     /// <returns>List of blogs be suitable to search condtions</returns>
     ResponseBaseDTO SearchBlogs(SearchBlogReqDTO req);
-
-    /// <summary>
-    ///    Get the blog that is being edited by an author
-    /// </summary>
-    /// <param name="username">the author</param>
-    /// <returns>Being edited blog if found, otherwise null</returns>
-    ResponseBaseDTO GetBeingEditedBlog(string username);
 }
 
 

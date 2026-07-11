@@ -115,9 +115,4 @@ public class BlogRepository(BlogAppContext context,
 
         return (blogs, totalPages);
     }
-
-    public Blog? GetBeingEditedBlog(string username)
-    {
-        return context.Blogs.FirstOrDefault(b => b.AuthorId == username && b.State == 0);
-    }
 }

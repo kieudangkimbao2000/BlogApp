@@ -4,8 +4,6 @@
 // </auto-generated>
 //----------------------
 
-import type { PageDTO } from "./page-dto";
-
 /* eslint-disable */
 // ReSharper disable InconsistentNaming
 
@@ -25,14 +23,6 @@ export interface AccountDTO {
     state?: string;
     createdAt?: string | undefined;
     updatedAt?: string | undefined;
-
-    [key: string]: any;
-}
-
-export interface AccountRespDTO {
-    account?: AccountDTO;
-    statusCode?: number;
-    message?: string;
 
     [key: string]: any;
 }
@@ -63,37 +53,6 @@ export interface BlogLikeDTO {
     [key: string]: any;
 }
 
-export interface BlogListRespDTO {
-    datas?: BlogDTO[];
-    statusCode?: number;
-    message?: string;
-
-    [key: string]: any;
-}
-
-export interface BlogPageRespDTO {
-    page : PageDTO<BlogDTO>;
-    statusCode?: number;
-    message?: string;
-
-    [key: string]: any;
-}
-
-export interface BlogReqDTO {
-    blog?: BlogDTO;
-    datas?: any;
-
-    [key: string]: any;
-}
-
-export interface BlogRespDTO {
-    blog?: BlogDTO | undefined;
-    statusCode?: number;
-    message?: string;
-
-    [key: string]: any;
-}
-
 export interface CommentDTO {
     id?: string;
     content?: string;
@@ -115,17 +74,9 @@ export interface CommentLikeDTO {
     [key: string]: any;
 }
 
-export interface LoginDTO {
+export interface LoginReqDTO {
     username?: string;
     password?: string;
-
-    [key: string]: any;
-}
-
-export interface LoginRespDTO {
-    jwt: string;
-    statusCode?: number;
-    message?: string;
 
     [key: string]: any;
 }
@@ -136,6 +87,14 @@ export interface NotificationDTO {
     targetId?: string;
     createdAt?: string | undefined;
     receiverId?: string;
+
+    [key: string]: any;
+}
+
+export interface PageDTOOfObject {
+    datas?: any[];
+    curPage?: number;
+    pageSize?: number;
 
     [key: string]: any;
 }
@@ -164,22 +123,9 @@ export interface ReportDTO {
     [key: string]: any;
 }
 
-export interface RequestBaseDTO {
-    datas?: any;
-
-    [key: string]: any;
-}
-
-export interface ResponseBaseDTO {
-    statusCode?: number;
-    message?: string;
-
-    [key: string]: any;
-}
-
 export interface SearchBlogReqDTO {
-    searchTitle?: string;
-    tags?: string[];
+    searchTitle?: string | undefined;
+    tags?: string[] | undefined;
     searchFlag?: number;
     curPage?: number;
 
@@ -195,14 +141,6 @@ export interface TagDTO {
     [key: string]: any;
 }
 
-export interface TagListRespDTO {
-    datas?: TagDTO[];
-    statusCode?: number;
-    message?: string;
-
-    [key: string]: any;
-}
-
 export interface Body {
     Username?: string;
     Password?: string;
@@ -211,48 +149,49 @@ export interface Body {
 }
 
 export interface Body2 {
-    "Blog.Id"?: string;
-    "Blog.Title"?: string;
-    "Blog.Content"?: string;
-    "Blog.CoverImage"?: string;
-    "Blog.Tags"?: string[];
-    "Blog.AmountOfAccesses"?: number;
-    "Blog.State"?: number;
-    "Blog.PublishedAt"?: string;
-    "Blog.LikedByUser"?: boolean;
-    "Blog.AuthorId"?: string;
-    "Blog.AuthorName"?: string;
-    "Blog.CreatedAt"?: string;
-    "Blog.UpdatedAt"?: string;
-    datas?: any;
+    "datas.Id"?: string;
+    "datas.Title"?: string;
+    "datas.Content"?: string;
+    "datas.CoverImage"?: string;
+    "datas.Tags"?: string[];
+    "datas.AmountOfAccesses"?: number;
+    "datas.State"?: number;
+    "datas.PublishedAt"?: string;
+    "datas.LikedByUser"?: boolean;
+    "datas.AuthorId"?: string;
+    "datas.AuthorName"?: string;
+    "datas.CreatedAt"?: string;
+    "datas.UpdatedAt"?: string;
+    files?: string[];
 
     [key: string]: any;
 }
 
 export interface Body3 {
-    "Blog.Id"?: string;
-    "Blog.Title"?: string;
-    "Blog.Content"?: string;
-    "Blog.CoverImage"?: string;
-    "Blog.Tags"?: string[];
-    "Blog.AmountOfAccesses"?: number;
-    "Blog.State"?: number;
-    "Blog.PublishedAt"?: string;
-    "Blog.LikedByUser"?: boolean;
-    "Blog.AuthorId"?: string;
-    "Blog.AuthorName"?: string;
-    "Blog.CreatedAt"?: string;
-    "Blog.UpdatedAt"?: string;
-    datas?: any;
+    "datas.Id"?: string;
+    "datas.Title"?: string;
+    "datas.Content"?: string;
+    "datas.CoverImage"?: string;
+    "datas.Tags"?: string[];
+    "datas.AmountOfAccesses"?: number;
+    "datas.State"?: number;
+    "datas.PublishedAt"?: string;
+    "datas.LikedByUser"?: boolean;
+    "datas.AuthorId"?: string;
+    "datas.AuthorName"?: string;
+    "datas.CreatedAt"?: string;
+    "datas.UpdatedAt"?: string;
+    files?: string[];
 
     [key: string]: any;
 }
 
 export interface Body4 {
-    SearchTitle?: string;
-    Tags?: string[];
-    SearchFlag?: number;
-    CurPage?: number;
+    "datas.SearchTitle"?: string;
+    "datas.Tags"?: string[];
+    "datas.SearchFlag"?: number;
+    "datas.CurPage"?: number;
+    files?: string[];
 
     [key: string]: any;
 }

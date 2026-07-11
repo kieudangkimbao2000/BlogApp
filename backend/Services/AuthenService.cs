@@ -15,32 +15,37 @@ using BlogApp.Common;
 /// <param name="repository"></param>
 /// <param name="tokenHandler"></param>
 public class AuthenService (IAccountRepository repository, 
-                            TokenHandler tokenHandler): IAuthenService
+                            TokenHandler tokenHandler,
+                            IAuthenValidator validator): IAuthenService
 {
     public ResponseBaseDTO LoginUser(LoginReqDTO login)
     {
+        if (!validator.ValidateLoginRequest(login))
+        {
+            return new ResponseBaseDTO(400);
+        }
+
         var user = repository.GetAccountByUsername(login.Username);
 
-        if (user != null && 
-            PasswordHandler
-                .VerifyPassword(login.Password, Encoding.UTF8.GetString(user.Password)))
+        if (user != null && PasswordHandler
+                            .VerifyPassword(login.Password, Encoding.UTF8.GetString(user.Password)))
         {
             string jwt = tokenHandler.CreateToken(user.ToDTO());
 
-            return new LoginRespDTO(jwt, 200, "");
+            return new ResponseBaseDTO<LoginRespDTO>(new LoginRespDTO(jwt), 200);
         }
 
-        return new ResponseBaseDTO(400, AppMessages.E0001);
+        return new ResponseBaseDTO<ErrorRespDTO>(new ErrorRespDTO(AppMessages.E0001), 400);
     }
 
     public ResponseBaseDTO RegisterUser(RegisterDTO register)
     {
         bool result = false;
-        var existingAccount = repository.GetAccountByUsername(register.Username);
+        var exsAccount = repository.GetAccountByUsername(register.Username);
 
-        if (existingAccount != null)
+        if (exsAccount != null)
         {
-            return new ResponseBaseDTO(400, AppMessages.E0002);
+            return new ResponseBaseDTO<ErrorRespDTO>(new ErrorRespDTO(AppMessages.E0002), 400);
         }
 
         var account = new Account
@@ -63,9 +68,9 @@ public class AuthenService (IAccountRepository repository,
 
         if (!result)
         {
-           return new ResponseBaseDTO(500, AppMessages.E0003);
+           return new ResponseBaseDTO<ErrorRespDTO>(new ErrorRespDTO(AppMessages.E0003), 500);
         }
 
-        return new AccountRespDTO(account.ToDTO(), 200, "");
+        return new ResponseBaseDTO<AccountDTO>(account.ToDTO(), 200);
     }
 }

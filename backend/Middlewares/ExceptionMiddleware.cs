@@ -12,7 +12,7 @@ public class ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddlewa
         {
             logger.LogError(ex, "", context.Request.Path);
 
-            context.Response.StatusCode = 500;
+            // context.Response.StatusCode = 500;
             await context.Response.WriteAsync("Internal Server Error");
         }
     }

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type { BlogDTO, SearchBlogReqDTO, BlogPageRespDTO } from "../models/generated-interfaces";
+import type { BlogDTO, SearchBlogReqDTO } from "../models/generated-interfaces";
 import type { PageDTO } from "../models/page-dto";
 import BlogService from "../services/blog-service";
 import PageComponent from "./page-component";
@@ -7,6 +7,8 @@ import useLoading from "../hooks/useLoading";
 import useMessage from "../hooks/useMessage";
 import BlogAppMessage from "../common/message";
 import { useOutletContext } from "react-router-dom";
+import type { RequestBaseDTO } from "../models/request-base-dto";
+import Constant from "../common/constant";
 
 const blogService = new BlogService();
 
@@ -21,14 +23,24 @@ const MainListComponent = () => {
         try {
             const search = searchRef?.current ? {...searchRef.current, curPage: page} : 
                                                 {searchTitle: '', tags: [], searchFlag: 0, curPage: page};
-            const resp = await blogService.searchBlog(search)
+            const req: RequestBaseDTO<SearchBlogReqDTO> = {
+                datas: search,
+                base64Strings: []
+            };
+            const resp = await blogService.searchBlog(req);
             
-            setPage(resp.page);
+            if(!resp || !resp.datas || resp.statusCode != 200)
+            {
+                hideLoading();
+                return;
+            }
+
+            setPage(resp.datas as PageDTO<BlogDTO>);
             hideLoading();
         } catch (err) {
             hideLoading();
             await showMessage({
-                type: BlogAppMessage.MSG_ERR_TYPE,
+                type: Constant.ERROR_MESSAGE_TYPE,
                 message: 'A error occured. Please try to reload page!'
             });
         }
