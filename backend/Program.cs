@@ -5,7 +5,9 @@ using BlogApp.Repositories;
 using BlogApp.Services;
 using BlogApp.Validators;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Session;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
 
@@ -52,6 +54,7 @@ builder.Services.AddScoped<IBlogValidator, BlogValidator>();
 builder.Services.AddScoped<IAuthenValidator, AuthenValidator>();
 builder.Services.AddSingleton<BlogApp.Handlers.TokenHandler>();
 builder.Services.AddSingleton<BlogApp.Handlers.FileHandler>();
+builder.Services.AddSingleton<BlogApp.Handlers.EmailHandler>();
 
 builder.Services.AddCors(option =>
 {
@@ -71,6 +74,12 @@ builder.Services.AddOpenApiDocument();
 Log.Logger = new LoggerConfiguration()
                 .ReadFrom.Configuration(builder.Configuration)
                 .CreateLogger();
+
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = builder.Configuration["RedisCacheSettings:ConnectionString"];
+    options.InstanceName = "BlogApp_";
+});
 
 builder.Host.UseSerilog();
 

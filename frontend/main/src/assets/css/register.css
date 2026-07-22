@@ -1,11 +1,11 @@
-.login-form{
+.register-form{
     margin-top: -65px;
     min-width: 400px;
     min-height: 200px;
     background-color: #fffceb;
 }
 
-.login-title{
+.register-title{
     text-align: center;
     font-family: myfont;
     font-size: 84.5px;
@@ -20,16 +20,8 @@
     font-style: italic;
 }
 
-.username-field{
-    font-family: 'Dejavu Serif';
-    font-size: 20px;
-    width: 100%;
-    background-color: #fffceb;
-    height: 40px;
-    border-radius: 10px;
-    padding-left: 10px;
-}
-.password-field
+.username-field, .password-field, .repassword-field,
+.fullname-field, .email-field, .phone-field, .otp-field
 {
     font-family: 'Dejavu Serif';
     font-size: 20px;
@@ -39,18 +31,14 @@
     border-radius: 10px;
     padding-left: 10px;
 }
-.login-btn, .login-btn:hover{
+
+.register-btn, .register-btn:hover{
     background-color: transparent;
     border: none;
     font-family: 'Dejavu Serif';
     font-size: 18px;
     padding: 0px;
 }
-.login-btn:hover{
+.register-btn:hover{
     text-decoration: underline;
-}
-.login-link{
-    font-family: 'Dejavu Serif';
-    color: black;
-    font-size: 15px;
 }

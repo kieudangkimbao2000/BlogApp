@@ -4,6 +4,7 @@ using BlogApp.DTOs;
 using BlogApp.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Caching.Distributed;
 
 /// <summary>
 ///   Authentication Controller
@@ -40,9 +41,22 @@ public class AuthenController(IAuthenService authenService,
     /// </summary>
     /// <param name="req">Registration request</param>
     /// <returns>Account Info / Error Message</returns>
-    public IActionResult Register([FromForm] RequestBaseDTO<RegisterDTO> req)
+    public IActionResult Register([FromBody] RequestBaseDTO<RegisterReqDTO> req)
     {
         var resp = authenService.RegisterUser(req.Datas);
+
+        return StatusCode(resp.StatusCode, resp);
+    }
+
+    [HttpPost("validate-register-info")]
+    public IActionResult ValidateRegisterInfo([FromBody] RequestBaseDTO<RegisterReqDTO> req)
+    {
+        if(!validator.ValidateRegisterRequest(req.Datas))
+        {
+            return BadRequest();
+        }
+
+        var resp = authenService.VerifyRegisterInfo(req.Datas);
 
         return StatusCode(resp.StatusCode, resp);
     }
@@ -56,5 +70,31 @@ public class AuthenController(IAuthenService authenService,
     public IActionResult CheckValidToken()
     {
         return StatusCode(200, new ResponseBaseDTO(200));
+    }
+
+    /// <summary>
+    ///  Route for email authentication
+    /// </summary>
+    /// <param name="req">Email authentication request</param>
+    /// <returns>OTP Hash / Error Message</returns>
+    [HttpPost("authenticate-email")]
+    public IActionResult AuthenticateEmail([FromBody] RequestBaseDTO<AuthenEmailReqDTO> req)
+    {
+        var resp = authenService.AuthenticateEmail(req.Datas);
+
+        return StatusCode(resp.StatusCode, resp);
+    }
+
+    /// <summary>
+    ///     Route for verifying email OTP
+    /// </summary>
+    /// <param name="req">Request for checking the email OTP</param>
+    /// <returns>True if successful, otherwise false</returns>
+    [HttpPost("verify-email-otp")]
+    public IActionResult VerifyOTPEmail([FromBody] RequestBaseDTO<VerifyEmailOTPReqDTO> req)
+    {
+        var resp = authenService.VerifyEmailOTP(req.Datas);
+
+        return StatusCode(resp.StatusCode, resp);
     }
 }

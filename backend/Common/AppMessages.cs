@@ -36,7 +36,10 @@ public static class AppMessages
     // Error messages related to authentication
     public const string E0001 = "Username or password is incorrect!";
     public const string E0002 = "Username already exists!";
-    public const string E0003 = "Error occurred while registering user!";       
+    public const string E0003 = "Error occurred while registering user!";  
+    public const string E0004 = "OTP is not correct!";
+    public const string E0005 = "Email already exists!";
+    public const string E0006 = "Authentication service is temporarily unavailable!";
 
     // Error messages related to blog
     public const string E1001 = "Blog not found!";

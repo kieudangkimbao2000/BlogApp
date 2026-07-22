@@ -11,9 +11,7 @@ public class Account
     [Required]
     public string FullName {get; set; }
     public string Address { get; set; }
-    [Phone]
     public string Phone { get; set; }
-    [EmailAddress]
     [Required]
     public string Email { get; set; }
     public string OtherContact{ get; set; }

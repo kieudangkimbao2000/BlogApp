@@ -1,8 +1,9 @@
 namespace BlogApp.Repositories;
 
-using BlogApp.Dbs;
 using BlogApp.Interfaces;
 using BlogApp.Entities;
+using Microsoft.Extensions.Logging;
+using BlogApp.Dbs;
 
 /// <summary>
 ///     Implement Account Repository Interface
@@ -20,6 +21,11 @@ public class AccountRepository(BlogAppContext context,
     public Account? GetAccountByUsername(string username)
     {
         return context.Accounts.FirstOrDefault(a => a.Username == username);
+    }
+
+    public bool IsEmailExist(string email)
+    {
+        return context.Accounts.Any(a => a.Email == email);
     }
 
     public bool AddAccount(Account account)
@@ -68,5 +74,10 @@ public class AccountRepository(BlogAppContext context,
                              account.Username);
             return false;
         }
+    }
+
+    public Account? GetAccountByEmail(string email)
+    {
+        return context.Accounts.FirstOrDefault(a => a.Email == email);
     }
 }

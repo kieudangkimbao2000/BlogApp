@@ -80,12 +80,6 @@ namespace BlogApp.Migrations
 
                     b.HasKey("Username");
 
-                    b.HasIndex("Email")
-                        .IsUnique();
-
-                    b.HasIndex("Phone")
-                        .IsUnique();
-
                     b.ToTable("Accounts");
                 });
 

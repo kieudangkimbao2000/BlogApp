@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
 [Route("api/blog")]
-public class GenerateInterfaceController() : ControllerBase
+public class GenerateInterfaceController : ControllerBase
 {
     #region Main DTOs
     [HttpGet]
@@ -65,7 +65,25 @@ public class GenerateInterfaceController() : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<RegisterDTO> GetRegisterDTO()
+    public ActionResult<RegisterReqDTO> GetRegisterDTO()
+    {
+        return Ok();
+    }
+
+    [HttpGet]
+    public ActionResult<AuthenEmailReqDTO> GetVerifyEmailReqDTO()
+    {
+        return Ok();
+    }
+
+    [HttpGet]
+    public ActionResult<AuthenEmailRespDTO> GetAuthenEmailRespDTO()
+    {
+        return Ok();
+    }
+
+    [HttpGet]
+    public ActionResult<VerifyEmailOTPReqDTO> GetVerifyEmailOTPReqDTO()
     {
         return Ok();
     }

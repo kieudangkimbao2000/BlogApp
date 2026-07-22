@@ -5,7 +5,6 @@ import BlogService from "../services/blog-service";
 import PageComponent from "./page-component";
 import useLoading from "../hooks/useLoading";
 import useMessage from "../hooks/useMessage";
-import BlogAppMessage from "../common/message";
 import { useOutletContext } from "react-router-dom";
 import type { RequestBaseDTO } from "../models/request-base-dto";
 import Constant from "../common/constant";

@@ -11,12 +11,6 @@ namespace BlogApp.Dbs
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //Account
-            modelBuilder.Entity<Account>()
-                .HasIndex(a => a.Phone).IsUnique();
-            modelBuilder.Entity<Account>()
-                .HasIndex(a => a.Email).IsUnique();
-
             //Tag
             modelBuilder.Entity<Tag>()
                 .HasIndex(c => c.Name).IsUnique();

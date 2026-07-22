@@ -1,6 +1,7 @@
 //liraries
-import { useEffect, useRef, useState } from 'react';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
+import Constant from '../common/constant';
+import { useEffect, useRef, useState } from 'react';
 import { Avatar } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
@@ -8,7 +9,6 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import useAuthen from '../hooks/useAuthen';
 import MainService from '../services/main-service';
 import useMessage from '../hooks/useMessage';
-import BlogAppMessage from '../common/message';
 import type { BlogDTO, TagDTO, SearchBlogReqDTO } from '../models/generated-interfaces';
 //css
 import '../assets/css/main.css';
@@ -48,7 +48,7 @@ const MainPage = () => {
         catch(err)
         {
             showMessage({
-                type: BlogAppMessage.MSG_ERR_TYPE,
+                type: Constant.ERROR_MESSAGE_TYPE,
                 message: err?.toString()  ??  ' '
             });
         }

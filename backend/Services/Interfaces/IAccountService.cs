@@ -39,5 +39,5 @@ public interface IAccountService
     /// </summary>
     /// <param name="username"></param>
     /// <returns>True if successful, otherwise false</returns>
-    bool DeleteAccount(string username);
+    bool DeleteAccount(string username);   
 }

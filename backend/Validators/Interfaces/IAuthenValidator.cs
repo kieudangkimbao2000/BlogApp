@@ -19,5 +19,19 @@ public interface IAuthenValidator
     /// </summary>
     /// <param name="register">The register request DTO</param>
     /// <returns>True if the register request is valid, otherwise false</returns>
-    bool ValidateRegisterRequest(RegisterDTO register);
+    bool ValidateRegisterRequest(RegisterReqDTO register);
+    
+    /// <summary>
+    ///   Validates before registering a user
+    /// </summary>
+    /// <param name="register">The register request DTO</param>
+    /// <returns>True if the user can be registered, otherwise false</returns>
+    bool ValidateBeforeRegisterUser(RegisterReqDTO register);
+
+    /// <summary>
+    ///  Validates the email authentication request
+    /// </summary>
+    /// <param name="req">The email authentication request DTO</param>
+    /// <returns>True if the email authentication request is valid, otherwise false</returns>
+    bool ValidateAuthenticateEmail(AuthenEmailReqDTO req);
 }

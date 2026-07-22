@@ -27,18 +27,30 @@ export interface AccountDTO {
     [key: string]: any;
 }
 
+export interface AuthenEmailReqDTO {
+    email?: string;
+
+    [key: string]: any;
+}
+
+export interface AuthenEmailRespDTO {
+    sessionId?: string;
+
+    [key: string]: any;
+}
+
 export interface BlogDTO {
-    id?: string;
+    id?: string | undefined;
     title?: string;
     content?: string;
-    coverImage?: string;
+    coverImage?: string | undefined;
     tags?: string[];
-    amountOfAccesses?: number;
+    amountOfAccesses?: number | undefined;
     state?: number;
     publishedAt?: string | undefined;
     likedByUser?: boolean | undefined;
     authorId?: string;
-    authorName?: string;
+    authorName?: string | undefined;
     createdAt?: string | undefined;
     updatedAt?: string | undefined;
 
@@ -74,9 +86,21 @@ export interface CommentLikeDTO {
     [key: string]: any;
 }
 
+export interface ErrorRespDTO {
+    message: string;
+
+    [key: string]: any;
+}
+
 export interface LoginReqDTO {
     username?: string;
     password?: string;
+
+    [key: string]: any;
+}
+
+export interface LoginRespDTO {
+    token: string;
 
     [key: string]: any;
 }
@@ -91,23 +115,11 @@ export interface NotificationDTO {
     [key: string]: any;
 }
 
-export interface PageDTOOfObject {
-    datas?: any[];
-    curPage?: number;
-    pageSize?: number;
-
-    [key: string]: any;
-}
-
-export interface RegisterDTO {
+export interface RegisterReqDTO {
     username?: string;
     password?: string;
     fullName?: string;
-    address?: string;
-    phone?: string;
     email?: string;
-    otherContact?: string;
-    description?: string;
 
     [key: string]: any;
 }
@@ -119,6 +131,41 @@ export interface ReportDTO {
     content?: string;
     reporterId?: string;
     createdAt?: string | undefined;
+
+    [key: string]: any;
+}
+
+export interface RequestBaseDTOOfAuthenEmailReqDTO {
+    datas?: AuthenEmailReqDTO | undefined;
+    base64Strings?: string[] | undefined;
+
+    [key: string]: any;
+}
+
+export interface RequestBaseDTOOfBlogDTO {
+    datas?: BlogDTO | undefined;
+    base64Strings?: string[] | undefined;
+
+    [key: string]: any;
+}
+
+export interface RequestBaseDTOOfLoginReqDTO {
+    datas?: LoginReqDTO | undefined;
+    base64Strings?: string[] | undefined;
+
+    [key: string]: any;
+}
+
+export interface RequestBaseDTOOfSearchBlogReqDTO {
+    datas?: SearchBlogReqDTO | undefined;
+    base64Strings?: string[] | undefined;
+
+    [key: string]: any;
+}
+
+export interface RequestBaseDTOOfVerifyEmailOTPReqDTO {
+    datas?: VerifyEmailOTPReqDTO | undefined;
+    base64Strings?: string[] | undefined;
 
     [key: string]: any;
 }
@@ -141,57 +188,19 @@ export interface TagDTO {
     [key: string]: any;
 }
 
+export interface VerifyEmailOTPReqDTO {
+    sessionId?: string;
+    otp?: string;
+
+    [key: string]: any;
+}
+
 export interface Body {
-    Username?: string;
-    Password?: string;
-
-    [key: string]: any;
-}
-
-export interface Body2 {
-    "datas.Id"?: string;
-    "datas.Title"?: string;
-    "datas.Content"?: string;
-    "datas.CoverImage"?: string;
-    "datas.Tags"?: string[];
-    "datas.AmountOfAccesses"?: number;
-    "datas.State"?: number;
-    "datas.PublishedAt"?: string;
-    "datas.LikedByUser"?: boolean;
-    "datas.AuthorId"?: string;
-    "datas.AuthorName"?: string;
-    "datas.CreatedAt"?: string;
-    "datas.UpdatedAt"?: string;
-    files?: string[];
-
-    [key: string]: any;
-}
-
-export interface Body3 {
-    "datas.Id"?: string;
-    "datas.Title"?: string;
-    "datas.Content"?: string;
-    "datas.CoverImage"?: string;
-    "datas.Tags"?: string[];
-    "datas.AmountOfAccesses"?: number;
-    "datas.State"?: number;
-    "datas.PublishedAt"?: string;
-    "datas.LikedByUser"?: boolean;
-    "datas.AuthorId"?: string;
-    "datas.AuthorName"?: string;
-    "datas.CreatedAt"?: string;
-    "datas.UpdatedAt"?: string;
-    files?: string[];
-
-    [key: string]: any;
-}
-
-export interface Body4 {
-    "datas.SearchTitle"?: string;
-    "datas.Tags"?: string[];
-    "datas.SearchFlag"?: number;
-    "datas.CurPage"?: number;
-    files?: string[];
+    "Datas.Username"?: string;
+    "Datas.Password"?: string;
+    "Datas.FullName"?: string;
+    "Datas.Email"?: string;
+    Base64Strings?: string[];
 
     [key: string]: any;
 }

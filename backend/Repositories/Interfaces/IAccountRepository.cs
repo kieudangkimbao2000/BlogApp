@@ -21,6 +21,13 @@ public interface IAccountRepository
     Account? GetAccountByUsername(string username);
 
     /// <summary>
+    ///    Check if an email is already exist in the database
+    /// </summary>
+    /// <param name="email">Email to be checked</param>
+    /// <returns>True if the email exists, otherwise false</returns>
+    bool IsEmailExist(string email);
+
+    /// <summary>
     ///     Add an account
     /// </summary>
     /// <param name="account">Account data</param>
@@ -40,4 +47,11 @@ public interface IAccountRepository
     /// <param name="account">Account data</param>
     /// <returns>True if successfully, otherwise false</returns>
     bool DeleteAccount(Account account);
+
+    /// <summary>
+    ///  Get an account by email
+    /// </summary>
+    /// <param name="email">Email to be found</param>
+    /// <returns>The account if found, otherwise null</returns>
+    Account? GetAccountByEmail(string email);
 }

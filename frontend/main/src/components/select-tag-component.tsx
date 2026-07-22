@@ -3,9 +3,9 @@ import type { TagDTO, SearchBlogReqDTO } from "../models/generated-interfaces";
 import '../assets/css/select-categ-component.css'
 import { useOutletContext } from "react-router-dom";
 import CategoryService from "../services/tag-service";
+import Constant from "../common/constant";
 import useLoading from "../hooks/useLoading";
 import useMessage from "../hooks/useMessage";
-import BlogAppMessage from "../common/message";
 
 const service = new CategoryService();
 
@@ -37,7 +37,7 @@ const SelectTagComponent = () => {
         {
             hideLoading();
             await showMessage({
-                type: BlogAppMessage.MSG_ERR_TYPE,
+                type: Constant.ERROR_MESSAGE_TYPE,
                 message: 'Lỗi hệ thống. Hãy thử loading lại trang.'
             });
         }
