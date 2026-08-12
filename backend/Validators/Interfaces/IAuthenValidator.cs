@@ -34,4 +34,11 @@ public interface IAuthenValidator
     /// <param name="req">The email authentication request DTO</param>
     /// <returns>True if the email authentication request is valid, otherwise false</returns>
     bool ValidateAuthenticateEmail(AuthenEmailReqDTO req);
+
+    /// <summary>
+    ///   Validates the change password request
+    /// </summary>
+    /// <param name="req">The change password request DTO</param>
+    /// <returns>True if the change password request is valid, otherwise false</returns>
+    bool ValidateChangePasswordRequest(ChangePasswordReqDTO req);
 }

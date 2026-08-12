@@ -1,7 +1,7 @@
 //libraries
 import { Link, useNavigate } from 'react-router-dom';
 //modules
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { AuthenValidator } from '../validator/authen-validator';
 import type { LoginReqDTO } from '../models/generated-interfaces';
 import LoginService from '../services/authen-service';
@@ -15,7 +15,7 @@ import '../assets/css/login.css';
 
 const LoginPage = () => {
     const service = new LoginService();
-
+    
     const [login, setLogin] = useState<LoginReqDTO>({username: '', password: ''});
     const [message, setMessage] = useState<string>('');
     const navigate = useNavigate();
@@ -41,6 +41,8 @@ const LoginPage = () => {
 
             const resp = await service.Login(req);
 
+            hideLoading();
+
             if(resp != null)
             {
                 if(resp.statusCode == 200 && resp.datas != null)
@@ -52,15 +54,19 @@ const LoginPage = () => {
                 }
                 else
                 {
-                    if(resp.statusCode == 500)
+                    if(resp.statusCode == 403)
+                    {
+                        localStorage.setItem('JWT', '');
+                        setMessage(resp.datas.message);
+                    }
+                    else
                     {
                         await showMessage({
                             type: Constant.ERROR_MESSAGE_TYPE,
-                            message: resp.message ?? 'Internal server error'
+                            message: resp.datas.message ?? 'Internal server error'
                         });
                     }
                 }
-                hideLoading();
             }
         }
         catch(err)
@@ -123,7 +129,7 @@ const LoginPage = () => {
                         </div>
                         <div className='row' style={{padding: '0px 30px 30px 30px'}}>
                                 <div className='col' >
-                                    <Link to={''} className='login-link'>Forgot password</Link>
+                                    <Link to={'/forgot-password'} className='login-link'>Forgot password</Link>
                                 </div>
                         </div>
                     </div>

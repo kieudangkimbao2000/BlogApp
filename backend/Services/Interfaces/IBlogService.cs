@@ -1,6 +1,5 @@
 namespace BlogApp.Interfaces;
 
-using BlogApp.Mappers;
 using BlogApp.DTOs;
 
 /// <summary>
@@ -21,7 +20,7 @@ public interface IBlogService
     /// <param name="id">Blog's Id</param>
     /// <param name="errCode">Error code be returned</param>
     /// <returns>Blog if found, otherwise null</returns>
-    BlogDTO GetBlogById(string id, string? userId, ref string errCode);
+    ResponseBaseDTO GetBlogById(string id);
 
     /// <summary>
     ///     Add a blog
@@ -64,6 +63,14 @@ public interface IBlogService
     /// <param name="req">Search conditions</param>
     /// <returns>List of blogs be suitable to search condtions</returns>
     ResponseBaseDTO SearchBlogs(SearchBlogReqDTO req);
+
+    /// <summary>
+    ///    Get blog details
+    /// </summary>
+    /// <param name="id">Blog's Id</param>
+    /// <param name="username">User's username (optional)</param>
+    /// <returns>Blog details if found, otherwise null</returns>
+    ResponseBaseDTO GetBlogDetails(string id, string? username);
 }
 
 

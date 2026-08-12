@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using BlogApp.Common;
 
 namespace BlogApp.DTOs
 {
@@ -10,7 +11,7 @@ namespace BlogApp.DTOs
         public string? CoverImage { get; set;}
         public string[] Tags { get; set; }
         public int? AmountOfAccesses { get; set; }
-        public int State { get; set; }
+        public BlogState State { get; set; }
         public DateTime? PublishedAt { get; set; }
         public bool? LikedByUser { get; set; }
         public string AuthorId { get; set; }

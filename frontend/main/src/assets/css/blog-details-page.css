@@ -1,0 +1,12 @@
+.blog-detail-title {
+    text-align: center;
+    margin-top: 50px;
+    font-family: 'Dejavu Serif';
+}
+
+.blog-detail-content{
+    margin-top: 30px;
+    font-family: 'Dejavu Serif';
+    padding-bottom: 20px;
+    min-width: 960px;
+}

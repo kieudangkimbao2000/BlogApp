@@ -1,0 +1,97 @@
+.profile-page {
+    width: 100vw;
+    height: 100vh;
+    background-color: #f5f5f5;
+    display: flex;
+    flex-direction: row;
+}
+
+.p-left-menu {
+    width: 20%;
+    height: 100%;
+    background-color: #99f0ff;
+    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+    border-radius: 0 20px 20px 0;
+}
+
+.p-left-menu-avatar {
+    width: 50%;
+    border-radius: 50%;
+    background-color: transparent;
+    margin-bottom: 20px;
+    aspect-ratio: 1/1;
+    position: relative;
+    overflow: hidden;
+}
+.p-left-menu-avatar img {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+.p-left-menu-choose-avatar {
+    color: transparent;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    object-fit: cover;
+}
+.p-left-menu-choose-avatar:hover {
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.p-left-menu-line {
+    width: 80%;
+    height: 3px;
+    background-color: #ffffff;
+    margin: 20px 0;
+}
+
+.p-left-menu-item {
+    width: 80%;
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 30px;
+    color: #1800ad;
+    font-family: 'DM Sans', sans-serif;
+}
+
+.p-left-menu-item:hover {
+    color: #ffffff;
+    background-color: #1800ad;
+    border-radius: 10px;
+    transition: all 0.3s ease-in-out;
+}
+
+.p-left-menu-item-active {
+    color: #ffffff;
+    background-color: #1800ad;
+    border-radius: 10px;
+}
+
+.p-left-menu-footer {
+    width: 100%;
+    margin-top: auto;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-size: 20px;
+    color: #1800ad;
+    font-family: 'DM Sans', sans-serif;
+}

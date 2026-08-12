@@ -1,5 +1,6 @@
 namespace BlogApp.Repositories;
 
+using BlogApp.Common;
 using BlogApp.Dbs;
 using BlogApp.DTOs;
 using BlogApp.Entities;
@@ -81,7 +82,7 @@ public class BlogRepository(BlogAppContext context,
         var page = req.CurPage > 0 ? req.CurPage : 1;
         const int pageSize = 10;
 
-        var query = context.Blogs.AsQueryable<Blog>();
+        var query = context.Blogs.AsQueryable<Blog>().Where(x => x.State == BlogState.PUBLISHED);
 
         if (!string.IsNullOrWhiteSpace(req.SearchTitle))
         {

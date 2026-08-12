@@ -6,10 +6,9 @@ const Constant = {
     CONFIRM_MESSAGE_TYPE: 3,
     
     // Blog states
-    SAVED_BLOG_STATE: 0,
-    UNPUBLISHED_BLOG_STATE: 1,
-    PUBLISHED_BLOG_STATE: 2,
-    DELETED_BLOG_STATE: 3,
+    UNPUBLISHED_BLOG_STATE: 0,
+    PUBLISHED_BLOG_STATE: 1,
+    DELETED_BLOG_STATE: 2,
 }
 
 export default Constant;

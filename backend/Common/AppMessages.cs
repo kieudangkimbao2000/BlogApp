@@ -40,6 +40,7 @@ public static class AppMessages
     public const string E0004 = "OTP is not correct!";
     public const string E0005 = "Email already exists!";
     public const string E0006 = "Authentication service is temporarily unavailable!";
+    public const string E0007 = "Change password failed! Please check your old password and try again.";
 
     // Error messages related to blog
     public const string E1001 = "Blog not found!";
@@ -54,6 +55,7 @@ public static class AppMessages
     public const string E2003 = "Error occurred while adding account!";
     public const string E2004 = "Error occurred while updating account!";
     public const string E2005 = "Error occurred while deleting account!";
+    public const string E2006 = "Error occurred while uploading avatar!";
 
     // Error messages related to category
     public const string E3001 = "Category not found!";

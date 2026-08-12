@@ -54,6 +54,8 @@
     border: 1px solid black;
     border-top: none;
     margin-bottom: 40px;
+    min-width: 960px;
+    font-family: 'Dejavu Serif';
 }
 
 .editor-content > div
@@ -126,4 +128,8 @@
 .err-msg-elm::before
 {
     content: '*';
+}
+
+.editor-toolbar-btn.active{
+    background-color: #c41010;
 }

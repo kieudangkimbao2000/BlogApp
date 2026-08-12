@@ -40,4 +40,12 @@ public interface IAccountService
     /// <param name="username"></param>
     /// <returns>True if successful, otherwise false</returns>
     bool DeleteAccount(string username);   
+
+    /// <summary>
+    ///   Upload avatar for an account
+    /// </summary>
+    /// <param name="username">Username of the account</param>
+    /// <param name="base64String">Base64 encoded avatar image</param>
+    /// <returns>Response indicating success or failure</returns>
+    ResponseBaseDTO UploadAvatar(string username, string base64String);
 }

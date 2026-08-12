@@ -14,11 +14,15 @@ using Microsoft.AspNetCore.Mvc;
 [Authorize]
 public class BlogController(IBlogService service) : ControllerBase
 {
+    /// <summary>
+    ///   Route for retrieving a blog by its ID
+    /// </summary>
+    /// <param name="id">Blog ID</param>
+    /// <returns>Blog details</returns>
     [HttpGet("{id}")]
     public ActionResult<BlogDTO> GetBlogById(string id)
     {
-        string errCode = "";
-        var blog = service.GetBlogById(id, null, ref errCode);
+        var blog = service.GetBlogById(id);
 
         if (blog == null) return NotFound();
 
@@ -74,7 +78,7 @@ public class BlogController(IBlogService service) : ControllerBase
     {
         var resp = service.Get5LatestBlogs();
 
-        return Ok(resp);
+        return StatusCode(resp.StatusCode, resp);
     }
 
     /// <summary>
@@ -87,7 +91,7 @@ public class BlogController(IBlogService service) : ControllerBase
     {
         var resp = service.GetTop5Blogs();
 
-        return Ok(resp);
+        return StatusCode(resp.StatusCode, resp);
     }
 
     /// <summary>
@@ -101,6 +105,16 @@ public class BlogController(IBlogService service) : ControllerBase
     {
         var resp = service.SearchBlogs(req.Datas);
 
-        return Ok(resp);
+        return StatusCode(resp.StatusCode, resp);
+    }
+
+    [AllowAnonymous]
+    [HttpGet("details/{id}")]
+    public ActionResult GetBlogDetails(string id)
+    {
+        var username = User.Identity?.Name;
+        var resp = service.GetBlogDetails(id, username);
+
+        return StatusCode(resp.StatusCode, resp);
     }
 }

@@ -1,17 +1,17 @@
 //liraries
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import Constant from '../common/constant';
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { Avatar } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 //modules
-import useAuthen from '../hooks/useAuthen';
 import MainService from '../services/main-service';
 import useMessage from '../hooks/useMessage';
 import type { BlogDTO, TagDTO, SearchBlogReqDTO } from '../models/generated-interfaces';
 //css
 import '../assets/css/main.css';
+import { AuthContext } from '../App';
 
 const mainService = new MainService();
 
@@ -22,7 +22,7 @@ const MainPage = () => {
     const [topFiveBlogs, setTopFiveBlogs] = useState<BlogDTO[]>();
     const [searchTitle, setSearchTitle] = useState<string>('');
     const [isSearching, setIsSearching] = useState<boolean>(false);
-    const [user] = useAuthen();
+    const auth = useContext(AuthContext);
     const navigate = useNavigate();
     const searchRef = useRef<SearchBlogReqDTO>({    searchTitle: '',
                                                     tags: [],
@@ -31,6 +31,7 @@ const MainPage = () => {
                                                 });
 
     useEffect(()=> {
+        auth?.handleLoadingUserInfo();
         handleGetNeeds();
     }, []);
 
@@ -66,12 +67,15 @@ const MainPage = () => {
         {
             case 'new':
                 searchRef.current = {searchTitle: '', searchFlag: value, tags: [], curPage: 1};
+                setSearchTitle('');
                 break;
             case 'top':
                 searchRef.current = {searchTitle: '', searchFlag: value, tags: [], curPage: 1};
+                setSearchTitle('');
                 break;
             case 'categ':
                 searchRef.current = {searchTitle: '', searchFlag: 0, tags: [value], curPage: 1};
+                setSearchTitle(''); 
                 break;
         }
     };
@@ -113,8 +117,8 @@ const MainPage = () => {
                             { (topFiveCategs && topFiveCategs.length > 0) ? 
                                 <>
                                     <div style={{border: '1px solid black', margin: '10px'}}></div>
-                                    {topFiveCategs.map((categ) => (
-                                        <div className='left-link'>
+                                    {topFiveCategs.map((categ, index) => (
+                                        <div key={index} className='left-link'>
                                             <Link to={''} onClick={() => {
                                                 setValueToSearchRef(categ.name, 'categ');
                                                 handleSearch();}}>
@@ -125,7 +129,7 @@ const MainPage = () => {
                                 </> : null
                             }
                             <div style={{border: '1px solid black', margin: '10px'}}></div>
-                            {user?.Username ? 
+                            {auth?.user?.Username ? 
                                 <>
                                     <div className='left-link d-flex' style={{justifyContent: 'center'}}>
                                         <Avatar>K</Avatar>
@@ -139,6 +143,7 @@ const MainPage = () => {
                                     <div className='left-link'>
                                         <Link to={'/login'} onClick={() => {
                                             localStorage.setItem('JWT', '');
+                                            auth?.handleLoadingUserInfo();
                                             }}>Logout</Link>
                                     </div>
                                 </> :
@@ -161,8 +166,8 @@ const MainPage = () => {
                             <div style={{border: '1px solid black', margin: '0px 10px 10px 10px'}}></div>
                             {
                                 (fiveLatestBlogs && fiveLatestBlogs.length > 0) ?
-                                   fiveLatestBlogs.map((blog) => (
-                                        <div className='right-link'>
+                                   fiveLatestBlogs.map((blog, index) => (
+                                        <div key={index} className='right-link'>
                                              <Link to={'/blog/' + blog.id} title={blog.title}>{blog.title}1</Link>
                                         </div>
                                    )) : null
@@ -174,8 +179,8 @@ const MainPage = () => {
                             <div style={{border: '1px solid black', margin: '0px 10px 10px 10px'}}></div>
                             {
                                 (topFiveBlogs && topFiveBlogs.length > 0) ?
-                                   topFiveBlogs.map((blog) => (
-                                        <div className='right-link'>
+                                   topFiveBlogs.map((blog, index) => (
+                                        <div key={index} className='right-link'>
                                             <Link to={'/blog/' + blog.id} title={blog.title}>{blog.title}1</Link>
                                         </div>
                                    )) : null

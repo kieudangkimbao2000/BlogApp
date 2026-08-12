@@ -95,6 +95,11 @@ public class GenerateInterfaceController : ControllerBase
     {
         return Ok();
     }
+    [HttpGet]
+    public ActionResult<UploadAvatarReqDTO> GetUploadAvatarReqDTO()
+    {
+        return Ok();
+    }
     #endregion
 
     #region Response DTOs

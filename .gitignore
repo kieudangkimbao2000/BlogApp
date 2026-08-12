@@ -5,3 +5,6 @@
 /Migrations
 /backend/*.csproj.lscache
 /backend/Migrations
+/backend/logs
+/backend/datas
+/tests

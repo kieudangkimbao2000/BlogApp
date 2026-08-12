@@ -1,4 +1,4 @@
-import type { RegisterReqDTO } from "../models/generated-interfaces";
+import type { ChangePasswordReqDTO, RegisterReqDTO } from "../models/generated-interfaces";
 
 export class AuthenValidator
 {
@@ -71,6 +71,65 @@ export class AuthenValidator
         // Validate password match
         if (register.password !== register.repassword) {
             message = this.ERROR_MESSAGES.PASSWORDS_DO_NOT_MATCH;
+            return [false, message];
+        }
+
+        // Validate logic conditions
+        if(register.username.length < 3 || register.username.length > 20) {
+            message = "Username must be at least 3 and at most 20 characters long";
+            return [false, message];
+        }
+        if(register.password.length < 8 || register.password.length > 20) {
+            message = "Password must be at least 8 and at most 20 characters long";
+            return [false, message];
+        }
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        if (!passwordRegex.test(register.password)) {
+            message = "Password must contain at least one uppercase letter, "+
+                        "one lowercase letter, one number, and one special character";
+            return [false, message];
+        }
+
+        
+        return [true];
+    }
+
+    public static validateChangePasswordRequest = (changePassword: ChangePasswordReqDTO): [boolean, string?] => {
+        let message: string = "";
+        if (!changePassword) {
+            message = this.ERROR_MESSAGES.EMAIL_REQUIRED;
+            return [false, message];
+        }
+        
+        // Validate required fields
+        if (!changePassword.email || changePassword.email.trim() === "") {
+            message = this.ERROR_MESSAGES.EMAIL_REQUIRED;
+            return [false, message];
+        }
+        if (!changePassword.newPassword || changePassword.newPassword.trim() === "") {
+            message = this.ERROR_MESSAGES.PASSWORD_REQUIRED;
+            return [false, message];
+        }
+        if (!changePassword.rePassword || changePassword.rePassword.trim() === "") {
+            message = this.ERROR_MESSAGES.REPASSWORD_REQUIRED;
+            return [false, message];
+        }
+        
+        // Validate password match
+        if (changePassword.newPassword !== changePassword.rePassword) {
+            message = this.ERROR_MESSAGES.PASSWORDS_DO_NOT_MATCH;
+            return [false, message];
+        }
+
+        // Validate logic conditions
+        if(changePassword.newPassword.length < 8 || changePassword.newPassword.length > 20) {
+            message = "New password must be at least 8 and at most 20 characters long";
+            return [false, message];
+        }
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        if (!passwordRegex.test(changePassword.newPassword)) {
+            message = "New password must contain at least one uppercase letter, "+
+                        "one lowercase letter, one number, and one special character";
             return [false, message];
         }
         

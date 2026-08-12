@@ -15,7 +15,7 @@ using StackExchange.Redis;
 /// </summary>
 /// <param name="repository"></param>
 /// <param name="tokenHandler"></param>
-public class AuthenService (IAccountRepository repository, 
+public class    AuthenService (IAccountRepository repository, 
                             TokenHandler tokenHandler,
                             IAuthenValidator validator,
                             EmailHandler emailHandler,
@@ -38,7 +38,7 @@ public class AuthenService (IAccountRepository repository,
             return new ResponseBaseDTO<LoginRespDTO>(new LoginRespDTO(jwt), 200);
         }
 
-        return new ResponseBaseDTO<ErrorRespDTO>(new ErrorRespDTO(AppMessages.E0001), 400);
+        return new ResponseBaseDTO<ErrorRespDTO>(new ErrorRespDTO(AppMessages.E0001), 403);
     }
 
     public ResponseBaseDTO RegisterUser(RegisterReqDTO register)
@@ -158,5 +158,26 @@ public class AuthenService (IAccountRepository repository,
         }
 
         return new ResponseBaseDTO<ErrorRespDTO>(new ErrorRespDTO(AppMessages.E0004), 400);
+    }
+
+    public ResponseBaseDTO ChangePassword(ChangePasswordReqDTO changePassword)
+    {
+        var account = repository.GetAccountByEmail(changePassword.Email);
+
+        if (account == null)
+        {
+            return new ResponseBaseDTO<ErrorRespDTO>(new ErrorRespDTO(AppMessages.E2001), 400);
+        }
+
+        account.Password = Encoding.UTF8.GetBytes(PasswordHandler.HashPassword(changePassword.NewPassword));
+
+        bool result = repository.UpdateAccount(account);
+
+        if (!result)
+        {
+            return new ResponseBaseDTO<ErrorRespDTO>(new ErrorRespDTO(AppMessages.E0007), 500);
+        }
+
+        return new ResponseBaseDTO(200);
     }
 }

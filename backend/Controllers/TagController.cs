@@ -19,6 +19,7 @@ public class TagController(ITagService service) : ControllerBase
     /// </summary>
     /// <returns>List of all tags</returns>
     [HttpGet]
+    [AllowAnonymous]
     public ActionResult GetAllTags()
     {
         var resp = service.GetAllTags();

@@ -50,6 +50,7 @@ builder.Services.AddScoped<IBlogRepository, BlogRepository>();
 builder.Services.AddScoped<IBlogService, BlogService>();
 builder.Services.AddScoped<ITagRepository, TagRepository>();
 builder.Services.AddScoped<ITagService, TagService>();
+builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<IBlogValidator, BlogValidator>();
 builder.Services.AddScoped<IAuthenValidator, AuthenValidator>();
 builder.Services.AddSingleton<BlogApp.Handlers.TokenHandler>();

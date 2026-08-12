@@ -70,7 +70,8 @@ const SelectTagComponent = () => {
                 <ul className="categ-list">
                     {
                         tags.map((tag) =>
-                            <li className={'categ-item ' +
+                            <li key={tag.name}
+                                className={'categ-item ' +
                                     (selectTags.includes(tag.name ?? '', 0) ? 'select-categ-item' : '')} 
                                 onClick={() => handleSelectCateg(tag.name ?? '')}>{tag.name}</li>
                         )

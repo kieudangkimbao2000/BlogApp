@@ -2,7 +2,7 @@
   "version": "0.2.0",
   "configurations": [    
     {
-      "type": "pwa-chrome",
+      "type": "chrome",
       "request": "launch",
       "name": "FrontEnd Main",
       "url": "http://localhost:5173",
@@ -20,6 +20,6 @@
       "stopAtEntry": false,
       "console": "integratedTerminal",
       "preLaunchTask": "dotnet:build-api"
-    }
+    },
   ]
 }

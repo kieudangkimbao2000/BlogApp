@@ -43,6 +43,6 @@
 	  "options": {
 		"cwd": "${workspaceFolder}/backend"
 	  }
-	}
+	},
   ]
 }

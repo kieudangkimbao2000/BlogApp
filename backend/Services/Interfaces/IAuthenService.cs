@@ -43,4 +43,11 @@ public interface IAuthenService
    /// <param name="verifyEmail">Request containing OTP sent to the email and session id</param>
    /// <returns>Status Code</returns>
    ResponseBaseDTO VerifyEmailOTP(VerifyEmailOTPReqDTO verifyEmail);
+
+   /// <summary>
+   ///  Change password for a user
+   /// </summary>
+   /// <param name="changePassword">Request containing old and new passwords</param>
+   /// <returns>Status Code</returns>
+   ResponseBaseDTO ChangePassword(ChangePasswordReqDTO changePassword);
 }

@@ -1,6 +1,5 @@
 .main-area{
     z-index: 1;
-    width: 70%;
     margin-bottom: 60px;
 }
 
@@ -57,6 +56,7 @@
 
 .list-area{
     padding-bottom: 10px;
+    min-width: 960px;
 }
 
 .item{
@@ -65,6 +65,7 @@
     border-radius: 10px;
     margin: 10px 0px 10px 0px;
     padding: 10px 0px 10px 0px;
+    cursor: pointer;
 }
 
 .item-title{
@@ -123,4 +124,8 @@
     padding: 0px;
     background-color: transparent;
     border: none;
+}
+
+.cate-list{
+    min-width: 960px;
 }

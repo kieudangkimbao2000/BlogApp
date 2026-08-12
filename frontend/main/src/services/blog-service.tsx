@@ -53,6 +53,13 @@ class BlogService {
 
         return resp;
     }
+
+    async getBlogDetails(blogId: string) : Promise<ResponseBaseDTO>
+    {
+        const resp = await ApiClient.get<ResponseBaseDTO>(`blog/details/${blogId}`);
+
+        return resp;
+    }
 }
 
 export default BlogService;

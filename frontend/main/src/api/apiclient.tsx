@@ -1,5 +1,3 @@
-import type { forEach } from "@tiptap/core";
-
 class ApiClient
 {
     static async post<T>(endpoint: string, req: any) : Promise<T>
@@ -11,12 +9,17 @@ class ApiClient
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(req)
+        }).then((resp) => {
+            if(resp.headers.get('Content-Type')?.includes('application/json')) {
+                return resp.json();
+            } else {
+                return {statusCode: resp.status, message: resp.statusText};
+            }
+        }).catch((err) => {
+            return {statusCode: 500, message: err.message} as T;
         });
 
-        const data = await resp.json();
-
-        return {...data, StatusCode: (!data.statusCode || data.statusCode == 0) ? 
-                                                        resp.status : data.statusCode} as T;
+        return resp;
     }
 
     static async get<T>(endpoint: string) : Promise<T>
@@ -26,11 +29,17 @@ class ApiClient
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('JWT')}`
             }
+        }).then((resp) => {
+            if(resp.headers.get('Content-Type')?.includes('application/json')) {
+                return resp.json();
+            } else {
+                return {statusCode: resp.status, message: resp.statusText};
+            }
+        }).catch((err) => {
+            return {statusCode: 500, message: err.message} as T;
         });
-        const data = await resp.json();
 
-        return {...data, StatusCode: (!data.StatusCode || data.StatusCode == 0) ? 
-                                                        resp.status : data.StatusCode} as T;
+        return resp;
     }
 
     static async delete<T>(endpoint: string) : Promise<T>
@@ -40,11 +49,17 @@ class ApiClient
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('JWT')}`
             }
+        }).then((resp) => {
+            if(resp.headers.get('Content-Type')?.includes('application/json')) {
+                return resp.json();
+            } else {
+                return {statusCode: resp.status, message: resp.statusText};
+            }
+        }).catch((err) => {
+            return {statusCode: 500, message: err.message} as T;
         });
-        const data = await resp.json();
 
-        return {...data, StatusCode: (!data.StatusCode || data.StatusCode == 0) ? 
-                                                        resp.status : data.StatusCode} as T;
+        return resp;
     }
 }
 

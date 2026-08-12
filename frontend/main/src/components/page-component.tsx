@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import '../assets/css/page-component.css'
 
 interface PageComponentProps
@@ -9,14 +9,6 @@ interface PageComponentProps
 }
 
 const PageComponent = (props: PageComponentProps) => {
-    useEffect(() => {
-        const pageElm  = document.getElementById('page-' + props.curPage);
-
-        if(!pageElm) return;
-
-        pageElm.classList.add('page-enabled');
-    },[]);
-
     return (
         <>
             <div className="pagination">
@@ -30,19 +22,25 @@ const PageComponent = (props: PageComponentProps) => {
                 <div>
                     {(props.totalPages < 23) ? 
                         [...Array(props.totalPages)].map((_, index) => (
-                            <a id={'page-' + (index + 1)} className='page ' onClick={()=>props.handleSearch(index + 1)}>
+                            <a  key={'page-' + (index + 1)} 
+                                className={(props.curPage == index + 1) ? 'page page-enabled' : 'page'} 
+                                onClick={()=>props.handleSearch(index + 1)}>
                                 {index + 1}
                             </a>
                         )) : 
                         [...Array(20)].map((_, index) => (
                             (props.curPage < props.totalPages -3) ?
-                            <a id={'page-' +  ((props.curPage >= 20) ? ((index + 1) + (props.curPage + 2) - 20) : index + 1)}
+                            <a key={'page-' +  ((props.curPage >= 20) ? ((index + 1) + (props.curPage + 2) - 20) : index + 1)}
                                     onClick={()=>props.handleSearch((props.curPage >= 20) ? ((index + 1) + (props.curPage + 2) - 20) : index + 1)}
-                                    className='page'>
+                                    className={(props.curPage == index + 1) ? 'page page-enabled' : 'page'}>
                                 {(props.curPage >= 20) ? ((index + 1) + (props.curPage + 2) - 20) : index + 1}
                             </a> 
                                 :
-                            <a onClick={()=>props.handleSearch(props.totalPages + (index + 1 - 20))}>{props.totalPages + (index + 1 - 20)}</a>    
+                            <a key={index} 
+                                className={(props.curPage == props.totalPages + (index + 1 - 20)) ? 'page page-enabled' : 'page'}
+                                onClick={()=>props.handleSearch(props.totalPages + (index + 1 - 20))}>
+                                {props.totalPages + (index + 1 - 20)}
+                            </a>
                         ))
                     }   
                 </div>
@@ -51,7 +49,9 @@ const PageComponent = (props: PageComponentProps) => {
                         <div>...</div>
                         <div>
                             {[...Array(3)].map((_, index) => (
-                                <a onClick={()=>props.handleSearch(props.totalPages - 2 + index)}>{(props.totalPages - 2 + index)}</a>
+                                <a key={index}
+                                    className={(props.curPage == props.totalPages - 2 + index) ? 'page page-enabled' : 'page'}
+                                    onClick={()=>props.handleSearch(props.totalPages - 2 + index)}>{(props.totalPages - 2 + index)}</a>
                             ))
                             }
                         </div>

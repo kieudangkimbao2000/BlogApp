@@ -1,5 +1,5 @@
 namespace BlogApp.Entities;
-
+using BlogApp.Common;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -21,7 +21,7 @@ public class Blog
         public int AmountOfAccesses { get; set; }
         [Required]
         [MaxLength(1)]
-        public int State { get; set; }
+        public BlogState State { get; set; }
         public DateTime? PublishedAt { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }

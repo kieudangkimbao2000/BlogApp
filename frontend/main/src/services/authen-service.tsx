@@ -1,5 +1,6 @@
 import ApiClient from "../api/apiclient";
-import type { AuthenEmailReqDTO, LoginReqDTO, RegisterReqDTO, VerifyEmailOTPReqDTO } from "../models/generated-interfaces";
+import type { AuthenEmailReqDTO, ChangePasswordReqDTO, LoginReqDTO, RegisterReqDTO, 
+        VerifyEmailOTPReqDTO } from "../models/generated-interfaces";
 import type { RequestBaseDTO } from "../models/request-base-dto";
 import type {ResponseBaseDTO } from "../models/response-base-dto";
 
@@ -36,6 +37,12 @@ class AuthenService {
 
     async ValidateRegisterInfo(req: RequestBaseDTO<RegisterReqDTO>) : Promise<ResponseBaseDTO> {
         const resp = await ApiClient.post<ResponseBaseDTO>('authen/validate-register-info', req);
+        
+        return resp;
+    }
+
+    async ChangePassword(req: RequestBaseDTO<ChangePasswordReqDTO>) : Promise<ResponseBaseDTO> {
+        const resp = await ApiClient.post<ResponseBaseDTO>('authen/change-password', req);
         
         return resp;
     }

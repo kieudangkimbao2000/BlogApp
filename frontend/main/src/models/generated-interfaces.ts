@@ -65,6 +65,14 @@ export interface BlogLikeDTO {
     [key: string]: any;
 }
 
+export interface ChangePasswordReqDTO {
+    email?: string;
+    rePassword?: string;
+    newPassword?: string;
+
+    [key: string]: any;
+}
+
 export interface CommentDTO {
     id?: string;
     content?: string;
@@ -149,6 +157,13 @@ export interface RequestBaseDTOOfBlogDTO {
     [key: string]: any;
 }
 
+export interface RequestBaseDTOOfChangePasswordReqDTO {
+    datas?: ChangePasswordReqDTO | undefined;
+    base64Strings?: string[] | undefined;
+
+    [key: string]: any;
+}
+
 export interface RequestBaseDTOOfLoginReqDTO {
     datas?: LoginReqDTO | undefined;
     base64Strings?: string[] | undefined;
@@ -156,8 +171,22 @@ export interface RequestBaseDTOOfLoginReqDTO {
     [key: string]: any;
 }
 
+export interface RequestBaseDTOOfRegisterReqDTO {
+    datas?: RegisterReqDTO | undefined;
+    base64Strings?: string[] | undefined;
+
+    [key: string]: any;
+}
+
 export interface RequestBaseDTOOfSearchBlogReqDTO {
     datas?: SearchBlogReqDTO | undefined;
+    base64Strings?: string[] | undefined;
+
+    [key: string]: any;
+}
+
+export interface RequestBaseDTOOfUploadAvatarReqDTO {
+    datas?: UploadAvatarReqDTO | undefined;
     base64Strings?: string[] | undefined;
 
     [key: string]: any;
@@ -188,19 +217,15 @@ export interface TagDTO {
     [key: string]: any;
 }
 
-export interface VerifyEmailOTPReqDTO {
-    sessionId?: string;
-    otp?: string;
+export interface UploadAvatarReqDTO {
+    username?: string;
 
     [key: string]: any;
 }
 
-export interface Body {
-    "Datas.Username"?: string;
-    "Datas.Password"?: string;
-    "Datas.FullName"?: string;
-    "Datas.Email"?: string;
-    Base64Strings?: string[];
+export interface VerifyEmailOTPReqDTO {
+    sessionId?: string;
+    otp?: string;
 
     [key: string]: any;
 }

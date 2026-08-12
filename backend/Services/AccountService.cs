@@ -1,6 +1,8 @@
 namespace BlogApp.Services;
 
+using BlogApp.Common;
 using BlogApp.DTOs;
+using BlogApp.Handlers;
 using BlogApp.Interfaces;
 using BlogApp.Mappers;
 
@@ -8,7 +10,7 @@ using BlogApp.Mappers;
 ///   Implement Account Service Interface
 /// </summary>
 /// <param name="repository"></param>
-public class AccountService(IAccountRepository repository) : IAccountService
+public class AccountService(IAccountRepository repository, FileHandler fhandler) : IAccountService
 {
     public List<AccountDTO> GetAllAccounts()
     {
@@ -108,5 +110,33 @@ public class AccountService(IAccountRepository repository) : IAccountService
     public bool DeleteAccount(string username)
     {
         throw new NotImplementedException();
+    }
+
+    public ResponseBaseDTO UploadAvatar(string username, string base64String)
+    {
+        var account = repository.GetAccountByUsername(username);
+
+        if(account == null)
+        {
+            return new ResponseBaseDTO<ErrorRespDTO>(new ErrorRespDTO(AppMessages.E2001), 400);
+        }
+
+        string fileName = "avatar.png";
+        bool resultSave = fhandler.SaveImgFile(account.Username, fileName, "profile", base64String).Result;
+
+        if(!resultSave)
+        {
+            return new ResponseBaseDTO<ErrorRespDTO>(new ErrorRespDTO(AppMessages.E2006), 500);
+        }
+
+        account.Avatar = Path.Combine(account.Username, fileName);
+        bool resultUpdate = repository.UpdateAccount(account);
+
+        if(!resultUpdate)
+        {
+            return new ResponseBaseDTO<ErrorRespDTO>(new ErrorRespDTO(AppMessages.E2004), 500);
+        }
+
+        return new ResponseBaseDTO<AccountDTO>(account.ToDTO(), stat: 200);
     }
 }

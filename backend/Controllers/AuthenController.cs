@@ -97,4 +97,22 @@ public class AuthenController(IAuthenService authenService,
 
         return StatusCode(resp.StatusCode, resp);
     }
+
+    /// <summary>
+    ///    Route for changing password
+    /// </summary>
+    /// <param name="req">Change password request</param>
+    /// <returns>Success or error message</returns>
+    [HttpPost("change-password")]
+    public IActionResult ChangePassword([FromBody] RequestBaseDTO<ChangePasswordReqDTO> req)
+    {
+        if(!validator.ValidateChangePasswordRequest(req.Datas))
+        {
+            return BadRequest();
+        }
+
+        var resp = authenService.ChangePassword(req.Datas);
+
+        return StatusCode(resp.StatusCode, resp);
+    }
 }

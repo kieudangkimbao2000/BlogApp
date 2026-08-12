@@ -13,7 +13,7 @@ export class BlogValidator
         CONTENT_MAX_LENGTH_EXCEEDED: "Content exceeds maximum length of 5000 characters"
     };
 
-    public static validateAddBlogRequest = (blog: BlogDTO): [boolean, string?] => {
+    public static validateAddBlogRequest = (blog: BlogDTO, lengthText: number): [boolean, string?] => {
         let message: string = "";
         if (!blog) {
             message = this.ERROR_MESSAGES.BLOG_REQUIRED;
@@ -43,7 +43,7 @@ export class BlogValidator
             message = this.ERROR_MESSAGES.TITLE_MAX_LENGTH_EXCEEDED;
             return [false, message];
         }
-        if (blog.content.length > 5000) {
+        if (lengthText > 5000) {
             message = this.ERROR_MESSAGES.CONTENT_MAX_LENGTH_EXCEEDED;
             return [false, message];
         }

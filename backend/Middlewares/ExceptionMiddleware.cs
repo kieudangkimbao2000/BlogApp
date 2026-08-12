@@ -10,9 +10,10 @@ public class ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddlewa
         }   
         catch(Exception ex)
         {
-            logger.LogError(ex, "", context.Request.Path);
+            logger.LogError(ex, "Unhandled exception at path: {Path}", context.Request.Path);
 
-            // context.Response.StatusCode = 500;
+            context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+            context.Response.ContentType = "text/plain";
             await context.Response.WriteAsync("Internal Server Error");
         }
     }

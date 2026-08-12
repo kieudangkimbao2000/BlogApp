@@ -89,4 +89,22 @@ public class AuthenValidator(IAccountRepository repository) : IAuthenValidator
 
         return true;
     }
+
+    public bool ValidateChangePasswordRequest(ChangePasswordReqDTO req)
+    {
+        // Validate not null
+        if (req == null)
+        {
+            return false;
+        }
+
+        // Validate required fields
+        if(string.IsNullOrWhiteSpace(req.Email) || string.IsNullOrWhiteSpace(req.RePassword) 
+                                                || string.IsNullOrWhiteSpace(req.NewPassword))
+        {
+            return false;
+        }
+
+        return true;
+    }
 }

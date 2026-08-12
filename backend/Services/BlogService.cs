@@ -22,25 +22,18 @@ public class BlogService(IBlogRepository repository,
         return blogs.ToDTOList();
     }
 
-    public BlogDTO GetBlogById(string id, string? userId, ref string errCode)
+    public ResponseBaseDTO GetBlogById(string id)
     {
         var blog = repository.GetBlogById(id);
 
         if (blog == null) 
         {
-            errCode = "E1001"; // Blog not found
-            return null;
+            return new ResponseBaseDTO<ErrorRespDTO>(new ErrorRespDTO(AppMessages.E1001), 404);
         }
 
         var blogDTO = blog.ToDTO();
 
-        if (userId != null)
-        {
-            bool? like = blog.Likes.FirstOrDefault(bl => bl.AuthorId == userId)?.LikeOrNot;
-            blogDTO.LikedByUser = like;
-        }
-
-        return blogDTO;
+        return new ResponseBaseDTO<BlogDTO>(blogDTO, 200);
     }
 
     public async Task<ResponseBaseDTO> AddBlog(BlogDTO blog, string[] base64Strings)
@@ -162,5 +155,25 @@ public class BlogService(IBlogRepository repository,
         blogPage.Datas = blogs.ToDTOList();
         
         return new ResponseBaseDTO<PageDTO<BlogDTO>>(blogPage, 200);
+    }
+
+    public ResponseBaseDTO GetBlogDetails(string id, string? username)
+    {
+        Blog? blog = repository.GetBlogById(id);
+
+        if (blog == null || blog.State == BlogState.DELETED)
+        {
+            return new ResponseBaseDTO<ErrorRespDTO>(new ErrorRespDTO(AppMessages.E1001), 404);
+        }
+
+        var blogDTO = blog.ToDTO();
+
+        if (username != null)
+        {
+            bool like = blog.Likes?.FirstOrDefault(bl => bl.AuthorId == username)?.LikeOrNot ?? false;
+            blogDTO.LikedByUser = like;
+        }
+
+        return new ResponseBaseDTO<BlogDTO>(blogDTO, 200);
     }
 }
